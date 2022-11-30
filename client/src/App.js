@@ -12,17 +12,16 @@ import {
 } from '@chakra-ui/react';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
-import ProductCard from './components/ProductCard';
+import ListingsPage from './pages/ListingsPage';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
       <Navigation/>
-      <ProductCard/>
       <Routes>
         <Route path="/" element = {<LandingPage/>} />
-
+        <Route path="/listings" element = {<ListingsPage/>} />
       </Routes>
       </BrowserRouter>
     </ChakraProvider>
