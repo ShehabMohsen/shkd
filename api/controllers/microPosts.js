@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   let { content } = req.body;
-
+  console.log(content)
   MicroPost.create({ content })
     .then((newPost) => {
       res.status(201).json(newPost);
