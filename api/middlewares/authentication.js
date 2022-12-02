@@ -1,12 +1,13 @@
 const bcrypt = require("bcryptjs"); // to check password
 const passport = require("passport"); // package for managing user session
+
 // localStrategy is our means of logging in. There are github/twitter/google strategy
 const LocalStrategy = require("passport-local"); // package for managing email and password
 
-const { User } = require("../models"); // to query the database
+const { User } = require("../models") // to query the database
 
 // compares user submitted password with stored hashed password from the database.
-function passwordMatch(submittedPassword, storedPasswordHash) {
+function passwordsMatch(submittedPassword, storedPasswordHash) {
   return bcrypt.compareSync(submittedPassword, storedPasswordHash);
 }
 
@@ -41,7 +42,7 @@ passport.use(
             return done(null, false, { message: "Failed Login" });
           }
           // returns user object by passing it as second parameter inside 'done' callback function
-          console.log("\n\nSuccessful Login\n\n");  
+          console.log("\n\nSuccessful Login\n\n");
           return done(null, user, { message: "Successfully Logged In!" });
         })
         .catch((err) => {

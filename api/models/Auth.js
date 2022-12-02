@@ -54,7 +54,6 @@ module.exports = (sequelize, DataTypes) => {
         // this will hash the password before storing it to the database
         if (user.password) {
             user.passwordHash = bcrypt.hashSync(user.password, 10);
-            console.log(user.passwordHash)
         }
     });
 
