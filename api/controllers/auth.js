@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const db = require("../models");
 const passport = require("../middlewares/authentication")
-const { User } = require("../models");
+
+const { User } = db;
 
 // simple test to make sure route works
 router.get("/", async (req, res) => {

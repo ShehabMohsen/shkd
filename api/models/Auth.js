@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
        sequelize,
        //modelName is used to make queries to DB in auth.js controller
-       modelName: 'user'  // sequelize takes modelName and pluralizes it when creating the table for the model (user -> users)
+       modelName: 'User'  // sequelize takes modelName and pluralizes it when creating the table for the model (user -> users)
     })
 
     // await User.sync({ force: true })
