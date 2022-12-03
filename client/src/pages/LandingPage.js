@@ -55,6 +55,7 @@ import {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: 'column', sm: 'row' }}>
               
+              <Link to="/register">
               <Button
                 rounded={'full'}
                 size={'lg'}
@@ -65,7 +66,8 @@ import {
                 _hover={{ bg: 'red.500' }}>
                 Sign up now!
               </Button>
-              
+              </Link>
+
               <Link to="/listings">
               <Button
                 rounded={'full'}
