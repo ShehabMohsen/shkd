@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require("../models");
 const { MicroPost } = db;
@@ -20,9 +21,9 @@ router.get("/", (req, res) => {
   MicroPost.findAll({}).then((allPosts) => res.json(allPosts));
 });
 
-router.post("/", (req, res) => {
+router.post("/", passport.isAuthenticated(), (req, res) => {
   let { content } = req.body;
-
+  console.log(content)
   MicroPost.create({ content })
     .then((newPost) => {
       res.status(201).json(newPost);
