@@ -1,5 +1,5 @@
-"use strict"
 
+"use strict"
 const {Model} = require("sequelize")
 
 module.exports = (sequelize, DataTypes) => {
@@ -17,30 +17,32 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
-                //Checks if Gender matches.
+                isAlpha: true,
+                //Checks if Gender matches. (Will need to create a array containing Gender?)
+                isIn: [['Male','Female','Unisex']]
             }
-
         },
         category: {
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
-                //Checks if category matches with categories.
+                isAlpha: true,
+                //Checks if letters, will need to create a array of categories)
+                //isIn: [['Shirt','Pants']]
             }
-
         },
         description: {
             type: DataTypes.STRING,
             allowNull: false,
-
         },
         size: {
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
-                //Checks if size validate
+                //Checks if size validate (Will need to create a array containing sizes?)
+                //Will need to consider numbers for shoe size
+                //isIn: [['XL','L','M','S','XS']]         
             }
-
         },
         listing_region: {
             type: DataTypes.STRING,
@@ -54,7 +56,9 @@ module.exports = (sequelize, DataTypes) => {
         image: {
             type: DataTypes.STRING,
             allowNull: false,
-
+            validate:{
+                isUrl: true //Checks for valid URL.
+            }
         },
     },{
         //############PORTION TAKEN FROM SHEHAB'S AUTH.JS. REVISIT JUST IN CASE
@@ -63,6 +67,8 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Listing'  // sequelize takes modelName and pluralizes it when creating the table for the model 
          
     })
+
+    //Tying User to Listing
 
     return Listing
 }
