@@ -57,7 +57,7 @@ import {
               
               <Link to="/register">
               <Button
-                rounded={'full'}
+                // rounded={'full'}
                 size={'lg'}
                 fontWeight={'normal'}
                 px={6}
@@ -70,7 +70,7 @@ import {
 
               <Link to="/listings">
               <Button
-                rounded={'full'}
+                // rounded={'full'}
                 size={'lg'}
                 fontWeight={'normal'}
                 px={6} >
