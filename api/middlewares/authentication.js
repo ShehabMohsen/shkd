@@ -72,6 +72,8 @@ passport.deserializeUser((id, done) => {
     .catch((err) => done(err, null));
 });
 
+// middleware function that protects routes from unauthorized users (users who are not logged in)
+// this is important for creating listings and adding them to cart. 
 passport.isAuthenticated = () => (req, res, next) =>
   req.user ? next() : res.sendStatus(401);
 

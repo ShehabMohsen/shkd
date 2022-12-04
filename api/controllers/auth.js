@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 });
 
 // sign up route
-router.post("/signup", async (req, res) => {
+router.post("/signup", (req, res) => {
   // signup content received from frontEnd. will be in the form of JSON Object
   let content = req.body;
 
