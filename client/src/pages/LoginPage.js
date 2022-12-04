@@ -42,13 +42,11 @@ import {
                 <Input type="password" />
               </FormControl>
               <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
-                </Stack>
+                <Stack pt={6}>
+                <Text align={'center'}>
+                  Don't have an account? <Link href="/register" color={'blue.400'}>Register</Link>
+                </Text>
+              </Stack>
                 <Button
                   bg={'blue.400'}
                   color={'white'}
