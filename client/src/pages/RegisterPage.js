@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     Flex,
     Box,
@@ -19,7 +20,26 @@ import {
   
   export default function SignupCard() {
     const [showPassword, setShowPassword] = useState(false);
-  
+    const [form, setForm] = React.useState({
+      firstName: "",
+      lastName:"",
+      email: "",
+      username: "",
+      confirmPassword: "",
+      password: "",
+    })
+    const [error, setError] = React.useState(true)
+
+    function handleOnFormChange (event){
+      // console.log(event.target.name)
+      // console.log(event.target.value)
+      if (form.password!==form.confirmPassword) setError(true)
+      else setError(false)
+      setForm({...form, [event.target.name]:event.target.value})
+    }
+
+    console.log(form)
+
     return (
       <Flex
         minH={'100vh'}
@@ -45,28 +65,28 @@ import {
                 <Box>
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
-                    <Input type="text" />
+                    <Input type="text" onChange={handleOnFormChange} name="firstName"/>
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="lastName">
                     <FormLabel>Last Name</FormLabel>
-                    <Input type="text" />
+                    <Input type="text" onChange={handleOnFormChange} name="lastName"/>
                   </FormControl>
                 </Box>
               </HStack>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" onChange={handleOnFormChange} name = "email"/>
               </FormControl>
               <FormControl id="userName" isRequired>
                 <FormLabel>User name</FormLabel>
-                <Input type="text" />
+                <Input type="text" onChange={handleOnFormChange} name="username"/>
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} />
+                  <Input type={showPassword ? 'text' : 'password'} onChange={handleOnFormChange} name="password"/>
                   <InputRightElement h={'full'}>
                     <Button
                       variant={'ghost'}
@@ -81,7 +101,7 @@ import {
               <FormControl id="password" isRequired>
                 <FormLabel>Password Confirmaition</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} />
+                  <Input type={showPassword ? 'text' : 'password'} onChange={handleOnFormChange} name="confirmPassword"/>
                   <InputRightElement h={'full'}>
                     <Button
                       variant={'ghost'}

@@ -1,3 +1,5 @@
+import React from 'react';
+import { useAuthContext } from '../contexts/AuthContext';
 import {
     Flex,
     Box,
@@ -14,6 +16,25 @@ import {
   } from '@chakra-ui/react';
   
   export default function SimpleCard() {
+    const {authVariables} = useAuthContext()
+    const [form, setForm] = React.useState({
+      email: "",
+      password: "",
+    })
+    const [error, setError] = React.useState(null)
+
+    const handleOnFormChange = (event) => {
+      setForm({...form, [event.target.name]:event.target.value})
+    }
+
+    const login = async (event) => {
+      event.preventDefault()
+      authVariables.authenticate(form.email, form.password)
+    }
+
+
+    console.log(form)
+
     return (
       <Flex
         minH={'100vh'}
@@ -35,11 +56,11 @@ import {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" onChange = {handleOnFormChange} name = "email"/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" onChange = {handleOnFormChange} name = "password"/>
               </FormControl>
               <Stack spacing={10}>
                 <Stack pt={6}>
@@ -50,6 +71,7 @@ import {
                 <Button
                   bg={'blue.400'}
                   color={'white'}
+                  onClick={login}
                   _hover={{
                     bg: 'blue.500',
                   }}>
