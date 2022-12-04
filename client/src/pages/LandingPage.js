@@ -13,8 +13,9 @@ import {
     IconProps,
     useColorModeValue,
   } from '@chakra-ui/react';
-  import { Link } from "react-router-dom";
   
+  import {Link} from "react-router-dom"
+
   export default function LandingPage() {
 
     return (
