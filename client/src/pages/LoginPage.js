@@ -27,13 +27,15 @@ import {
       setForm({...form, [event.target.name]:event.target.value})
     }
 
-    const login = async (event) => {
+    const handleOnSubmit = async (event) => {
       event.preventDefault()
-      authVariables.authenticate(form.email, form.password)
+      try {
+        await authVariables.authenticate(form.email, form.password)
+      } catch (error) {
+        setError(true)
+        console.log(error)
+      }
     }
-
-
-    console.log(form)
 
     return (
       <Flex
@@ -56,11 +58,11 @@ import {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" onChange = {handleOnFormChange} name = "email"/>
+                <Input type="email" onChange = {handleOnFormChange} name = "email" value = {form.email}/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" onChange = {handleOnFormChange} name = "password"/>
+                <Input type="password" onChange = {handleOnFormChange} name = "password" value = {form.password}/>
               </FormControl>
               <Stack spacing={10}>
                 <Stack pt={6}>
@@ -71,7 +73,7 @@ import {
                 <Button
                   bg={'blue.400'}
                   color={'white'}
-                  onClick={login}
+                  onClick={handleOnSubmit}
                   _hover={{
                     bg: 'blue.500',
                   }}>
