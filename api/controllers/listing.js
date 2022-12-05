@@ -16,10 +16,15 @@ router.get("/", (req, res) => {
 });
 
 // listing route
-router.post("/createListing", passport.authenticate("local"), (req, res) =>{
+router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     // listing content received from frontEnd, in a JSON Object form
     let content = req.body;
-    let user = req.user;
+
+    //passport.authenticate("local") currently needs to be utilize (01:40 Dec 4th)
+
+/*     let user = req.user;
+    res.json(req.user);
+    console.log(req.user) */
 
     Listing.create({
         listing_name: content.listing_name,
@@ -29,7 +34,7 @@ router.post("/createListing", passport.authenticate("local"), (req, res) =>{
         size: content.size,
         listing_region: content.listing_region,
         price: content.price,
-        image: content.image
+        image: content.image,
     })
         .then((newData) =>{
             // response data frontend gets if the request is successful 
@@ -40,10 +45,10 @@ router.post("/createListing", passport.authenticate("local"), (req, res) =>{
             res.status(400).json({msg: "Failed to Create Listing",err});
         });
     
-    //Ties user to the listing
+    //Ties listing id to user.
+    // https://sequelize.org/docs/v6/core-concepts/assocs/#philosophy
+    //Listing.hasOne(user);
 });
 
-
-  
 // export route instance so that ./controllers/index can import it to use with our API
 module.exports = router;

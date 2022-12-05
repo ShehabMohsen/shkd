@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             validate:{
                 //Checks if size validate (Will need to create a array containing sizes?)
                 //Will need to consider numbers for shoe size
-                //isIn: [['XL','L','M','S','XS']]         
+                isIn: [['XL','L','M','S','XS']]         
             }
         },
         listing_region: {
@@ -60,6 +60,10 @@ module.exports = (sequelize, DataTypes) => {
                 isUrl: true //Checks for valid URL.
             }
         },
+
+/*         user: {
+            type: DataTypes.FLOAT,
+        }, */
     },{
         //############PORTION TAKEN FROM SHEHAB'S AUTH.JS. REVISIT JUST IN CASE
         sequelize,
@@ -69,6 +73,11 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     //Tying User to Listing
+    
+/*     Listing.associate = (models) => {
+        // association with other models
+    } */
+    
 
     return Listing
 }
