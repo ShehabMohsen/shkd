@@ -22,7 +22,7 @@ let listingData =
         "size": "M",
         "listing_region": "USA",
         "price": 15.00,
-        "image": "",
+        "image": "https://goop-img.com/wp-content/uploads/2022/04/g.png",
       }},
     {item3: {
         "listing_name": "Stripped Pants",
@@ -32,7 +32,7 @@ let listingData =
         "size": "L",
         "listing_region": "FR",
         "price": 10.00,
-        "image": "",
+        "image": "https://cdn.media.amplience.net/i/partycity/P925843?$large$&fmt=auto&qlt=default",
       }},
     {item4: {
         "listing_name": "NY Yankee Cap",
@@ -42,7 +42,7 @@ let listingData =
         "size": "N/A",
         "listing_region": "USA",
         "price": 20.00,
-        "image": "",
+        "image": "https://slimages.macysassets.com/is/image/MCY/products/4/optimized/8278534_fpx.tif?op_sharpen=1&wid=700&hei=855&fit=fit,1",
       }},
     {item4: {
         "listing_name": "Rogue Leather Belt",
@@ -52,7 +52,7 @@ let listingData =
         "size": "30 inches",
         "listing_region": "USA",
         "price": 55.00,
-        "image": "",
+        "image": "https://assets.roguefitness.com/f_auto,q_auto,c_limit,w_1284,b_rgb:f8f8f8/catalog/Apparel/Accessories%20/Belts/WL0033/WL0033-H_ihpi02.png",
       }},
     {item5: {
         "listing_name": "Black Hooded Sweater",
@@ -62,7 +62,7 @@ let listingData =
         "size": "M",
         "listing_region": "Canada",
         "price": 15.00,
-        "image": "",
+        "image": "https://cdn.shopify.com/s/files/1/1830/0563/products/LEO-VICI-2022-10-31-KB3400_1_800x.jpg?v=1667688544",
       }},
     {item6: {
         "listing_name": "Purple Gloves",
@@ -72,7 +72,7 @@ let listingData =
         "size": "small",
         "listing_region": "UK",
         "price": 10.00,
-        "image": "",
+        "image": "https://cdn.shopify.com/s/files/1/0159/7571/0820/products/Purple-Gloves-Main_800x.jpg?v=1646179426",
       }},
     ]
 
