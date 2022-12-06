@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     //GET localhost:8080/api/listing
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
-    res.status(200).json({ListingData}); 
+    res.status(200).json(ListingData); 
 });
 
 // listing route
