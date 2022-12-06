@@ -7,7 +7,12 @@ const { User } = db;
 
 // simple test to make sure route works
 router.get("/", async (req, res) => {
-  res.json({ ping: "pong" });
+  try {
+    User.findAll({}).then((allPosts) => res.json(allPosts));
+    // res.json({ ping: "pong" });
+  } catch (err){
+    next(err)
+  }
 });
 
 // sign up route
@@ -17,6 +22,8 @@ router.post("/signup", (req, res) => {
 
   // breaking down the 'content' object and passing column entries on to the users table
   User.create({
+    firstName:content.firstName,
+    lastName:content.lastName,
     username: content.username,
     email: content.email,
     password: content.password,

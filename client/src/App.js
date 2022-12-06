@@ -15,10 +15,12 @@ import LandingPage from './pages/LandingPage';
 import ListingsPage from './pages/ListingsPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import {AuthContextProvider} from "./contexts/AuthContext"
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <AuthContextProvider>
       <BrowserRouter>
       <Navigation/>
       <Routes>
@@ -28,6 +30,7 @@ function App() {
         <Route path="/login" element = {<LoginPage/>} />
       </Routes>
       </BrowserRouter>
+      </AuthContextProvider>
     </ChakraProvider>
   );
 }
