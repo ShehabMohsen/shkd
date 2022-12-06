@@ -92,7 +92,7 @@ export default function Navigation() {
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
-              onClick={authVariables.signout}
+              onClick={authVariables.logout}
             >
               Sign Out
             </Button>

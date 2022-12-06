@@ -38,7 +38,7 @@ import { useNavigate } from 'react-router-dom';
     const handleOnSubmit = async (event) => {
       event.preventDefault()
       try {
-        await authVariables.authenticate(form.email, form.password)
+        await authVariables.login(form.email, form.password)
         navigate("/")
       } catch (error) {
         setError(true)

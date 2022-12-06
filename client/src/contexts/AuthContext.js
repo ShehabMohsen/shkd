@@ -38,8 +38,8 @@ export const AuthContextProvider = ({children}) => {
       }, []);
 
 
-    // user login 
-    const authenticate = async (email, password) => {
+    // authenticate user 
+    const login = async (email, password) => {
     
     let response = await fetch("/api/auth/login", {
       method: "POST",
@@ -81,7 +81,7 @@ export const AuthContextProvider = ({children}) => {
     };
     
     // signout user
-    const signout = async () => {
+    const logout = async () => {
         let response = await fetch("/api/auth/logout", {
           method: "POST",
           headers: {
@@ -100,7 +100,7 @@ export const AuthContextProvider = ({children}) => {
 
 
 
-    const authVariables = {user, setUser, authenticate, signout, signup}
+    const authVariables = {user, setUser, authenticate: login, logout, signup}
     return (
         <AuthContext.Provider value={{authVariables}}>
             {children}
