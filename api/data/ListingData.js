@@ -1,16 +1,16 @@
 //Dummy Date to Test With
 let listingData = {
   listingDataArray: [
-    {
-      listing_name: "",
-      gender: "",
-      category: "",
-      description: "",
-      size: "",
-      listing_region: "",
-      price: 1.0,
-      image: "",
-    },
+    // {
+    //   listing_name: "",
+    //   gender: "",
+    //   category: "",
+    //   description: "",
+    //   size: "",
+    //   listing_region: "",
+    //   price: 1.0,
+    //   image: "",
+    // },
     {
       listing_name: "Clean White Shirt",
       gender: "unisex",
