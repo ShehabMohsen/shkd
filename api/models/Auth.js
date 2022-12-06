@@ -11,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
     class User extends Model {}
 
     // Object of objects. each nested object (e.g. usernmame & email) is a column on the DB table
-    User.init({    
+    User.init({
+        firstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastName :{
+            type: DataTypes.STRING
+        },
         username: {
             type: DataTypes.STRING,
             allowNull:false, // does not allow an empty entry for a column on the table

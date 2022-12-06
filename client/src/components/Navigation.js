@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  useColorMode,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -20,11 +21,24 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-
-import {Link} from "react-router-dom"
+import { Link, useNavigate } from 'react-router-dom';
+import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
+import { useAuthContext } from '../contexts/AuthContext';
 
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
+  // toggle darkmode on and off
+  const { colorMode, toggleColorMode } = useColorMode();
+  // from AuthContext, contains user, signin, signout, signup, etc
+  const { authVariables } = useAuthContext();
+  // for redirecting our page to landing page after logging in
+  const navigate = useNavigate()
+
+  // making a dedicating handler for logging out in case we need to do more
+  const handleOnClickLogout = async event => {
+    authVariables.logout();
+  };
+
 
   return (
     <Box>
@@ -76,29 +90,50 @@ export default function Navigation() {
           direction={'row'}
           spacing={6}
         >
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            href={'/login'}
-          >
-            Sign In
+          {authVariables.user ? (
+            <Button onClick = {()=>{navigate("/listing/create")}}
+             leftIcon={<AddIcon />}>Add</Button>
+          ) : null}
+          <Button onClick={toggleColorMode}>
+            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
-          <Link to="/register">
+          {authVariables.user ? (
             <Button
-              display={{ base: 'none', md: 'inline-flex' }}
+              as={'a'}
               fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'pink.400'}
-              href={'/register'}
-              _hover={{
-                bg: 'pink.300',
-              }}
+              fontWeight={400}
+              variant={'link'}
+              onClick={handleOnClickLogout}
             >
-              Sign Up
+              Sign Out
             </Button>
+          ) : (
+            <Button
+              as={'a'}
+              fontSize={'sm'}
+              fontWeight={400}
+              variant={'link'}
+              href={'/login'}
+            >
+              Sign In
+            </Button>
+          )}
+          <Link to="/register">
+            {authVariables.user ? null : (
+              <Button
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'pink.400'}
+                href={'/register'}
+                _hover={{
+                  bg: 'pink.300',
+                }}
+              >
+                Sign Up
+              </Button>
+            )}
           </Link>
         </Stack>
       </Flex>

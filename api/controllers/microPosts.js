@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
   MicroPost.findAll({}).then((allPosts) => res.json(allPosts));
 });
 
-router.post("/", passport.isAuthenticated(), (req, res) => {
+router.post("/", (req, res) => {
   let { content } = req.body;
   console.log(content)
   MicroPost.create({ content })

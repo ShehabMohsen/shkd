@@ -21,6 +21,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
+    "react-axios": "^2.0.6",
     "react-router-dom": "^6.4.3",
     "sequelize": "^6.25.2"
   },

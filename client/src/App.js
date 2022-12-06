@@ -15,10 +15,13 @@ import LandingPage from './pages/LandingPage';
 import ListingsPage from './pages/ListingsPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
+import {AuthContextProvider} from "./contexts/AuthContext"
+import CreateListing from './pages/CreateListing';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
+      <AuthContextProvider>
       <BrowserRouter>
       <Navigation/>
       <Routes>
@@ -26,8 +29,10 @@ function App() {
         <Route path="/listings" element = {<ListingsPage/>} />
         <Route path="/register" element = {<RegisterPage/>} />
         <Route path="/login" element = {<LoginPage/>} />
+        <Route path = "listing/create" element = {CreateListing}/>
       </Routes>
       </BrowserRouter>
+      </AuthContextProvider>
     </ChakraProvider>
   );
 }

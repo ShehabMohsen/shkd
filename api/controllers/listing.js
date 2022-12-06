@@ -7,13 +7,18 @@ const passport = require("../middlewares/authentication")
 const { Listing } = db;
 
 router.get("/", (req, res) => {
+    //Returns "Listing pong"
     //res.status(200).json({ping: "Listing pong"});
 
     //Outputs ../data/ListingData.js
     //GET localhost:8080/api/listing
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
+    //Returns ListingData.js
     res.status(200).json(ListingData.listingDataArray); 
+
+    //Returns currentListings from PSQL DB
+    Listing.findAll({}).then((allListing) => res.json(allListing));
 });
 
 // listing route
@@ -54,11 +59,11 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
 // editing a post
 router.put("/:id", passport.isAuthenticated(), (req, res) =>{
     const { id } = req.params;
+    //res.json({ping: id})
     Listing.findByPk(id).then((lpost) => {
         if (!lpost){
             return res.sendStatus(400);
         }
-
         lpost.content = req.body.content;
         lpost
             .save()
@@ -71,14 +76,13 @@ router.put("/:id", passport.isAuthenticated(), (req, res) =>{
     })
 })
 
-// deleting a post
+// deleting a post (Works: 00:06, Dec 5th, 2022)
 router.delete("/:id", (req, res) =>{
     const { id } = req.params;
     Listing.findByPk(id).then((lpost) =>{
         if(!lpost){
             return res.sendStatus(400);
         }
-
         lpost.destroy();
         res.sendStatus(204); //No content JSON error message.
     })

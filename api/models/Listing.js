@@ -79,8 +79,9 @@ module.exports = (sequelize, DataTypes) => {
     /* Listing.associate = (models) => {
         // association with other models
         //Listing.belongsTo(user)
-    } */
+    } 
 
+    */
     return Listing
 }
 

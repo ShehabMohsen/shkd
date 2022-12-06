@@ -29,6 +29,7 @@ passport.use(
     },
     // 2. callback function that determines if a user exists with provided email, and if the password provided matches w/stored password
     (email, password, done) => {
+      console.log("email, password", email, password)
       User.findOne({ where: { email } })
         .then((user) => {
           // user does not exist with provided email
