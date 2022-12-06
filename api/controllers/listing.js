@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
     res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    Listing.findAll({}).then((allListing) => res.json(allListing));
+    //Listing.findAll({}).then((allListing) => res.json(allListing));
 });
 
 // listing route
