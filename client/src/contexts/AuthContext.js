@@ -13,7 +13,6 @@ export const AuthContextProvider = ({children}) => {
 
     const [user, setUser] = useState(false);
     const [error, setError] = useState(false);
-    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     // Checks for user cookie for login persistance
     useEffect(() => {
@@ -27,6 +26,7 @@ export const AuthContextProvider = ({children}) => {
             setUser(fetchedUser);
           } catch (error) {
             setUser(false);
+            setError(true)
           }
         }
     

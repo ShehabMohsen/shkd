@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuthContext } from '../contexts/AuthContext';
 import {
     Flex,
     Box,
@@ -14,14 +13,23 @@ import {
     Text,
     useColorModeValue,
   } from '@chakra-ui/react';
+  import { useAuthContext } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
   
   export default function SimpleCard() {
+    // from AuthContext, contains user, signin, signout, signup, etc
     const {authVariables} = useAuthContext()
+    // this object will update to the values the user types into the input form
     const [form, setForm] = React.useState({
       email: "",
       password: "",
     })
+
+    const navigate = useNavigate()
+    
     const [error, setError] = React.useState(null)
+
+
 
     const handleOnFormChange = (event) => {
       setForm({...form, [event.target.name]:event.target.value})
@@ -31,6 +39,7 @@ import {
       event.preventDefault()
       try {
         await authVariables.authenticate(form.email, form.password)
+        navigate("/")
       } catch (error) {
         setError(true)
         console.log(error)
