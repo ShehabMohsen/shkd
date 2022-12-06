@@ -32,6 +32,11 @@ export default function Navigation() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   
+  
+  // making a dedicating handler for logging out in case we need to do more
+  const handleOnClickLogout = async (event) => {
+    authVariables.logout()
+  }
 
   return (
     <Box>
@@ -92,7 +97,7 @@ export default function Navigation() {
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
-              onClick={authVariables.logout}
+              onClick={handleOnClickLogout}
             >
               Sign Out
             </Button>

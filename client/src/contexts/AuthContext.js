@@ -100,7 +100,7 @@ export const AuthContextProvider = ({children}) => {
 
 
 
-    const authVariables = {user, setUser, authenticate: login, logout, signup}
+    const authVariables = {user, setUser, login, logout, signup}
     return (
         <AuthContext.Provider value={{authVariables}}>
             {children}
