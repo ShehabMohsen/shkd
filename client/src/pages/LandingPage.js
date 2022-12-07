@@ -45,14 +45,14 @@ export default function LandingPage() {
                 position: 'absolute',
                 bottom: 1,
                 left: 0,
-                bg: 'red.400',
+                bg: 'orange.400',
                 zIndex: -1,
               }}
             >
               FASHION
             </Text>
             <br />
-            <Text as={'span'} color={'red.400'}>
+            <Text as={'span'} color={'orange.400'}>
               4 YOU!
             </Text>
           </Heading>
@@ -73,9 +73,9 @@ export default function LandingPage() {
                   size={'lg'}
                   fontWeight={'normal'}
                   px={6}
-                  colorScheme={'red'}
-                  bg={'red.400'}
-                  _hover={{ bg: 'red.500' }}
+                  colorScheme={'orange'}
+                  bg={'orange.400'}
+                  _hover={{ bg: 'orange.500' }}
                 >
                   Start Browsing
                 </Button>
@@ -87,9 +87,9 @@ export default function LandingPage() {
                   size={'lg'}
                   fontWeight={'normal'}
                   px={6}
-                  colorScheme={'red'}
-                  bg={'red.400'}
-                  _hover={{ bg: 'red.500' }}
+                  colorScheme={'orange'}
+                  bg={'orange.400'}
+                  _hover={{ bg: 'orange.500' }}
                 >
                   Sign up now!
                 </Button>
@@ -123,7 +123,7 @@ export default function LandingPage() {
             top={'-20%'}
             left={0}
             zIndex={-1}
-            color={useColorModeValue('red.50', 'red.400')}
+            color={useColorModeValue('orange.50', 'orange.400')}
           />
           <Box
             position={'relative'}
