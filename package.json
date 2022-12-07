@@ -12,6 +12,7 @@
   "author": "Edgardo Molina",
   "license": "MIT",
   "dependencies": {
+    "@chakra-ui/menu": "^2.1.5",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.18.2",

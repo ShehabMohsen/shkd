@@ -14,7 +14,7 @@ import {
   useBreakpointValue,
   useDisclosure,
   useColorMode,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -24,7 +24,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
 import { useAuthContext } from '../contexts/AuthContext';
-
+import ProfileMenu from './ProfileMenu';
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   // toggle darkmode on and off
@@ -97,16 +97,9 @@ export default function Navigation() {
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
+          
           {authVariables.user ? (
-            <Button
-              as={'a'}
-              fontSize={'sm'}
-              fontWeight={400}
-              variant={'link'}
-              onClick={handleOnClickLogout}
-            >
-              Sign Out
-            </Button>
+            <ProfileMenu authVariables = {authVariables}/>
           ) : (
             <Button
               as={'a'}
