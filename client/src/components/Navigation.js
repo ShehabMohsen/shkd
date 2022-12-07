@@ -76,7 +76,7 @@ export default function Navigation() {
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Link to="/">
             <Center>
-              <Image src={Logo} width="50px" marginLeft="2px" />
+              <Image src={Logo} width="45px" marginLeft="2px" />
             </Center>
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
