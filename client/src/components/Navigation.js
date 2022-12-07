@@ -14,6 +14,8 @@ import {
   useBreakpointValue,
   useDisclosure,
   useColorMode,
+  Image, 
+  Center 
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -26,7 +28,8 @@ import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
 import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
 import CartDrawer from "./CartDrawer";
-
+// import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
+import Logo from "../Assets/Logo.png"
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   // toggle darkmode on and off
@@ -72,12 +75,17 @@ export default function Navigation() {
 
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Link to="/">
+            <Center>
+            <Image src={Logo} width="50px"/>
+            </Center>
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
               color={useColorModeValue('gray.800', 'white')}
             >
-              Logo
+              {/* Logo */}
+              
+              
             </Text>
           </Link>
 
