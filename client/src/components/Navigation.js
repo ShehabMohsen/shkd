@@ -94,7 +94,7 @@ export default function Navigation() {
         >
           {authVariables.user ? (
             <Button onClick = {()=>{navigate("/listing/create")}}
-             leftIcon={<AddIcon />}>Add</Button>
+             rightIcon={<AddIcon />}>Add</Button>
           ) : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
