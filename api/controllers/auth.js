@@ -8,7 +8,7 @@ const { User } = db;
 // simple test to make sure route works
 router.get("/", async (req, res) => {
   try {
-    User.findAll({}).then((allPosts) => res.json(allPosts));
+    User.findAll({}).then((allUsers) => res.json(allUsers));
     // res.json({ ping: "pong" });
   } catch (err){
     next(err)
