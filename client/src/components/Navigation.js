@@ -25,6 +25,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
 import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
+import CartDrawer from "./CartDrawer";
+
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   // toggle darkmode on and off
@@ -97,20 +99,20 @@ export default function Navigation() {
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
-          
           {authVariables.user ? (
             <ProfileMenu authVariables = {authVariables}/>
-          ) : (
-            <Button
+            ) : (
+              <Button
               as={'a'}
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
               href={'/login'}
-            >
+              >
               Sign In
             </Button>
           )}
+          {authVariables.user ? <CartDrawer/> : null}
           <Link to="/register">
             {authVariables.user ? null : (
               <Button

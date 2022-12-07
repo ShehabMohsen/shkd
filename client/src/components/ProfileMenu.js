@@ -18,7 +18,6 @@ export default function ProfileMenu({authVariables}) {
         as={Button}
         rightIcon = {<ChevronDownIcon/>}
         colorScheme="orange"
-        onClick={console.log(1)}
         bg={'orange.400'}
         _hover={{
           bg: 'orange.500',
