@@ -27,7 +27,6 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     let content = req.body;
 
     let user = req.user;
-    console.log(user.dataValues.id)
     Listing.create({
         UserId:user.dataValues.id,
         listing_name: content.listing_name,

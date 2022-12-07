@@ -1,22 +1,36 @@
-import {
-  Stack,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Divider,
-  ButtonGroup
-} from '@chakra-ui/react';
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import React from "react"
+import React, {useState, useEffect}  from "react"
 import ProductCard from '../components/ProductCard';
 
-export default function ListingsPage(props) {
-  
-  
+export default function ListingsPage() {
+  const [listings, setListings] = useState([])
+
+  useEffect(() => {
+    async function getListingData() {
+      try{
+        let response = await fetch(`/api/listing`);
+
+        if(!response.ok) throw new Error("Unable to get listings");
+        
+        let fetchedListings = await response.json();
+
+        setListings(fetchedListings);
+      }catch(err) {
+        console.log(err);
+      }
+    }
+    getListingData();
+  }, []);
+
   return(
     <React.Fragment>
-      <ProductCard/>
+      {listings.map((itemData) => {
+        return <ProductCard 
+          key = {itemData.id}
+          imageURL = {itemData.image}
+          name = {itemData.listing_name}
+          price = {itemData.price}
+        />
+      })}
     </React.Fragment>
   )
 }
