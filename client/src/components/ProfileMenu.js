@@ -8,7 +8,7 @@ import {
   MenuItem,
   MenuDivider,
 } from '@chakra-ui/menu';
-
+import { ChevronDownIcon} from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/react';
 
 export default function ProfileMenu({authVariables}) {
@@ -16,7 +16,9 @@ export default function ProfileMenu({authVariables}) {
     <Menu>
       <MenuButton
         as={Button}
+        rightIcon = {<ChevronDownIcon/>}
         colorScheme="orange"
+        onClick={console.log(1)}
         bg={'orange.400'}
         _hover={{
           bg: 'orange.500',
