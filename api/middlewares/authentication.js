@@ -38,7 +38,7 @@ passport.use(
             return done(null, false, { message: "Failed Login" }); // message provided to the user
           }
           // provided password is incorrect
-          if (passwordsMatch(password, user.passwordHash) === false) {
+          if (passwordsMatch(password, user.password) === false) {
             console.log("\n\nFailed Login: passwords did not match\n\n");
             return done(null, false, { message: "Failed Login" });
           }
