@@ -29,15 +29,15 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     let user = req.user;
     console.log(user.dataValues.id)
     Listing.create({
+        UserId:user.dataValues.id,
         listing_name: content.listing_name,
         gender: content.gender,
         category: content.category,
-        description: content.description,
         size: content.size,
-        listing_region: content.listing_region,
         price: content.price,
+        description: content.description,
+        listing_region: content.listing_region,
         image: content.image,
-        UserId:user.dataValues.id
     })
         .then((newData) =>{
             // response data frontend gets if the request is successful 

@@ -34,18 +34,17 @@ module.exports = (sequelize, DataTypes) => {
         },
         // passwordHash: {type: DataTypes.STRING},
         password: {
-            type: DataTypes.VIRTUAL,
+            type: DataTypes.STRING,
             validate:{
-                isLongEnough: (val) => {
-                    if (val.length < 8){
+                isLongEnough: (value) => {
+                    // making sure password length is 8 characters or more
+                    if (value.length < 8){
                         throw new Error("Please choose a larger password")
                     }
                 },
             },
             set(value) {
-                // Storing passwords in plaintext in the database is terrible.
-                // Hashing the value with an appropriate cryptographic hash function is better.
-                // Using the username as a salt is better.
+                // hash user provided password before storing it into the database 
                 this.setDataValue('password', bcrypt.hashSync(value, 10));
               }
           
