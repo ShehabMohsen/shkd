@@ -14,9 +14,10 @@ import {
   useBreakpointValue,
   useDisclosure,
   useColorMode,
-  Image, 
-  Center 
-} from "@chakra-ui/react";
+  Image,
+  Center,
+  Spacer,
+} from '@chakra-ui/react';
 import {
   HamburgerIcon,
   CloseIcon,
@@ -27,9 +28,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
 import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
-import CartDrawer from "./CartDrawer";
+import CartDrawer from './CartDrawer';
 // import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
-import Logo from "../Assets/Logo.png"
+import Logo from '../Assets/Logo.png';
 export default function Navigation() {
   const { isOpen, onToggle } = useDisclosure();
   // toggle darkmode on and off
@@ -37,13 +38,12 @@ export default function Navigation() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   // for redirecting our page to landing page after logging in
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // making a dedicating handler for logging out in case we need to do more
   const handleOnClickLogout = async event => {
     authVariables.logout();
   };
-
 
   return (
     <Box>
@@ -76,7 +76,7 @@ export default function Navigation() {
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Link to="/">
             <Center>
-            <Image src={Logo} width="50px"/>
+              <Image src={Logo} width="50px" marginLeft="2px" />
             </Center>
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
@@ -84,16 +84,15 @@ export default function Navigation() {
               color={useColorModeValue('gray.800', 'white')}
             >
               {/* Logo */}
-              
-              
             </Text>
           </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
+            <Center>
+              <DesktopNav />
+            </Center>
           </Flex>
         </Flex>
-
         <Stack
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
@@ -101,26 +100,32 @@ export default function Navigation() {
           spacing={6}
         >
           {authVariables.user ? (
-            <Button onClick = {()=>{navigate("/listing/create")}}
-             rightIcon={<AddIcon />}>Add</Button>
+            <Button
+              onClick={() => {
+                navigate('/listing/create');
+              }}
+              rightIcon={<AddIcon />}
+            >
+              Add
+            </Button>
           ) : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
           {authVariables.user ? (
-            <ProfileMenu authVariables = {authVariables}/>
-            ) : (
-              <Button
+            <ProfileMenu authVariables={authVariables} />
+          ) : (
+            <Button
               as={'a'}
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
               href={'/login'}
-              >
+            >
               Sign In
             </Button>
           )}
-          {authVariables.user ? <CartDrawer/> : null}
+          {authVariables.user ? <CartDrawer /> : null}
           <Link to="/register">
             {authVariables.user ? null : (
               <Button
@@ -141,7 +146,7 @@ export default function Navigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={isOpen} animateOpacity> 
         <MobileNav />
       </Collapse>
     </Box>
