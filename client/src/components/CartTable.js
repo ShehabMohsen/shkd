@@ -15,7 +15,7 @@ export default function CartTable({ shoppingCart }) {
   return (
     <TableContainer>
       <Table variant="striped" colorScheme="orange">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
+        <TableCaption>Table Caption Here</TableCaption>
         <Thead>
           <Tr>
             <Th>Listing Name</Th>

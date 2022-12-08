@@ -12,6 +12,7 @@ import {
   Button,
   Icon,
   Spacer,
+  Text
 } from '@chakra-ui/react';
 import { IconShoppingCart } from '@tabler/icons';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -61,7 +62,8 @@ export default function CartDrawer() {
           </DrawerBody>
 
           <DrawerFooter>
-            Drawer Footer
+            <Text>Drawer Footer</Text>
+            <Spacer/>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
