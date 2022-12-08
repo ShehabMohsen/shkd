@@ -1,8 +1,12 @@
 import React, {useState, useEffect}  from "react"
 import ProductCard from '../components/ProductCard';
+import { useListingContext } from "../contexts/ListingContext";
+
 
 export default function ListingsPage() {
-  const [listings, setListings] = useState([])
+  const {listingVariables} = useListingContext()
+  const listings = listingVariables.listings
+  const setListings = listingVariables.setListings
 
   useEffect(() => {
     async function getListingData() {
@@ -29,6 +33,8 @@ export default function ListingsPage() {
           imageURL = {itemData.image}
           name = {itemData.listing_name}
           price = {itemData.price}
+          gender = {itemData.gender}
+          size = {itemData.size}
         />
       })}
     </React.Fragment>
