@@ -15,10 +15,10 @@ router.get("/", (req, res) => {
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
     //Returns ListingData.js
-    res.status(200).json(ListingData.listingDataArray); 
+    //res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    // Listing.findAll({}).then((allListing) => res.json(allListing));
+    Listing.findAll({}).then((allListing) => res.json(allListing));
 });
 
 // listing route
@@ -52,29 +52,6 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     //Listing.hasOne(user);
 });
 
-
-// ################# CODE BELOW HASN'T BEEN TESTED ###############
-
-// editing a post
-router.put("/:id", passport.isAuthenticated(), (req, res) =>{
-    const { id } = req.params;
-    //res.json({ping: id})
-    Listing.findByPk(id).then((lpost) => {
-        if (!lpost){
-            return res.sendStatus(400);
-        }
-        lpost.content = req.body.content;
-        lpost
-            .save()
-            .then((updatePost) => {
-                res.json(updatePost);
-            })
-            .catch((err) => {
-                res.status(400).json(err);
-            })
-    })
-})
-
 // deleting a post (Works: 00:06, Dec 5th, 2022)
 router.delete("/:id", (req, res) =>{
     const { id } = req.params;
@@ -86,6 +63,43 @@ router.delete("/:id", (req, res) =>{
         res.sendStatus(204); //No content JSON error message.
     })
 })
+
+
+//Attempt to get userListing
+router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
+    const { UserId } = req.user;
+    //res.json({ping: id});
+    Listing.findByPk(UserId).then((allPost) =>{
+        if(allPost){
+            return res.sendStatus(400);
+        }
+        res.status(200).json({allPost});
+
+    })
+})
+
+// ################# CODE BELOW HASN'T BEEN TESTED ###############
+
+// editing a post
+router.put("/:id", passport.isAuthenticated(), (req, res) =>{
+    const { id } = req.params;
+    //res.json({ping: id})
+    Listing.findByPk(id).then((lpost) => {
+        if (!lpost){
+            return res.sendStatus(400);
+        }
+        lpost.content = req.content;
+        res.status(200).json(lpost)
+/*         lpost
+            .save()
+            .then((updatePost) => {
+                res.json(updatePost);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            }); */
+    });
+});
 
 //############################################################
 
