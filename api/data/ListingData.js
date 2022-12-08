@@ -37,7 +37,7 @@ let listingData = {
       gender: "unisex",
       category: "head",
       description: "A NY Yankee Cap from the best NY Baseball Team",
-      size: "N/A",
+      size: "",
       listing_region: "USA",
       price: 20.0,
       image:

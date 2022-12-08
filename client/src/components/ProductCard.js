@@ -73,7 +73,7 @@ function ProductCard({ imageURL, name, price, gender, size }) {
               fontSize={'1.2em'}
             >
               <chakra.a href={'#'} display={'flex'}>
-                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} onClick={()}/>
+                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
               </chakra.a>
             </Tooltip>
           </Flex>
