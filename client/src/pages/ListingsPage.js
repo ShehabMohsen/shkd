@@ -35,6 +35,7 @@ export default function ListingsPage() {
           price = {itemData.price}
           gender = {itemData.gender}
           size = {itemData.size}
+          itemData={itemData}
         />
       })}
     </React.Fragment>

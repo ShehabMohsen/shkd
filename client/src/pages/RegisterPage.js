@@ -43,8 +43,6 @@ import {
       authVariables.signup(form)
     }
 
-    console.log(form)
-
     return (
       <Flex
         minH={'100vh'}

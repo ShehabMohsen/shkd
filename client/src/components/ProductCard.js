@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
+import { MoonIcon} from '@chakra-ui/icons';
 const data = {
   isNew: true,
   imageURL:
@@ -22,9 +23,10 @@ const data = {
   numReviews: 34,
 };
 
-function ProductCard({ imageURL, name, price, gender, size }) {
+function ProductCard({ imageURL, name, price, gender, size, itemData }) {
   const {cartVariables} = useCartContext()
-
+  
+  
   return (
     <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Box
@@ -72,10 +74,13 @@ function ProductCard({ imageURL, name, price, gender, size }) {
               color={'gray.800'}
               fontSize={'1.2em'}
             >
-              <chakra.a href={'#'} display={'flex'}>
-                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
+              <chakra.a  display={'flex'}>
+                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} onClick={()=>{cartVariables.addToCart(itemData)}}/>
               </chakra.a>
             </Tooltip>
+              <chakra.a display={'flex'}>
+                <Icon as={MoonIcon} h={7} w={7} alignSelf={'center'} onClick={()=>{cartVariables.removeFromCart(itemData)}} />
+              </chakra.a>
           </Flex>
           <Divider orientation="horizontal" />
 
