@@ -76,12 +76,14 @@ module.exports = (sequelize, DataTypes) => {
     // ################# CODE BELOW HASN'T BEEN TESTED ###############
     //Tying User to Listing
     
-    /* Listing.associate = (models) => {
+     Listing.associate = (models) => {
         // association with other models
-        //Listing.belongsTo(user)
+        Listing.belongsTo(models.User)
     } 
 
-    */
+    
+    // Listing.sync({force:true})
+
     return Listing
 }
 

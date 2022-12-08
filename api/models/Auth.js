@@ -32,16 +32,22 @@ module.exports = (sequelize, DataTypes) => {
                 isEmail: true, //makes sure the email provided follows email@example.com format
             }
         },
-        passwordHash: {type: DataTypes.STRING},
+        // passwordHash: {type: DataTypes.STRING},
         password: {
-            type: DataTypes.VIRTUAL,
+            type: DataTypes.STRING,
             validate:{
-                isLongEnough: (val) => {
-                    if (val.length < 8){
+                isLongEnough: (value) => {
+                    // making sure password length is 8 characters or more
+                    if (value.length < 8){
                         throw new Error("Please choose a larger password")
                     }
                 },
             },
+            set(value) {
+                // hash user provided password before storing it into the database 
+                this.setDataValue('password', bcrypt.hashSync(value, 10));
+              }
+          
         },
     }, {
        sequelize,
@@ -57,12 +63,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     // beforeSave is provided by sequelize, it's a hook that runs before a model gets saved 
-    User.beforeSave((user, options) => {
-        // this will hash the password before storing it to the database
-        if (user.password) {
-            user.passwordHash = bcrypt.hashSync(user.password, 10);
-        }
-    });
+    // User.beforeSave((user, options) => {
+    //     // this will hash the password before storing it to the database
+    //     if (user.password) {
+    //         user.passwordHash = bcrypt.hashSync(user.password, 10);
+    //     }
+    // });
 
+    // User.sync({force:true})
     return User
 }
