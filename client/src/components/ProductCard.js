@@ -11,7 +11,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-
+import { useCartContext } from '../contexts/CartContext';
 const data = {
   isNew: true,
   imageURL:
@@ -23,6 +23,8 @@ const data = {
 };
 
 function ProductCard({ imageURL, name, price, gender, size }) {
+  const {cartVariables} = useCartContext()
+
   return (
     <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Box
@@ -71,7 +73,7 @@ function ProductCard({ imageURL, name, price, gender, size }) {
               fontSize={'1.2em'}
             >
               <chakra.a href={'#'} display={'flex'}>
-                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
+                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} onClick={()}/>
               </chakra.a>
             </Tooltip>
           </Flex>
