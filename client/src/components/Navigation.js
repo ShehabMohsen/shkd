@@ -78,13 +78,13 @@ export default function Navigation() {
             <Center>
               <Image src={Logo} width="45px" marginLeft="2px" />
             </Center>
-            <Text
+            {/* <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               fontFamily={'heading'}
               color={useColorModeValue('gray.800', 'white')}
             >
-              {/* Logo */}
-            </Text>
+              Logo
+            </Text> */}
           </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
