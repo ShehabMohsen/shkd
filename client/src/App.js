@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -15,23 +15,29 @@ import LandingPage from './pages/LandingPage';
 import ListingsPage from './pages/ListingsPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import {AuthContextProvider} from "./contexts/AuthContext"
+import { AuthContextProvider } from './contexts/AuthContext';
+import { ListingContextProvider } from './contexts/ListingContext';
+import { CartContextProvider } from './contexts/CartContext';
 import CreateListing from './pages/CreateListing';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <AuthContextProvider>
-      <BrowserRouter>
-      <Navigation/>
-      <Routes>
-        <Route path="/" element = {<LandingPage/>} />
-        <Route path="/listings" element = {<ListingsPage/>} />
-        <Route path="/register" element = {<RegisterPage/>} />
-        <Route path="/login" element = {<LoginPage/>} />
-        <Route path = "listing/create" element = {CreateListing}/>
-      </Routes>
-      </BrowserRouter>
+        <CartContextProvider>
+          <ListingContextProvider>
+            <BrowserRouter>
+              <Navigation />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/listings" element={<ListingsPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="listing/create" element={CreateListing} />
+              </Routes>
+            </BrowserRouter>
+          </ListingContextProvider>
+        </CartContextProvider>
       </AuthContextProvider>
     </ChakraProvider>
   );
