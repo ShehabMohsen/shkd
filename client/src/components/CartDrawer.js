@@ -13,6 +13,8 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import { IconShoppingCart } from '@tabler/icons';
+import { FiShoppingCart } from 'react-icons/fi';
+
 
 export default function CartDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,8 +30,10 @@ export default function CartDrawer() {
         _hover={{
           bg: 'orange.500',
         }}
-        rightIcon={<IconShoppingCart height={20} width={20} stroke-width={2}/>}
-
+        rightIcon={<IconShoppingCart height={20} width={20} stroke-width={1.75} alignSelf={'center'} />}
+        // rightIcon={
+        //   <Icon as={FiShoppingCart} h={5} w={5} alignSelf={'center'} />
+        // }
       >
         Cart
       </Button>

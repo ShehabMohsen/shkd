@@ -29,6 +29,8 @@ export default function ListingsPage() {
           imageURL = {itemData.image}
           name = {itemData.listing_name}
           price = {itemData.price}
+          gender = {itemData.gender}
+          size = {itemData.size}
         />
       })}
     </React.Fragment>
