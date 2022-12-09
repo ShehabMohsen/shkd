@@ -33,7 +33,7 @@ function App() {
                 <Route path="/listings" element={<ListingsPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="listing/create" element={CreateListing} />
+                <Route path="listing/create" element={<CreateListing/>}/>
               </Routes>
             </BrowserRouter>
           </ListingContextProvider>
