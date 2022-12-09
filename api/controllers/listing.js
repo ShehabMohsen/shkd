@@ -21,6 +21,14 @@ router.get("/", (req, res) => {
     Listing.findAll({}).then((allListing) => res.json(allListing));
 });
 
+//Gets userListings
+//https://sebhastian.com/sequelize-where/
+router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
+    Listing.findAll({
+        where: { UserId: req.user.dataValues.id }
+    }).then((myListings) => res.json(myListings));
+})
+
 // listing route
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     // listing content received from frontEnd, in a JSON Object form
@@ -64,33 +72,23 @@ router.delete("/:id", (req, res) =>{
     })
 })
 
-
-//Attempt to get userListing
-router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
-    const { UserId } = req.user;
-    //res.json({ping: id});
-    Listing.findByPk(UserId).then((allPost) =>{
-        if(allPost){
-            return res.sendStatus(400);
-        }
-        res.status(200).json({allPost});
-
-    })
-})
-
 // ################# CODE BELOW HASN'T BEEN TESTED ###############
 
 // editing a post
 router.put("/:id", passport.isAuthenticated(), (req, res) =>{
     const { id } = req.params;
     //res.json({ping: id})
+    //res.json(req.body);
     Listing.findByPk(id).then((lpost) => {
         if (!lpost){
             return res.sendStatus(400);
         }
-        lpost.content = req.content;
-        res.status(200).json(lpost)
-/*         lpost
+        lpost.body = req.body;
+        lpost.save()
+        res.json(lpost)
+        //res.json(lpost.body);
+        //res.status(200).json(lpost.body)
+        /* lpost
             .save()
             .then((updatePost) => {
                 res.json(updatePost);
