@@ -12,10 +12,13 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
 export default function SimpleCard() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
@@ -24,25 +27,34 @@ export default function SimpleCard() {
     email: '',
     password: '',
   });
-  const [error, setError] = React.useState(null);
+  const [errorMsg, setErrorMsg] = React.useState('');
 
   // for redirecting our page to landing page after logging in
   const navigate = useNavigate();
 
+  // boolean state variable to have a loading button
+  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
+
   const handleOnFormChange = event => {
+    setErrorMsg("")
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   const handleOnSubmit = async event => {
     event.preventDefault();
+    setIsButtonLoading(true); //turns button icon into an animated spinner
     try {
       await authVariables.login(form.email, form.password);
       // redirect to landing page after logging in
       navigate('/');
+
     } catch (error) {
-      setError(true);
       console.log(error);
+      // set an alertmessage to display to the user when login fails
+      setErrorMsg('Email or password is incorrect');
     }
+    // stops the animated spinner after the request is done
+    setIsButtonLoading(false);
   };
 
   return (
@@ -84,6 +96,13 @@ export default function SimpleCard() {
                 value={form.password}
               />
             </FormControl>
+            {errorMsg ? (
+              <Alert status="error" variant={'subtle'}> 
+                <AlertIcon />
+                <AlertTitle>Error 401</AlertTitle>
+                <AlertDescription>{errorMsg}</AlertDescription>
+              </Alert>
+            ) : null}
             <Stack spacing={10}>
               <Stack pt={6}>
                 <Text align={'center'}>
@@ -94,6 +113,7 @@ export default function SimpleCard() {
                 </Text>
               </Stack>
               <Button
+                isLoading={isButtonLoading}
                 bg={'blue.400'}
                 color={'white'}
                 onClick={handleOnSubmit}

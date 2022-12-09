@@ -12,6 +12,7 @@ let listingData = {
     //   image: "",
     // },
     {
+      id:1,
       listing_name: "Clean White Shirt",
       gender: "unisex",
       category: "shirt",
@@ -22,6 +23,7 @@ let listingData = {
       image: "https://goop-img.com/wp-content/uploads/2022/04/g.png",
     },
     {
+      id:2,
       listing_name: "Stripped Pants",
       gender: "F",
       category: "pants",
@@ -33,17 +35,19 @@ let listingData = {
         "https://cdn.media.amplience.net/i/partycity/P925843?$large$&fmt=auto&qlt=default",
     },
     {
+      id:3,
       listing_name: "NY Yankee Cap",
       gender: "unisex",
       category: "head",
       description: "A NY Yankee Cap from the best NY Baseball Team",
-      size: "N/A",
+      size: "",
       listing_region: "USA",
       price: 20.0,
       image:
         "https://slimages.macysassets.com/is/image/MCY/products/4/optimized/8278534_fpx.tif?op_sharpen=1&wid=700&hei=855&fit=fit,1",
     },
     {
+      id:4,
       listing_name: "Rogue Leather Belt",
       gender: "M",
       category: "accessories",
@@ -55,6 +59,7 @@ let listingData = {
         "https://assets.roguefitness.com/f_auto,q_auto,c_limit,w_1284,b_rgb:f8f8f8/catalog/Apparel/Accessories%20/Belts/WL0033/WL0033-H_ihpi02.png",
     },
     {
+      id:5,
       listing_name: "Black Hooded Sweater",
       gender: "unisex",
       category: "sweater",
@@ -67,6 +72,7 @@ let listingData = {
         "https://cdn.shopify.com/s/files/1/1830/0563/products/LEO-VICI-2022-10-31-KB3400_1_800x.jpg?v=1667688544",
     },
     {
+      id:6,
       listing_name: "Purple Gloves",
       gender: "F",
       category: "accessories",
