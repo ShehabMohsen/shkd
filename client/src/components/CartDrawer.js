@@ -12,7 +12,6 @@ import {
   Button,
   Icon,
 } from '@chakra-ui/react';
-import { IconShoppingCart } from '@tabler/icons';
 import { FiShoppingCart } from 'react-icons/fi';
 
 
