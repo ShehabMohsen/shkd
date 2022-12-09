@@ -60,6 +60,28 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     //Listing.hasOne(user);
 });
 
+// editing a post
+// Updating a Instance:
+// https://sequelize.org/docs/v6/core-concepts/model-instances/
+router.put("/:id", passport.isAuthenticated(), (req, res) =>{
+    const { id } = req.params;
+    //res.json(req.body);
+    Listing.findByPk(id).then((lpost) => {
+        if (!lpost){
+            return res.sendStatus(400);
+        }
+        lpost.update(req.body)
+        lpost
+            .save()
+            .then((updatePost) => {
+                res.json(updatePost);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            });
+    });
+});
+
 // deleting a post (Works: 00:06, Dec 5th, 2022)
 router.delete("/:id", (req, res) =>{
     const { id } = req.params;
@@ -71,35 +93,6 @@ router.delete("/:id", (req, res) =>{
         res.sendStatus(204); //No content JSON error message.
     })
 })
-
-// ################# CODE BELOW HASN'T BEEN TESTED ###############
-
-// editing a post
-router.put("/:id", passport.isAuthenticated(), (req, res) =>{
-    const { id } = req.params;
-    //res.json({ping: id})
-    //res.json(req.body);
-    Listing.findByPk(id).then((lpost) => {
-        if (!lpost){
-            return res.sendStatus(400);
-        }
-        lpost.body = req.body;
-        lpost.save()
-        res.json(lpost)
-        //res.json(lpost.body);
-        //res.status(200).json(lpost.body)
-        /* lpost
-            .save()
-            .then((updatePost) => {
-                res.json(updatePost);
-            })
-            .catch((err) => {
-                res.status(400).json(err);
-            }); */
-    });
-});
-
-//############################################################
 
 // export route instance so that ./controllers/index can import it to use with our API
 module.exports = router;
