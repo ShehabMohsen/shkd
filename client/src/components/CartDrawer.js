@@ -11,13 +11,21 @@ import {
   Input,
   Button,
   Icon,
+  Spacer,
+  Text
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
-
+import { useCartContext } from '../contexts/CartContext';
+import { useState } from 'react';
+import CartTable from './CartTable';
 
 export default function CartDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const {cartVariables} = useCartContext()
+  const [checkoutForm, setCheckoutForm] = useState({
+    ...cartVariables.shoppingCart,
+  });
 
   return (
     <>
@@ -41,17 +49,20 @@ export default function CartDrawer() {
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
+        size={"lg"}
       >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+          <DrawerHeader>Your Shopping Cart</DrawerHeader>
 
           <DrawerBody>
-            <Input placeholder="Type here..." />
+            <CartTable shoppingCart={cartVariables.shoppingCart}/>
           </DrawerBody>
 
           <DrawerFooter>
+            <Text>Drawer Footer</Text>
+            <Spacer/>
             <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
@@ -62,3 +73,4 @@ export default function CartDrawer() {
     </>
   );
 }
+
