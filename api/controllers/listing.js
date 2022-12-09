@@ -64,6 +64,8 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
 // Updating a Instance:
 // https://sequelize.org/docs/v6/core-concepts/model-instances/
 router.put("/:id", passport.isAuthenticated(), (req, res) =>{
+
+    // IMPORTANT NOTE: may scrap detailed listing view, so listing id may not be passed via req.params
     const { id } = req.params;
     //res.json(req.body);
     Listing.findByPk(id).then((lpost) => {
