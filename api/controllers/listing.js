@@ -6,6 +6,12 @@ const passport = require("../middlewares/authentication")
 
 const { Listing } = db;
 
+//Retrieving results in Descending Date Order
+/*
+https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+https://sebhastian.com/sequelize-order-by/
+*/
+
 router.get("/", (req, res) => {
     //Returns "Listing pong"
     //res.status(200).json({ping: "Listing pong"});
@@ -18,16 +24,38 @@ router.get("/", (req, res) => {
     //res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    Listing.findAll({}).then((allListing) => res.json(allListing));
+    Listing.findAll({order: [
+        ["updatedAt",  "DESC"]
+    ]}).then((allListing) => res.json(allListing));
 });
 
 //Gets userListings
 //https://sebhastian.com/sequelize-where/
 router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
     Listing.findAll({
-        where: { UserId: req.user.dataValues.id }
+        where: { UserId: req.user.dataValues.id },
+        order: [["updatedAt","DESC"]],
     }).then((myListings) => res.json(myListings));
 })
+
+//Gets specificListing
+// Works, but can be optimized, and not use .save().
+router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
+    const { id } = req.params;
+    Listing.findByPk(id).then((lpost) => {
+        if (!lpost){
+            return res.sendStatus(404);
+        }
+        lpost
+            .save()
+            .then((specificListing) => {
+                res.json(specificListing);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            });
+    });
+});
 
 // listing route
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
@@ -68,15 +96,15 @@ router.put("/:id", passport.isAuthenticated(), (req, res) =>{
     // IMPORTANT NOTE: may scrap detailed listing view, so listing id may not be passed via req.params
     const { id } = req.params;
     //res.json(req.body);
-    Listing.findByPk(id).then((lpost) => {
-        if (!lpost){
+    Listing.findByPk(id).then((listingPost) => {
+        if (!listingPost){
             return res.sendStatus(400);
         }
-        lpost.update(req.body)
-        lpost
+        listingPost.update(req.body)
+        listingPost
             .save()
-            .then((updatePost) => {
-                res.json(updatePost);
+            .then((listingPost) => {
+                res.json(listingPost);
             })
             .catch((err) => {
                 res.status(400).json(err);
