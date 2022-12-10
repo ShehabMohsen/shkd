@@ -39,14 +39,15 @@ router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
 })
 
 //Gets specificListing
-// ############## DOESN'T WORK, DEC 9th 18:49 ##################
+// Works, but can be optimized, and not use .save().
 router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
-    const { itemID } = req.params;
+    const { id } = req.params;
     Listing.findByPk(id).then((lpost) => {
         if (!lpost){
             return res.sendStatus(404);
         }
         lpost
+            .save()
             .then((specificListing) => {
                 res.json(specificListing);
             })
@@ -55,7 +56,6 @@ router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
             });
     });
 });
-// ##############################################################
 
 // listing route
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
