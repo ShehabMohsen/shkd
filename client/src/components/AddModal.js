@@ -67,8 +67,8 @@ export default function AddModal() {
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <HStack spacing={20}>
-                <FormLabel>Category</FormLabel>
+              <HStack >
+                <FormLabel width="120px">Category</FormLabel>
                 {/* <Spacer/> */}
                   
                 <Select placeholder="Select category">
@@ -82,8 +82,8 @@ export default function AddModal() {
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <HStack spacing={20}>
-                <FormLabel>Size</FormLabel>
+              <HStack >
+                <FormLabel width="120px">Size</FormLabel>
                 {/* <Spacer/> */}
                 <Select placeholder="Select size">
                   <option value="option1">XSmall</option>
@@ -105,8 +105,8 @@ export default function AddModal() {
             </FormControl> */}
 
             <FormControl isRequired mt={4}>
-              <HStack >
-                <FormLabel>Price</FormLabel>
+              <HStack  >
+                <FormLabel width="120px">Price</FormLabel>
                 {/* <Spacer/> */}
                 <InputGroup>
                   <InputLeftElement
