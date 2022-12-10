@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Drawer,
   DrawerBody,
@@ -12,20 +12,48 @@ import {
   Button,
   Icon,
   Spacer,
-  Text
+  Text,
+  Center,
+  VStack,
+  Checkbox,
+  Box,
+  HStack,
+  Image,
+  useColorModeValue
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
 import { useState } from 'react';
 import CartTable from './CartTable';
+import Headline from './Headline';
+import Logo from '../Assets/Logo.png';
 
 export default function CartDrawer() {
+  // Required to make drawer work
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  const {cartVariables} = useCartContext()
-  const [checkoutForm, setCheckoutForm] = useState({
-    ...cartVariables.shoppingCart,
-  });
+  // CartContext
+  const { cartVariables } = useCartContext();
+  const shoppingCart = cartVariables.shoppingCart;
+  const [checkoutForm, setCheckoutForm] = useState({});
+  // Drawer background color:  useColorModeValue('lightModeColor', 'darkModeColor')
+  const bg = useColorModeValue('gray.100', 'gray.800')
+  
+
+  useEffect(() => {
+    // this will prepare checkout form
+    let totalPrice = 0;
+    if (shoppingCart.length > 0) {
+      for (let i = 0; i < shoppingCart.length; i++) {
+        totalPrice += shoppingCart[i].price;
+      }
+      setCheckoutForm({
+        shoppingCart:shoppingCart,
+        totalPrice,
+      });
+    }
+  }, [shoppingCart]);
 
   return (
     <>
@@ -37,7 +65,6 @@ export default function CartDrawer() {
         _hover={{
           bg: 'orange.500',
         }}
-        // rightIcon={<IconShoppingCart height={20} width={20} strokeWidth={1.75}/>}
         rightIcon={
           <Icon as={FiShoppingCart} h={5} w={5} alignSelf={'center'} />
         }
@@ -49,28 +76,83 @@ export default function CartDrawer() {
         placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
-        size={"lg"}
+        size={'lg'}
+        
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bgColor={bg}>
           <DrawerCloseButton />
-          <DrawerHeader>Your Shopping Cart</DrawerHeader>
-
-          <DrawerBody>
-            <CartTable shoppingCart={cartVariables.shoppingCart}/>
-          </DrawerBody>
-
-          <DrawerFooter>
-            <Text>Drawer Footer</Text>
-            <Spacer/>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
+          {shoppingCart.length > 0 ? (
+            <CartContent shoppingCart={shoppingCart} onClose={onClose} />
+          ) : (
+            // display headline when there's nothing in cart
+            <>
+              <Center height={'100%'}>
+                <VStack>
+                  <Headline />
+                  <Link to="/listings">
+                    <Button
+                      size={'lg'}
+                      fontWeight={'normal'}
+                      px={6}
+                      colorScheme={'orange'}
+                      bg={'orange.400'}
+                      _hover={{ bg: 'orange.500' }}
+                      onClick={onClose}
+                    >
+                      Start Browsing
+                    </Button>
+                  </Link>
+                </VStack>
+              </Center>
+            </>
+          )}
         </DrawerContent>
       </Drawer>
     </>
   );
 }
 
+export function CartContent({ shoppingCart, onClose }) {
+  const [isChecked, setIsChecked] = useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+
+
+  function checkoutCart(){
+    if (!isChecked) return
+    setIsButtonLoading(true)
+    // chechkout logic here
+    // after checkout is done, disable loading button
+    // setIsButtonLoading(false)
+
+  }
+
+
+
+  return (
+    <React.Fragment>
+      <DrawerHeader textColor={'orange.400'}>
+        <HStack>
+          <Image src={Logo} width="45px" marginLeft="2px" />
+          <Text>Your Shopping Cart</Text>
+        </HStack>
+      </DrawerHeader>
+
+      <DrawerBody>
+        <CartTable shoppingCart={shoppingCart} />
+      </DrawerBody>
+      <HStack>
+      <Checkbox ml={6} required onChange={()=>{setIsChecked(!isChecked)}}>
+        <Text>By checking this box, you are confirming to Checkout</Text>
+      </Checkbox>
+        </HStack>
+      <DrawerFooter>
+        <Button size={'md'}colorScheme="blue" isLoading = {isButtonLoading} onClick={checkoutCart}>Checkout</Button>
+        <Spacer />
+        <Button size = {'md'} variant="outline" ml={3} onClick={onClose}>
+          Cancel
+        </Button>
+      </DrawerFooter>
+    </React.Fragment>
+  );
+}

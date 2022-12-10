@@ -26,15 +26,7 @@ import {
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
 import { MoonIcon } from '@chakra-ui/icons';
-const data = {
-  isNew: true,
-  imageURL:
-    'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-  name: 'Wayfarer Classic',
-  price: 4.5,
-  rating: 4.2,
-  numReviews: 34,
-};
+
 
 function ProductCard({ imageURL, name, price, gender, size, itemData }) {
   const { cartVariables } = useCartContext();
@@ -61,7 +53,7 @@ function ProductCard({ imageURL, name, price, gender, size, itemData }) {
           </AccordionItem>
         </Accordion>
 
-          <Text color="blue.600" fontSize="2xl">
+          <Text color="blue.400" fontSize="2xl">
             ${price}
           </Text>
         </Stack>
@@ -69,10 +61,10 @@ function ProductCard({ imageURL, name, price, gender, size, itemData }) {
       <Divider />
       <CardFooter>
         <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
+          <Button variant="solid" colorScheme="blue" onClick={()=>{cartVariables.addToCart(itemData)}}>
             Add to Card
           </Button>
-          <Button variant="ghost" colorScheme="blue">
+          <Button variant="ghost" colorScheme="blue" onClick={()=>{cartVariables.removeFromCart(itemData)}}>
             Remove from Cart
           </Button>
         </ButtonGroup>
