@@ -12,10 +12,10 @@ import {
 } from '@chakra-ui/react';
 
 export default function CartTable({ shoppingCart }) {
+  let totalPrice = 0
   return (
     <TableContainer>
-      <Table variant="striped" colorScheme="orange">
-        <TableCaption>Table Caption Here</TableCaption>
+      <Table variant="striped" colorScheme="blue">
         <Thead>
           <Tr>
             <Th>Listing Name</Th>
@@ -26,6 +26,7 @@ export default function CartTable({ shoppingCart }) {
         {/* map over shoppingCart in Tbody */}
         <Tbody>
           {shoppingCart.map((listing) => {
+            totalPrice += listing.price*listing.quantity
             return (
               <Tr>
                 <Td>{listing.listing_name}</Td>
@@ -35,11 +36,11 @@ export default function CartTable({ shoppingCart }) {
             );
           })}
         </Tbody>
-        <Tfoot>
+        <Tfoot >
           <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
+            <Th fontSize={'md'}>Total Price</Th>
+            <Th></Th>
+            <Th isNumeric  fontSize={'md'}>${totalPrice}</Th>
           </Tr>
         </Tfoot>
       </Table>
