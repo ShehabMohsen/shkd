@@ -9,10 +9,23 @@ import {
   chakra,
   Tooltip,
   Divider,
+  Card,
+  CardBody,
+  Stack,
+  Heading,
+  Text,
+  CardFooter,
+  Button,
+  ButtonGroup,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from '@chakra-ui/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
-import { MoonIcon} from '@chakra-ui/icons';
+import { MoonIcon } from '@chakra-ui/icons';
 const data = {
   isNew: true,
   imageURL:
@@ -24,83 +37,47 @@ const data = {
 };
 
 function ProductCard({ imageURL, name, price, gender, size, itemData }) {
-  const {cartVariables} = useCartContext()
-  
-  
+  const { cartVariables } = useCartContext();
+
   return (
-    <Flex p={50} w="full" alignItems="center" justifyContent="center">
-      <Box
-        bg={useColorModeValue('white', 'gray.800')}
-        maxW="sm"
-        borderWidth="1px"
-        rounded="lg"
-        shadow="lg"
-        position="relative"
-      >
-        {data.isNew && (
-          <Circle
-            size="10px"
-            position="absolute"
-            top={2}
-            right={2}
-            bg="red.200"
-          />
-        )}
+    <Card maxW="sm">
+      <CardBody>
+        <Image src={imageURL} borderRadius="lg" />
+        <Stack mt="6" spacing="3">
 
-        <Image src={imageURL} alt={`Picture of ${data.name}`} roundedTop="lg" />
-
-        <Box p="6">
-          <Box d="flex" alignItems="baseline">
-            {data.isNew && (
-              <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
-                New
-              </Badge>
-            )}
-          </Box>
-          <Flex mt="1" justifyContent="space-between" alignContent="center">
-            <Box
-              fontSize="2xl"
-              fontWeight="semibold"
-              as="h4"
-              lineHeight="tight"
-              
-            >
-              {name}
-            </Box>
-            <Tooltip
-              label="Add to cart"
-              bg="white"
-              placement={'top'}
-              color={'gray.800'}
-              fontSize={'1.2em'}
-            >
-              <chakra.a  display={'flex'}>
-                <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} onClick={()=>{cartVariables.addToCart(itemData)}}/>
-              </chakra.a>
-            </Tooltip>
-              <chakra.a display={'flex'}>
-                <Icon as={MoonIcon} h={7} w={7} alignSelf={'center'} onClick={()=>{cartVariables.removeFromCart(itemData)}} />
-              </chakra.a>
-          </Flex>
-          <Divider orientation="horizontal" />
-
-          <Flex justifyContent="space-between" alignContent="center">
-            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-              {size ? (
-                <Box as="span" color={'blue.600'} fontSize="lg">
-                  Size: {size}
+        <Accordion defaultIndex={[0]} allowMultiple>
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex='1' textAlign='left'>
+                <Heading size="md">{name}</Heading>
                 </Box>
-              ) : null}
-            </Box>
-            <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
-              <Box as="span" color={'blue.600'} fontSize="lg">
-                ${price}
-              </Box>
-            </Box>
-          </Flex>
-        </Box>
-      </Box>
-    </Flex>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+            {itemData.description}
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+
+          <Text color="blue.600" fontSize="2xl">
+            ${price}
+          </Text>
+        </Stack>
+      </CardBody>
+      <Divider />
+      <CardFooter>
+        <ButtonGroup spacing="2">
+          <Button variant="solid" colorScheme="blue">
+            Add to Card
+          </Button>
+          <Button variant="ghost" colorScheme="blue">
+            Remove from Cart
+          </Button>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
   );
 }
 
