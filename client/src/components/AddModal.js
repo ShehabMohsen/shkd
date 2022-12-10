@@ -37,8 +37,7 @@ export default function AddModal() {
       <Button onClick={onOpen} rightIcon={<AddIcon />}>
         Add
       </Button>
-
-      <Modal  initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
+      <Modal size={'xl'} initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create Listing</ModalHeader>
@@ -51,7 +50,7 @@ export default function AddModal() {
 
             <FormControl isRequired mt={4}>
               <FormLabel>Item description</FormLabel>
-              <Textarea placeholder='Here is a sample placeholder' />
+              <Textarea placeholder="Here is a sample placeholder" />
             </FormControl>
 
             <FormControl isRequired mt={4}>
@@ -66,7 +65,7 @@ export default function AddModal() {
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <HStack >
+              <HStack>
                 <FormLabel width="120px">Category</FormLabel>
                 <Select placeholder="Select category">
                   <option value="option1">Top</option>
@@ -79,7 +78,7 @@ export default function AddModal() {
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <HStack >
+              <HStack>
                 <FormLabel width="120px">Size</FormLabel>
 
                 <Select placeholder="Select size">
@@ -94,7 +93,7 @@ export default function AddModal() {
             </FormControl>
 
             <FormControl isRequired mt={4}>
-              <HStack  >
+              <HStack>
                 <FormLabel width="120px">Price</FormLabel>
                 <InputGroup>
                   <InputLeftElement
@@ -103,7 +102,7 @@ export default function AddModal() {
                     fontSize="1.2em"
                     children="$"
                   />
-                  <Input type ='number' placeholder="Enter amount" />
+                  <Input type="number" placeholder="Enter amount" />
                 </InputGroup>
               </HStack>
             </FormControl>
