@@ -37,7 +37,7 @@ export default function ListingsPage() {
     getListingData();
   }, []);
 
-  console.log(listings);
+  
 
   return (
     <React.Fragment>

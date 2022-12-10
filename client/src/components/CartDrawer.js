@@ -49,11 +49,11 @@ export default function CartDrawer() {
         totalPrice += shoppingCart[i].price;
       }
       setCheckoutForm({
-        ...shoppingCart,
+        shoppingCart:shoppingCart,
         totalPrice,
       });
     }
-  }, []);
+  }, [shoppingCart]);
 
   return (
     <>
@@ -117,17 +117,18 @@ export function CartContent({ shoppingCart, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
-  console.log(isChecked)
 
   function checkoutCart(){
     if (!isChecked) return
     setIsButtonLoading(true)
     // chechkout logic here
-
     // after checkout is done, disable loading button
     // setIsButtonLoading(false)
 
   }
+
+
+
   return (
     <React.Fragment>
       <DrawerHeader textColor={'orange.400'}>
