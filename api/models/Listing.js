@@ -60,28 +60,19 @@ module.exports = (sequelize, DataTypes) => {
                 isUrl: true //Checks for valid URL.
             }
         },
-        
-        //TO BE REMOVED. ATTEMPT TO ASSOCIATE FOREIGN KEY TO LISTING 
-        /* user: {
-            type: DataTypes.FLOAT,
-        }, */
     },{
-        //############PORTION TAKEN FROM SHEHAB'S AUTH.JS. REVISIT JUST IN CASE, HAVEN'T TESTED
         sequelize,
         //modelName is used to make queries to DB in listing.js controller
         modelName: 'Listing'  // sequelize takes modelName and pluralizes it when creating the table for the model 
          
     })
 
-    // ################# CODE BELOW HASN'T BEEN TESTED ###############
     //Tying User to Listing
-    
      Listing.associate = (models) => {
         // association with other models
         Listing.belongsTo(models.User)
     } 
 
-    
     // Listing.sync({force:true})
 
     return Listing
