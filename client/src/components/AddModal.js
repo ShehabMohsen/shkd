@@ -48,9 +48,9 @@ export default function AddModal() {
               <Input ref={initialRef} placeholder="What are you selling?" />
             </FormControl>
 
-            <FormControl isRequired mt={4}>
+            <FormControl mt={4}>
               <FormLabel>Item description</FormLabel>
-              <Textarea placeholder="Here is a sample placeholder" />
+              <Textarea placeholder="Feel free to describe what you're selling in more detail 🙂" />
             </FormControl>
 
             <FormControl isRequired mt={4}>
