@@ -122,6 +122,11 @@ export function CartContent({ shoppingCart, onClose }) {
   function checkoutCart(){
     if (!isChecked) return
     setIsButtonLoading(true)
+    // chechkout logic here
+
+    // after checkout is done, disable loading button
+    // setIsButtonLoading(false)
+
   }
   return (
     <React.Fragment>
