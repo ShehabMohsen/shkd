@@ -11,7 +11,11 @@ const { Order } = db;
 
 //Getting all the order for a user
 router.get("/", passport.isAuthenticated(), (req, res) => {
-    Order.findAll({}).then((allOrders) => res.json(allOrders));
+    Order.findAll({
+        order:[
+            ["updatedAt", "DESC"]
+        ]
+    }).then((allOrders) => res.json(allOrders));
 });
 
 
