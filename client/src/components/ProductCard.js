@@ -28,7 +28,7 @@ function ProductCard({ imageURL, name, price, gender, size, itemData }) {
   
   
   return (
-    <Flex p={50} w="full" alignItems="center" justifyContent="center">
+    <Flex p={25} w="full" alignItems="center" justifyContent="center">
       <Box
         bg={useColorModeValue('white', 'gray.800')}
         maxW="sm"

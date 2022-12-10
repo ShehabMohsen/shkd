@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import { useListingContext } from '../contexts/ListingContext';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, useColorModeValue, Grid, GridItem, Input, Stack, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { Search2Icon } from '@chakra-ui/icons';
 export default function ListingsPage() {
   const { listingVariables } = useListingContext();
   const listings = listingVariables.listings;
@@ -28,22 +29,44 @@ export default function ListingsPage() {
   }, []);
 return (
     <React.Fragment>
-       <Box bg={useColorModeValue('gray.50', 'gray.800')}>
-      {!isLoading ?
-        listings.map(itemData => {
-          return (
-            <ProductCard
-              key={itemData.id}
-              imageURL={itemData.image}
-              name={itemData.listing_name}
-              price={itemData.price}
-              gender={itemData.gender}
-              size={itemData.size}
-              itemData={itemData}
-            />
-          );
-        })
-      :<LoadingSpinner/>}
+      <Box bg={useColorModeValue('gray.50', 'gray.800')} px={90} py={30}>
+        <Grid
+          h='200px'
+          templateColumns='repeat(4, 1fr)'
+          gap='2'
+          fontWeight='bold'
+        >
+          <GridItem colSpan={"4"} h="40px" p={25} h='100px'>
+            <Stack spacing={4}>
+              <InputGroup>
+                <InputLeftElement
+                  pointerEvents='none'
+                  children={<Search2Icon color='gray.300'/>}
+                />
+                <Input type='search' placeholder='Search for item'/>
+              </InputGroup>
+            </Stack>
+          </GridItem>
+
+          {!isLoading ?
+            listings.map(itemData => {
+              return (
+                <GridItem colSpan={1}>
+                  <ProductCard
+                    key={itemData.id}
+                    imageURL={itemData.image}
+                    name={itemData.listing_name}
+                    price={itemData.price}
+                    gender={itemData.gender}
+                    size={itemData.size}
+                    itemData={itemData}
+                  />
+                </GridItem>
+              );
+            })
+          :<LoadingSpinner/>}
+
+        </Grid>
       </Box>
     </React.Fragment>
   );
