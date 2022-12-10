@@ -29,6 +29,8 @@ import { MoonIcon, SunIcon, AddIcon } from '@chakra-ui/icons';
 import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
 import CartDrawer from './CartDrawer';
+import AddModal from './AddModal';
+
 // import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
 import Logo from '../Assets/Logo.png';
 export default function Navigation() {
@@ -100,14 +102,15 @@ export default function Navigation() {
           spacing={6}
         >
           {authVariables.user ? (
-            <Button
-              onClick={() => {
-                navigate('/listing/create');
-              }}
-              rightIcon={<AddIcon />}
-            >
-              Add
-            </Button>
+            // <Button
+            //   onClick={() => {
+            //     navigate('/listing/create');
+            //   }}
+            //   rightIcon={<AddIcon />}
+            // >
+            //   Add
+            // </Button>
+            <AddModal />
           ) : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
