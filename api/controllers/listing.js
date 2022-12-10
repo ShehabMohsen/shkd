@@ -76,7 +76,7 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     })
         .then((newData) =>{
             // response data frontend gets if the request is successful 
-            res.status.json({newData});
+            res.status(201).json({newData});
         })
         .catch((err) =>{
             // error status and error details if request failed
@@ -96,15 +96,15 @@ router.put("/:id", passport.isAuthenticated(), (req, res) =>{
     // IMPORTANT NOTE: may scrap detailed listing view, so listing id may not be passed via req.params
     const { id } = req.params;
     //res.json(req.body);
-    Listing.findByPk(id).then((lpost) => {
-        if (!lpost){
+    Listing.findByPk(id).then((listingPost) => {
+        if (!listingPost){
             return res.sendStatus(400);
         }
-        lpost.update(req.body)
-        lpost
+        listingPost.update(req.body)
+        listingPost
             .save()
-            .then((updatePost) => {
-                res.json(updatePost);
+            .then((listingPost) => {
+                res.json(listingPost);
             })
             .catch((err) => {
                 res.status(400).json(err);
