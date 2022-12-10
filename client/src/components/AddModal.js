@@ -52,7 +52,6 @@ export default function AddModal() {
             <FormControl isRequired mt={4}>
               <FormLabel>Item description</FormLabel>
               <Textarea placeholder='Here is a sample placeholder' />
-              {/* <Input height="20" placeholder="Describe your selling item" /> */}
             </FormControl>
 
             <FormControl isRequired mt={4}>
@@ -69,8 +68,6 @@ export default function AddModal() {
             <FormControl isRequired mt={4}>
               <HStack >
                 <FormLabel width="120px">Category</FormLabel>
-                {/* <Spacer/> */}
-                  
                 <Select placeholder="Select category">
                   <option value="option1">Top</option>
                   <option value="option2">Bottom</option>
@@ -84,7 +81,7 @@ export default function AddModal() {
             <FormControl isRequired mt={4}>
               <HStack >
                 <FormLabel width="120px">Size</FormLabel>
-                {/* <Spacer/> */}
+
                 <Select placeholder="Select size">
                   <option value="option1">XSmall</option>
                   <option value="option2">Small</option>
@@ -96,18 +93,9 @@ export default function AddModal() {
               </HStack>
             </FormControl>
 
-            {/* <FormControl mt={4}>
-              <FormLabel>Price</FormLabel>
-              <InputGroup>
-                <InputLeftAddon children="$" />
-                <Input type="price" placeholder="Price of item" />
-              </InputGroup>
-            </FormControl> */}
-
             <FormControl isRequired mt={4}>
               <HStack  >
                 <FormLabel width="120px">Price</FormLabel>
-                {/* <Spacer/> */}
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
