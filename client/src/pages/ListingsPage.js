@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import ProductCard from '../components/ProductCard';
 import { useListingContext } from '../contexts/ListingContext';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Box, useColorModeValue, Grid, GridItem, Input, Stack, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import {
+  Box,
+  useColorModeValue,
+  Grid,
+  GridItem,
+  Input,
+  Stack,
+  InputGroup,
+  InputLeftElement,
+} from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 export default function ListingsPage() {
   const { listingVariables } = useListingContext();
@@ -27,28 +36,31 @@ export default function ListingsPage() {
     }
     getListingData();
   }, []);
-return (
+
+  console.log(listings);
+
+  return (
     <React.Fragment>
       <Box bg={useColorModeValue('gray.50', 'gray.800')} px={90} py={30}>
         <Grid
-          h='200px'
-          templateColumns='repeat(4, 1fr)'
-          gap='2'
-          fontWeight='bold'
+          h="300px"
+          templateColumns="repeat(4, 1fr)"
+          gap="7"
+          fontWeight="bold"
         >
-          <GridItem colSpan={"4"} h="40px" p={25} h='100px'>
+          <GridItem colSpan={'4'} h="40px" >
             <Stack spacing={4}>
               <InputGroup>
                 <InputLeftElement
-                  pointerEvents='none'
-                  children={<Search2Icon color='gray.300'/>}
+                  pointerEvents="none"
+                  children={<Search2Icon color="gray.300" />}
                 />
-                <Input type='search' placeholder='Search for item'/>
+                <Input type="search" placeholder="Search for item" />
               </InputGroup>
             </Stack>
           </GridItem>
 
-          {!isLoading ?
+          {!isLoading ? (
             listings.map(itemData => {
               return (
                 <GridItem colSpan={1}>
@@ -64,8 +76,9 @@ return (
                 </GridItem>
               );
             })
-          :<LoadingSpinner/>}
-
+          ) : (
+            <LoadingSpinner />
+          )}
         </Grid>
       </Box>
     </React.Fragment>
