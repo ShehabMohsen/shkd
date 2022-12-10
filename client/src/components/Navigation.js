@@ -101,17 +101,17 @@ export default function Navigation() {
           direction={'row'}
           spacing={6}
         >
-          {authVariables.user ? (
-            // <Button
-            //   onClick={() => {
-            //     navigate('/listing/create');
-            //   }}
-            //   rightIcon={<AddIcon />}
-            // >
-            //   Add
-            // </Button>
-            <AddModal />
-          ) : null}
+          <AddModal />
+          {/* {authVariables.user ? (
+            <Button
+              onClick={() => {
+                navigate('/listing/create');
+              }}
+              rightIcon={<AddIcon />}
+            >
+              Add
+            </Button>
+          ) : null} */}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
