@@ -11,25 +11,21 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Select,
 } from '@chakra-ui/react';
 
 import React from 'react';
+import { AddIcon } from '@chakra-ui/icons';
 
 export default function AddModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
   return (
-
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-      <Button ml={4} ref={finalRef}>
-        I'll receive focus on close
-      </Button>
+      <Button onClick={onOpen} rightIcon={<AddIcon />}>Add</Button>
 
       <Modal
         initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
         isOpen={isOpen}
         onClose={onClose}
       >
