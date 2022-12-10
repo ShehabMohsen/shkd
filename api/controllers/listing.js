@@ -6,6 +6,12 @@ const passport = require("../middlewares/authentication")
 
 const { Listing } = db;
 
+//Retrieving results in Descending Date Order
+/*
+https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+https://sebhastian.com/sequelize-order-by/
+*/
+
 router.get("/", (req, res) => {
     //Returns "Listing pong"
     //res.status(200).json({ping: "Listing pong"});
@@ -18,16 +24,38 @@ router.get("/", (req, res) => {
     //res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    Listing.findAll({}).then((allListing) => res.json(allListing));
+    Listing.findAll({order: [
+        ["updatedAt",  "DESC"]
+    ]}).then((allListing) => res.json(allListing));
 });
 
 //Gets userListings
 //https://sebhastian.com/sequelize-where/
 router.get("/myListings", passport.isAuthenticated() ,(req,res) =>{
     Listing.findAll({
-        where: { UserId: req.user.dataValues.id }
+        where: { UserId: req.user.dataValues.id },
+        order: [["updatedAt","DESC"]],
     }).then((myListings) => res.json(myListings));
 })
+
+//Gets specificListing
+// ############## DOESN'T WORK, DEC 9th 18:49 ##################
+router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
+    const { itemID } = req.params;
+    Listing.findByPk(id).then((lpost) => {
+        if (!lpost){
+            return res.sendStatus(404);
+        }
+        lpost
+            .then((specificListing) => {
+                res.json(specificListing);
+            })
+            .catch((err) => {
+                res.status(400).json(err);
+            });
+    });
+});
+// ##############################################################
 
 // listing route
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
@@ -48,7 +76,7 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     })
         .then((newData) =>{
             // response data frontend gets if the request is successful 
-            res.status(201).json({newData});
+            res.status.json({newData});
         })
         .catch((err) =>{
             // error status and error details if request failed
