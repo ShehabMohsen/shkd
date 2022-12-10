@@ -10,14 +10,14 @@ const { Order } = db;
 // The purpose of this router is to store order transactions
 
 //Getting all the order for a user
-router.get("/", passport.isAuthenticated(), (req, res) => {
+router.get("/myOrders", passport.isAuthenticated(), (req, res) => {
     Order.findAll({
+        where: { UserId: req.user.dataValues.id },
         order:[
             ["updatedAt", "DESC"]
         ]
     }).then((allOrders) => res.json(allOrders));
 });
-
 
 //Adding a new order transaction
 router.post("/createOrder", passport.isAuthenticated(), (req,res) =>{
