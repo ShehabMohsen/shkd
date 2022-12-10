@@ -8,9 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     
     Order.init({
         listings: {
-            // Currently figuring out how to pass JSON array.
-            //https://dba.stackexchange.com/questions/54283/how-to-turn-json-array-into-postgres-array
-            type: DataTypes.ARRAY(DataTypes.BIGINT),
+            type: DataTypes.ARRAY(DataTypes.JSONB),
             allowNull: false,
         },
         tax: {
@@ -19,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         shipping: {
             type: DataTypes.FLOAT,
         },
-        total:{
+        totalPrice:{
             type: DataTypes.FLOAT,
         },       
 
@@ -28,23 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Order'
     })
 
-
     Order.associate = (models) => {
         // association with other models
         Order.belongsTo(models.User)
     } 
-
+    //Order.sync({force: true})
     return Order
 }
 
-/* ################################################
-
-JSON INPUT:
-{
-	"listings":"1,2,3,4",
-	"tax": "30.00",
-	"shipping": "20.00",
-	"total": "80.00"
-}
-
-*/

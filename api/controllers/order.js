@@ -23,12 +23,13 @@ router.post("/createOrder", passport.isAuthenticated(), (req,res) =>{
     Order.create({
         UserId:user.dataValues.id,
         listings: content.listings,
-        tax: content.tax, //Perhaps it being a equation, calculate towards content.tax
-        shipping: content.shipping, //Same as above
-        total: content.total,
+/*         tax: content.tax, //Perhaps it being a equation, calculate towards content.tax
+        shipping: content.shipping, //Same as above */
+        totalPrice: content.totalPrice,
     })
-        .then((newListing)=>{
-            res.status(201).json({newListing});
+        .then((newOrder)=>{
+            res.status(201).json({newOrder});
+            
         })
         .catch((err)=>{
             res.status(400).json({msg:"Failed to add order to table.",err})
