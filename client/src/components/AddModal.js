@@ -51,9 +51,7 @@ export default function AddModal() {
   const { listingVariables } = useListingContext();
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
-  const createListing = listingVariables.createListing
-  
-  
+  const createListing = listingVariables.createListing;
 
   // handles changes on create listing form
   const handleOnFormChange = event => {
@@ -62,22 +60,18 @@ export default function AddModal() {
       listingFormCopy.size = '';
       // reset size attribute in listingForm when changing category to shoes
       if (event.target.value == 'Shoes' && listingForm.category != 'Shoes') {
-        console.log(1);
-        setListingForm(listingForm);
+        setListingForm(listingFormCopy);
       }
       // reset size attribute inlistingForm when changing to any other category from shoes
       else if (
         event.target.value != 'Shoes' &&
         listingForm.category == 'Shoes'
       ) {
-        console.log(2);
-        setListingForm({
-          ...listingForm,
-          size: '',
-        });
+        setListingForm(listingFormCopy);
       }
     }
     // update listingForm with the value passed
+
     setListingForm({
       ...listingForm,
       [event.target.name]: event.target.value,
@@ -97,11 +91,10 @@ export default function AddModal() {
     onClose();
   };
 
-
   const submitListing = async () => {
-    
-    await createListing(listingForm)
-  } 
+    await createListing(listingForm);
+  };
+
 
   return (
     <>
@@ -185,13 +178,15 @@ export default function AddModal() {
                   <FormLabel width="120px">Size</FormLabel>
                   <NumberInput
                     width="100%"
-                    // placeholder={7}
                     precision={1}
                     step={0.5}
                     min={7}
                     max={18}
-                    // value = {listingForm.size}
-                    onChange={event => handleOnFormChange(event)}
+                    value = {listingForm.size}
+                    onChange={event =>{
+                      if (event%0.5!=0) setListingForm({ ...listingForm, size: Math.floor(event) })
+                      else setListingForm({ ...listingForm, size: event })}
+                    }
                   >
                     <NumberInputField value={9} name="size" />
                     <NumberInputStepper>
@@ -259,7 +254,7 @@ export default function AddModal() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button  onClick = {submitListing} colorScheme="blue" mr={3}>
+            <Button onClick={submitListing} colorScheme="blue" mr={3}>
               Add Listing
             </Button>
             <Button onClick={onClose}>Save Draft </Button>
