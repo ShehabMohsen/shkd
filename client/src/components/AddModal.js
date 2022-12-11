@@ -34,9 +34,9 @@ import { useListingContext } from '../contexts/ListingContext';
 export default function AddModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-  const sizes = ['xs', 'sm', 'md', 'lg', 'xl', 'free'];
-  const sizes_shose = ['5', '6', '7', '8', '9', '10', '11', '12'];
-  const categories = ['tops', 'bottoms', 'coat&jacket', 'shoes'];
+  const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
+  
+  const categories = ['Shirts', 'Pants', 'Tops', 'Bottoms', 'Jackets', 'Shoes', 'Accessories'];
 
   const { listingVariables } = useListingContext();
   const listingForm = listingVariables.listingForm;
@@ -129,55 +129,50 @@ export default function AddModal() {
                   placeholder="Select category"
                   name="category"
                 >
-                  <option value="Top">Top</option>
-                  <option value="Bottom">Bottom</option>
-                  <option value="Coat&Jacket">Coat&Jacket</option>
-                  <option value="Shoes">Shoes</option>
-                  <option value="Accessories">Accessories</option>
+                  {categories.map((category, index) => {
+                    return <option value={category} key={index}>{category}</option>;
+                  })}
                 </Select>
               </HStack>
             </FormControl>
-            {listingForm.category == "Shoes" ?
-            <FormControl isRequired mt={4}>
-              <HStack>
-                <FormLabel width="120px">Size</FormLabel>
-                <NumberInput 
-                  width="100%"
-                  defaultValue={7}
-                  precision={1}
-                  step={0.5}
-                  min={7}
-                  max={18}
-                >
-                  <NumberInputField  />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </HStack>
-            </FormControl>
-            :
-            <FormControl isRequired mt={4}>
-              <HStack>
-                <FormLabel width="120px">Size</FormLabel>
+            {listingForm.category == 'Shoes' ? (
+              <FormControl isRequired mt={4}>
+                <HStack>
+                  <FormLabel width="120px">Size</FormLabel>
+                  <NumberInput
+                    width="100%"
+                    defaultValue={7}
+                    precision={1}
+                    step={0.5}
+                    min={7}
+                    max={18}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </HStack>
+              </FormControl>
+            ) : (
+              <FormControl isRequired mt={4}>
+                <HStack>
+                  <FormLabel width="120px">Size</FormLabel>
 
-                <Select
-                  value={listingForm.size}
-                  onChange={event => handleOnFormChange(event)}
-                  placeholder="Select size"
-                  name="size"
-                >
-                  <option value="XSmall">XSmall</option>
-                  <option value="Small">Small</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Large">Large</option>
-                  <option value="XLarge">XLarge</option>
-                  <option value="N/A">N/A</option>
-                </Select>
-              </HStack>
-            </FormControl>
-            }
+                  <Select
+                    value={listingForm.size}
+                    onChange={event => handleOnFormChange(event)}
+                    placeholder="Select size"
+                    name="size"
+                  >
+                    {sizes.map((size, index)=>{
+                      return <option value={size} key = {index}>{size}</option>
+                    })}
+                  </Select>
+                </HStack>
+              </FormControl>
+            )}
             <FormControl isRequired mt={4}>
               <HStack>
                 <FormLabel width="120px">Price</FormLabel>
