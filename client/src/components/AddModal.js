@@ -42,9 +42,6 @@ const categories = [
   'Accessories',
 ];
 
-console.log(7.5%0.5)
-console.log(Math.floor(7.5))
-
 export default function AddModal() {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
