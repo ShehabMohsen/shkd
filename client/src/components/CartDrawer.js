@@ -20,6 +20,7 @@ import {
   HStack,
   Image,
   useColorModeValue,
+  useToast
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -36,6 +37,9 @@ export default function CartDrawer() {
   // CartContext
   const { cartVariables } = useCartContext();
   const shoppingCart = cartVariables.shoppingCart;
+  const setShoppingCart = cartVariables.setShoppingCart;
+  const checkout = cartVariables.checkout;
+
   const [checkoutForm, setCheckoutForm] = useState({});
   // Drawer background color:  useColorModeValue('lightModeColor', 'darkModeColor')
   const bg = useColorModeValue('gray.100', 'gray.800');
@@ -81,7 +85,14 @@ export default function CartDrawer() {
         <DrawerContent bgColor={bg}>
           <DrawerCloseButton />
           {shoppingCart.length > 0 ? (
-            <CartContent shoppingCart={shoppingCart} onClose={onClose} />
+            <CartContent
+              shoppingCart={shoppingCart}
+              onClose={onClose}
+              checkoutForm={checkoutForm}
+              checkout={checkout}
+              setCheckoutForm={setCheckoutForm}
+              setShoppingCart={setShoppingCart}
+            />
           ) : (
             // display headline when there's nothing in cart
             <>
@@ -111,16 +122,29 @@ export default function CartDrawer() {
   );
 }
 
-export function CartContent({ shoppingCart, onClose }) {
+export function CartContent({
+  shoppingCart,
+  onClose,
+  checkoutForm,
+  setCheckoutForm,
+  checkout,
+  setShoppingCart,
+}) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const toast = useToast()
 
-  function checkoutCart() {
+  async function checkoutCart() {
     if (!isChecked) return;
     setIsButtonLoading(true);
-    // chechkout logic here
+    // call to chechkout function
+    await checkout(checkoutForm);
     // after checkout is done, disable loading button
-    // setIsButtonLoading(false)
+
+    setCheckoutForm({});
+    setShoppingCart([]);
+    setIsButtonLoading(false);
+    onClose();
   }
 
   return (
@@ -151,7 +175,17 @@ export function CartContent({ shoppingCart, onClose }) {
           size={'md'}
           colorScheme="blue"
           isLoading={isButtonLoading}
-          onClick={checkoutCart}
+          onClick={() => {
+            checkoutCart()
+            toast({
+              position: 'top',
+              title: 'Checkout Success.',
+              description: "Your order has been processed, thank you for using SHKD :)",
+              status: 'success',
+              duration: 4000,
+              isClosable: true,
+            });
+          }}
         >
           Checkout
         </Button>
