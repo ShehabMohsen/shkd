@@ -27,23 +27,57 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from '@chakra-ui/react';
-
 import { AddIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 
+// will map through the two arrays to render the elements as html
+const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
+const categories = [
+  'Shirts',
+  'Pants',
+  'Tops',
+  'Bottoms',
+  'Jackets',
+  'Shoes',
+  'Accessories',
+];
+
 export default function AddModal() {
+  // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
-  
-  const categories = ['Shirts', 'Pants', 'Tops', 'Bottoms', 'Jackets', 'Shoes', 'Accessories'];
 
+  // listing context variables
   const { listingVariables } = useListingContext();
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
-  const [genderValue, setGenderValue] = useState('');
+  const createListing = listingVariables.createListing
+  
+  
 
+  // handles changes on create listing form
   const handleOnFormChange = event => {
+    if (event.target.name == 'category') {
+      let listingFormCopy = listingForm;
+      listingFormCopy.size = '';
+      // reset size attribute in listingForm when changing category to shoes
+      if (event.target.value == 'Shoes' && listingForm.category != 'Shoes') {
+        console.log(1);
+        setListingForm(listingForm);
+      }
+      // reset size attribute inlistingForm when changing to any other category from shoes
+      else if (
+        event.target.value != 'Shoes' &&
+        listingForm.category == 'Shoes'
+      ) {
+        console.log(2);
+        setListingForm({
+          ...listingForm,
+          size: '',
+        });
+      }
+    }
+    // update listingForm with the value passed
     setListingForm({
       ...listingForm,
       [event.target.name]: event.target.value,
@@ -62,6 +96,12 @@ export default function AddModal() {
     });
     onClose();
   };
+
+
+  const submitListing = async () => {
+    
+    await createListing(listingForm)
+  } 
 
   return (
     <>
@@ -130,7 +170,11 @@ export default function AddModal() {
                   name="category"
                 >
                   {categories.map((category, index) => {
-                    return <option value={category} key={index}>{category}</option>;
+                    return (
+                      <option value={category} key={index}>
+                        {category}
+                      </option>
+                    );
                   })}
                 </Select>
               </HStack>
@@ -141,13 +185,15 @@ export default function AddModal() {
                   <FormLabel width="120px">Size</FormLabel>
                   <NumberInput
                     width="100%"
-                    defaultValue={7}
+                    // placeholder={7}
                     precision={1}
                     step={0.5}
                     min={7}
                     max={18}
+                    // value = {listingForm.size}
+                    onChange={event => handleOnFormChange(event)}
                   >
-                    <NumberInputField />
+                    <NumberInputField value={9} name="size" />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
                       <NumberDecrementStepper />
@@ -166,8 +212,12 @@ export default function AddModal() {
                     placeholder="Select size"
                     name="size"
                   >
-                    {sizes.map((size, index)=>{
-                      return <option value={size} key = {index}>{size}</option>
+                    {sizes.map((size, index) => {
+                      return (
+                        <option value={size} key={index}>
+                          {size}
+                        </option>
+                      );
                     })}
                   </Select>
                 </HStack>
@@ -208,9 +258,8 @@ export default function AddModal() {
               </InputGroup>
             </FormControl>
           </ModalBody>
-
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
+            <Button  onClick = {submitListing} colorScheme="blue" mr={3}>
               Add Listing
             </Button>
             <Button onClick={onClose}>Save Draft </Button>

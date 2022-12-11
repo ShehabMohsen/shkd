@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 
 export const ListingContext = createContext();
 
 export function useListingContext() {
-  return React.useContext(ListingContext);
+  return useContext(ListingContext);
 }
 
 export const ListingContextProvider = ({children}) => {
@@ -19,13 +19,29 @@ export const ListingContextProvider = ({children}) => {
         price: '',
         image: ''
     });
+    
     useEffect(()=>{
-    },[listings])
-
-
     
 
-    const listingVariables = {listings, setListings, listingForm, setListingForm}
+    },[listings])
+
+    
+    const createListing = async (listingForm) => {
+        try {
+            let response = await fetch("/api/listing/createListing", {
+                method: "POST",
+                body: JSON.stringify(listingForm),
+                headers: {
+                    "Content-Type":"application/json"
+                }
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+    
+
+    const listingVariables = {listings, setListings, listingForm, setListingForm, createListing}
     return (
         <ListingContext.Provider value={{listingVariables}}>
             {children}

@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
             validate:{
                 //Checks if size validate (Will need to create a array containing sizes?)
                 //Will need to consider numbers for shoe size
-                isIn: [['XL','L','M','S','XS']]         
+                // isIn: [['XL','L','M','S','XS']]      
             }
         },
         listing_region: {
