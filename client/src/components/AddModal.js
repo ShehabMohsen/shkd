@@ -78,7 +78,6 @@ export default function AddModal() {
     });
   };
 
-  console.log(listingForm);
   const handleDiscardDraft = () => {
     setListingForm({
       listing_name: '',
