@@ -19,7 +19,7 @@ import {
   Box,
   HStack,
   Image,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -38,8 +38,7 @@ export default function CartDrawer() {
   const shoppingCart = cartVariables.shoppingCart;
   const [checkoutForm, setCheckoutForm] = useState({});
   // Drawer background color:  useColorModeValue('lightModeColor', 'darkModeColor')
-  const bg = useColorModeValue('gray.100', 'gray.800')
-  
+  const bg = useColorModeValue('gray.100', 'gray.800');
 
   useEffect(() => {
     // this will prepare checkout form
@@ -49,7 +48,7 @@ export default function CartDrawer() {
         totalPrice += shoppingCart[i].price;
       }
       setCheckoutForm({
-        shoppingCart:shoppingCart,
+        shoppingCart: shoppingCart,
         totalPrice,
       });
     }
@@ -77,7 +76,6 @@ export default function CartDrawer() {
         onClose={onClose}
         finalFocusRef={btnRef}
         size={'lg'}
-        
       >
         <DrawerOverlay />
         <DrawerContent bgColor={bg}>
@@ -117,17 +115,13 @@ export function CartContent({ shoppingCart, onClose }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
-
-  function checkoutCart(){
-    if (!isChecked) return
-    setIsButtonLoading(true)
+  function checkoutCart() {
+    if (!isChecked) return;
+    setIsButtonLoading(true);
     // chechkout logic here
     // after checkout is done, disable loading button
     // setIsButtonLoading(false)
-
   }
-
-
 
   return (
     <React.Fragment>
@@ -142,14 +136,27 @@ export function CartContent({ shoppingCart, onClose }) {
         <CartTable shoppingCart={shoppingCart} />
       </DrawerBody>
       <HStack>
-      <Checkbox ml={6} required onChange={()=>{setIsChecked(!isChecked)}}>
-        <Text>By checking this box, you are confirming to Checkout</Text>
-      </Checkbox>
-        </HStack>
+        <Checkbox
+          ml={6}
+          required
+          onChange={() => {
+            setIsChecked(!isChecked);
+          }}
+        >
+          <Text>By checking this box, you are confirming to Checkout</Text>
+        </Checkbox>
+      </HStack>
       <DrawerFooter>
-        <Button size={'md'}colorScheme="blue" isLoading = {isButtonLoading} onClick={checkoutCart}>Checkout</Button>
+        <Button
+          size={'md'}
+          colorScheme="blue"
+          isLoading={isButtonLoading}
+          onClick={checkoutCart}
+        >
+          Checkout
+        </Button>
         <Spacer />
-        <Button size = {'md'} variant="outline" ml={3} onClick={onClose}>
+        <Button size={'md'} variant="outline" ml={3} onClick={onClose}>
           Cancel
         </Button>
       </DrawerFooter>

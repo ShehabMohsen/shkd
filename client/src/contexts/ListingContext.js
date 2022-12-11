@@ -8,14 +8,24 @@ export function useListingContext() {
 }
 
 export const ListingContextProvider = ({children}) => {
-    const [listings, setListings] = useState([])
-
+    const [listings, setListings] = useState()
+    const [userListings, setUserListings] = useState();
+    const [listingForm, setListingForm] = useState({
+        listing_name:'',
+        description: '',
+        gender: '',
+        category: '',
+        size: '',
+        price: '',
+        image: ''
+    });
     useEffect(()=>{
-
     },[listings])
 
 
-    const listingVariables = {listings, setListings}
+    
+
+    const listingVariables = {listings, setListings, listingForm, setListingForm}
     return (
         <ListingContext.Provider value={{listingVariables}}>
             {children}
