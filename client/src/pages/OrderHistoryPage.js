@@ -40,7 +40,7 @@ export default function OrderHistoryPage() {
         }
         getOrderHistory();
     }, []);
-    console.log(orders) // ############ DELETE BEFORE PULL REQUEST
+
     //Generate Order History Page
     return (
         <React.Fragment>
