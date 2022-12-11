@@ -23,7 +23,6 @@ router.get("/myOrders", passport.isAuthenticated(), (req, res) => {
 router.post("/createOrder", passport.isAuthenticated(), (req,res) =>{
     let content = req.body;
     let user = req.user;
-    console.log(content)
     Order.create({
         UserId:user.dataValues.id,
         listings: content.shoppingCart,
