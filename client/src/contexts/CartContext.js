@@ -78,9 +78,20 @@ export const CartContextProvider = ({ children }) => {
     setShoppingCart(newShoppingCart);
   }
 
-  // this function will take checkout form and send it to the backend once user "purchases" the items. it'll probably be better to puth this in the CartDrawer Component
+  // this function will take checkout form and send it to the backend once user "purchases" the items. 
   async function checkout(checkoutForm) {
-
+    try {
+      // post request in order to checkout
+      await fetch('/api/order/createOrder', {
+        method: 'POST',
+        body: JSON.stringify(checkoutForm),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const cartVariables = {
