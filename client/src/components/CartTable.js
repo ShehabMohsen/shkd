@@ -38,7 +38,7 @@ export default function CartTable({ shoppingCart, isPrevOrder = false }) {
   let totalPrice = 0;
   return (
     <TableContainer>
-      <Table variant="striped" colorScheme="blue">
+      <Table variant="striped" colorScheme="blue" size = "md">
         <Thead>
           <Tr>
             <Th>Listing Name</Th>
@@ -49,10 +49,10 @@ export default function CartTable({ shoppingCart, isPrevOrder = false }) {
         </Thead>
         {/* map over shoppingCart in Tbody */}
         <Tbody>
-          {shoppingCart.map(listing => {
+          {shoppingCart.map((listing, index) => {
             totalPrice += listing.price * listing.quantity;
             return (
-              <Tr>
+              <Tr key = { index }>
                 <Td>
                   <Text mb={3}>{listing.listing_name}</Text>
                 </Td>

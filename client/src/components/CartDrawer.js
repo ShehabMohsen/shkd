@@ -55,6 +55,10 @@ export default function CartDrawer() {
     }
   }, [shoppingCart]);
 
+  //##########TO BE REMOVED, DAVID USED THIS TO UNDERSTAND THIS FILE
+  //console.log(shoppingCart);
+  //################################################################
+
   return (
     <>
       <Button

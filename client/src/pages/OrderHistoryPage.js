@@ -9,7 +9,12 @@ import {
     TableCaption,
     TableContainer,
     Heading,
+    HStack,
     Divider,
+    Flex,
+    Spacer,
+    Box,
+    Center,
   } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react';
 import CartTable from '../components/CartTable';
@@ -26,8 +31,8 @@ export default function OrderHistoryPage(){
                 if (!response.ok) throw new Error('Unable to get orders');
 
                 let fetchedOrders = await response.json();
-
                 setOrders(fetchedOrders);
+                
                 setIsLoading(false);
             } catch (err){
                 console.log(err);
@@ -35,26 +40,22 @@ export default function OrderHistoryPage(){
         }
         getOrderHistory();
     }, []);
-    console.log(orders)
+    console.log(orders) // ############ DELETE BEFORE PULL REQUEST
     //Generate Order History Page
-
     return (
         <React.Fragment>
-            {/* <CartTable shoppingCart={ shoppingCart } isPrevOrder = { true }/> */}
+            <Spacer h = '30px'/>
             <Heading textAlign = "center">Your Order History</Heading>
-            <Divider orientation='horizontal' h='30px' />
-            <TableContainer>
-                <Table variant = 'simple'>
-                    <Thead>
-                        <Th>Order ID</Th>
-                        <Th>Items Bought</Th>
-                        <Th>Total</Th>
-                    </Thead>
-                    <Tbody>
-                        
-                    </Tbody>
-                </Table>
-            </TableContainer>
+            <Spacer h = '30px'/>
+                {isLoading ? null : orders.map((order,index) => {
+                    return (
+                    <Flex justify = "center" >
+                        <Box width = 'xl' mb = '20' >
+                            <CartTable key = { index } shoppingCart={ order.listings} isPrevOrder = { true }/>
+                        </Box>
+                    </Flex>
+                    );
+                })}  
         </React.Fragment>
     )
     
