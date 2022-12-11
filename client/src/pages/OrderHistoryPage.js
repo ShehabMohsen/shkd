@@ -1,3 +1,16 @@
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer,
+    Heading,
+    Divider,
+  } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react';
 import CartTable from '../components/CartTable';
 export default function OrderHistoryPage(){
@@ -28,6 +41,20 @@ export default function OrderHistoryPage(){
     return (
         <React.Fragment>
             {/* <CartTable shoppingCart={ shoppingCart } isPrevOrder = { true }/> */}
+            <Heading textAlign = "center">Your Order History</Heading>
+            <Divider orientation='horizontal' h='30px' />
+            <TableContainer>
+                <Table variant = 'simple'>
+                    <Thead>
+                        <Th>Order ID</Th>
+                        <Th>Items Bought</Th>
+                        <Th>Total</Th>
+                    </Thead>
+                    <Tbody>
+                        
+                    </Tbody>
+                </Table>
+            </TableContainer>
         </React.Fragment>
     )
     
