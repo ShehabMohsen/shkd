@@ -19,6 +19,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 import { ListingContextProvider } from './contexts/ListingContext';
 import { CartContextProvider } from './contexts/CartContext';
 import CreateListing from './pages/CreateListing';
+import OrderHistoryPage from './pages/OrderHistoryPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="listing/create" element={<CreateListing/>}/>
+                <Route path="/user/orders" element={<OrderHistoryPage/>}/>
               </Routes>
             </BrowserRouter>
           </ListingContextProvider>
