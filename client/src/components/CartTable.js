@@ -20,7 +20,7 @@ import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
 
 
-export default function CartTable({ shoppingCart }) {
+export default function CartTable({ shoppingCart, isPrevOrder = false }) {
 
   //contains states/functions relating to cart such as shoppingCart, setShoppingCart, addToCart, removeFromCart, etc
   const { cartVariables } = useCartContext();
@@ -59,9 +59,9 @@ export default function CartTable({ shoppingCart }) {
                 <Td>
                   {/* display quantity of item as well as buttons to add/subtract quantity */}
                   <HStack spacing={3}>
-                    <IconButton size={'sm'} icon={<MinusIcon />} onClick={()=>{onClickRemove(listing)}} />{' '}
+                    {isPrevOrder ? null : <IconButton size={'sm'} icon={<MinusIcon />} onClick={()=>{onClickRemove(listing)}} />}
                     <Text fontSize={18}>{listing.quantity}</Text>
-                    <IconButton size={'sm'} icon={<AddIcon/>} onClick={()=>{onClickAdd(listing)}} />
+                    {isPrevOrder ? null : <IconButton size={'sm'} icon={<AddIcon/>} onClick={()=>{onClickAdd(listing)}} />}
                   </HStack>
                 </Td>
                 <Td>{listing.size}</Td>

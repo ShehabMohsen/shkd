@@ -10,8 +10,14 @@ import {
 } from '@chakra-ui/menu';
 import { ChevronDownIcon} from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/react';
-
+import { useNavigate } from 'react-router-dom';
 export default function ProfileMenu({authVariables}) {
+  const navigate = useNavigate();
+
+  function onClickOrderHistory(){
+    navigate("/user/orders");
+  }
+
   return (
     <Menu>
       <MenuButton
@@ -31,7 +37,7 @@ export default function ProfileMenu({authVariables}) {
       <MenuList>
         <MenuGroup title="Profile">
           <MenuItem>My Listings</MenuItem>
-          <MenuItem>Order History </MenuItem>
+          <MenuItem onClick={onClickOrderHistory}>Order History </MenuItem>
         </MenuGroup>
         <MenuDivider />
         <MenuGroup title="Help">
