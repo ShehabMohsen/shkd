@@ -145,6 +145,15 @@ export function CartContent({
     setShoppingCart([]);
     setIsButtonLoading(false);
     onClose();
+
+    toast({
+      position: 'top',
+      title: 'Checkout Success.',
+      description: "Your order has been processed, thank you for using SHKD :)",
+      status: 'success',
+      duration: 8000,
+      isClosable: true,
+    });
   }
 
   return (
@@ -177,14 +186,6 @@ export function CartContent({
           isLoading={isButtonLoading}
           onClick={() => {
             checkoutCart()
-            toast({
-              position: 'top',
-              title: 'Checkout Success.',
-              description: "Your order has been processed, thank you for using SHKD :)",
-              status: 'success',
-              duration: 4000,
-              isClosable: true,
-            });
           }}
         >
           Checkout
