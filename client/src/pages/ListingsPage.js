@@ -18,6 +18,7 @@ export default function ListingsPage() {
   const listings = listingVariables.listings;
   const setListings = listingVariables.setListings;
   const [isLoading, setIsLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     async function getListingData() {
@@ -37,7 +38,50 @@ export default function ListingsPage() {
     getListingData();
   }, []);
 
+  /** 
   
+  }*/
+
+  async function handleOnSearchChange(event) {
+    let value = event.target.value;
+    setSearchValue(value);
+    /**if (!value) {*/
+      try {
+        let response = await fetch(`/api/listing`);
+
+        if (!response.ok) throw new Error('Unable to get listings');
+
+        let fetchedListings = await response.json();
+
+        //setListings(fetchedListings);
+        setIsLoading(false);
+
+        let searchedListings = fetchedListings.filter(
+          element =>
+            element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
+            element.category.toLowerCase() == value.toLowerCase() ||
+            element.gender.toLowerCase() == value.toLowerCase()
+        );
+    
+        setListings(searchedListings);
+      } catch (err) {
+        console.log(err);
+      }
+      
+    //}
+
+    
+  }
+
+  console.log(searchValue);
+
+  function searchListing(searchValue) {
+    let searchedListings = listings.filter(element =>
+      element.listing_name.includes(searchValue)
+    );
+
+    setListings(searchedListings);
+  }
 
   return (
     <React.Fragment>
@@ -48,14 +92,19 @@ export default function ListingsPage() {
           gap="7"
           fontWeight="bold"
         >
-          <GridItem colSpan={'4'} h="40px" >
+          <GridItem colSpan={'4'} h="40px">
             <Stack spacing={4}>
               <InputGroup>
                 <InputLeftElement
                   pointerEvents="none"
                   children={<Search2Icon color="gray.300" />}
                 />
-                <Input type="search" placeholder="Search for item" />
+                <Input
+                  type="search"
+                  placeholder="Search for item"
+                  value={searchValue}
+                  onChange={handleOnSearchChange}
+                />
               </InputGroup>
             </Stack>
           </GridItem>
