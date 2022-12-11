@@ -94,7 +94,6 @@ export default function Navigation() {
           direction={'row'}
           spacing={6}
         >
-          <AddModal />
           {authVariables.user ? <AddModal /> : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
