@@ -21,7 +21,13 @@ import {
   HStack,
   Textarea,
   Spacer,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from '@chakra-ui/react';
+
 import { AddIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 
@@ -131,7 +137,27 @@ export default function AddModal() {
                 </Select>
               </HStack>
             </FormControl>
-
+            {listingForm.category == "Shoes" ?
+            <FormControl isRequired mt={4}>
+              <HStack>
+                <FormLabel width="120px">Size</FormLabel>
+                <NumberInput 
+                  width="100%"
+                  defaultValue={7}
+                  precision={1}
+                  step={0.5}
+                  min={7}
+                  max={18}
+                >
+                  <NumberInputField  />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+              </HStack>
+            </FormControl>
+            :
             <FormControl isRequired mt={4}>
               <HStack>
                 <FormLabel width="120px">Size</FormLabel>
@@ -151,7 +177,7 @@ export default function AddModal() {
                 </Select>
               </HStack>
             </FormControl>
-
+            }
             <FormControl isRequired mt={4}>
               <HStack>
                 <FormLabel width="120px">Price</FormLabel>
@@ -192,7 +218,7 @@ export default function AddModal() {
             <Button colorScheme="blue" mr={3}>
               Add Listing
             </Button>
-            <Button onClick = {onClose}>Save Draft </Button>
+            <Button onClick={onClose}>Save Draft </Button>
             <Spacer />
             <Button onClick={handleDiscardDraft} mr={3}>
               Discard draft
