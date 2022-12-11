@@ -38,49 +38,30 @@ export default function ListingsPage() {
     getListingData();
   }, []);
 
-  /** 
-  
-  }*/
-
   async function handleOnSearchChange(event) {
+    setIsLoading(true);
+
     let value = event.target.value;
     setSearchValue(value);
-    /**if (!value) {*/
-      try {
-        let response = await fetch(`/api/listing`);
+    try {
+      let response = await fetch(`/api/listing`);
 
-        if (!response.ok) throw new Error('Unable to get listings');
+      if (!response.ok) throw new Error('Unable to get listings');
 
-        let fetchedListings = await response.json();
+      let fetchedListings = await response.json();
 
-        //setListings(fetchedListings);
-        setIsLoading(false);
+      let searchedListings = fetchedListings.filter(
+        element =>
+          element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
+          element.category.toLowerCase() == value.toLowerCase() ||
+          element.gender.toLowerCase() == value.toLowerCase()
+      );
 
-        let searchedListings = fetchedListings.filter(
-          element =>
-            element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
-            element.category.toLowerCase() == value.toLowerCase() ||
-            element.gender.toLowerCase() == value.toLowerCase()
-        );
-    
-        setListings(searchedListings);
-      } catch (err) {
-        console.log(err);
-      }
-      
-    //}
-
-    
-  }
-
-  console.log(searchValue);
-
-  function searchListing(searchValue) {
-    let searchedListings = listings.filter(element =>
-      element.listing_name.includes(searchValue)
-    );
-
-    setListings(searchedListings);
+      setListings(searchedListings);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
