@@ -61,7 +61,6 @@ router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     // listing content received from frontEnd, in a JSON Object form
     let content = req.body;
-    console.log(content)
     let user = req.user;
     Listing.create({
         UserId:user.dataValues.id,
