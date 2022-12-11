@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 
 // will be used as key for storing/fetching data from browser local storage
 const SHOPPING_CART_STORAGE_KEY = 'listing-shopping-cart';
@@ -7,7 +7,7 @@ const SHOPPING_CART_STORAGE_KEY = 'listing-shopping-cart';
 export const CartContext = createContext();
 
 export function useCartContext() {
-  return React.useContext(CartContext);
+  return useContext(CartContext);
 }
 
 export const CartContextProvider = ({ children }) => {
@@ -79,7 +79,9 @@ export const CartContextProvider = ({ children }) => {
   }
 
   // this function will take checkout form and send it to the backend once user "purchases" the items. it'll probably be better to puth this in the CartDrawer Component
-  async function checkout(checkoutForm) {}
+  async function checkout(checkoutForm) {
+
+  }
 
   const cartVariables = {
     shoppingCart,
@@ -88,6 +90,7 @@ export const CartContextProvider = ({ children }) => {
     removeFromCart,
     checkout,
   };
+
   return (
     <CartContext.Provider value={{ cartVariables }}>
       {children}

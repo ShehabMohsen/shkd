@@ -80,13 +80,6 @@ export default function Navigation() {
             <Center>
               <Image src={Logo} width="45px" marginLeft="2px" />
             </Center>
-            {/* <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}
-            >
-              Logo
-            </Text> */}
           </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -101,10 +94,7 @@ export default function Navigation() {
           direction={'row'}
           spacing={6}
         >
-          
-          {authVariables.user ? (
-            <AddModal />
-          ) : null}
+          {authVariables.user ? <AddModal /> : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
@@ -142,7 +132,7 @@ export default function Navigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity> 
+      <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
     </Box>
