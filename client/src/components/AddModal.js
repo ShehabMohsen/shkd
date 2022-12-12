@@ -42,7 +42,7 @@ const categories = [
   'Accessories',
 ];
 
-export default function AddModal({itemData}) {
+export default function AddModal() {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
