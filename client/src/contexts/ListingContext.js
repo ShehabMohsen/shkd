@@ -68,6 +68,23 @@ export const ListingContextProvider = ({ children }) => {
     }
   };
 
+
+  const updateListing = async listingData => {
+    try {
+      await fetch(`/api/listing/update/${listingData.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(listingData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      getListingsData();
+
+    } catch (error){
+      console.log(error)
+    }
+  }
+
   const listingVariables = {
     listings,
     setListings,
@@ -75,6 +92,7 @@ export const ListingContextProvider = ({ children }) => {
     setListingForm,
     createListing,
     deleteListing,
+    updateListing
   };
   return (
     <ListingContext.Provider value={{ listingVariables }}>

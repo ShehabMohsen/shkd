@@ -1,14 +1,7 @@
 import React from 'react';
 import {
-  Flex,
-  Circle,
   Box,
   Image,
-  Badge,
-  useColorModeValue,
-  Icon,
-  chakra,
-  Tooltip,
   Divider,
   Card,
   CardBody,
@@ -23,43 +16,30 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Spacer,
-  HStack,
-  useDisclosure,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
 } from '@chakra-ui/react';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
 import { useAuthContext } from '../contexts/AuthContext';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 import DeleteListingButton from './DeleteListingButton';
+import EditModal from './EditModal';
 
-export default function ProductCard({
-  imageURL,
-  name,
-  price,
-  gender,
-  size,
-  itemData,
-}) {
+export default function ProductCard({ itemData }) {
   const { cartVariables } = useCartContext();
   const { authVariables } = useAuthContext();
-  console.log(itemData);
+  const [isEditActive, setIsEditActive] = useState(false);
+
   return (
     <Card maxW="sm">
       <CardBody>
-        <Image src={imageURL} borderRadius="lg" />
+        <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">
           <Accordion defaultIndex={[0]} allowMultiple>
             <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box flex="1" textAlign="left">
-                    <Heading size="md">{name}</Heading>
+                    <Heading size="md">{itemData.listing_name}</Heading>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
@@ -69,7 +49,7 @@ export default function ProductCard({
           </Accordion>
 
           <Text color="blue.400" fontSize="2xl">
-            ${price}
+            ${itemData.price}
           </Text>
         </Stack>
       </CardBody>
@@ -99,14 +79,21 @@ export default function ProductCard({
         ) : (
           <>
             <ButtonGroup spacing="2">
-              <Button
-                variant="solid"
-                colorScheme="blue"
-                rightIcon={<EditIcon />}
-              >
-                Edit
-              </Button>
-              <DeleteListingButton listingId={itemData.id}/> {/* popup alert modal */}
+              {isEditActive ? (
+                <EditModal
+                  itemData={itemData}
+                  setIsEditActive={setIsEditActive}
+                />
+              ) : (
+                <Button
+                  colorScheme={'blue'}
+                  onClick={setIsEditActive(true)}
+                  rightIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              )}
+              <DeleteListingButton listingId={itemData.id} />{' '}
             </ButtonGroup>
           </>
         )}
@@ -114,4 +101,3 @@ export default function ProductCard({
     </Card>
   );
 }
-

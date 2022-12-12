@@ -26,8 +26,9 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  useToast,
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 
 // will map through the two arrays to render the elements as html
@@ -42,18 +43,18 @@ const categories = [
   'Accessories',
 ];
 
-export default function AddModal({itemData}) {
+export default function EditModal({ itemData, setIsEditActive }) {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-
+  const toast = useToast()
+  
+  
   // listing context variables
   const { listingVariables } = useListingContext();
-  const listingForm = listingVariables.listingForm;
-  const setListingForm = listingVariables.setListingForm;
-  const createListing = listingVariables.createListing;
+  const [listingForm, setListingForm] = useState({...itemData});
 
-  // handles changes on create listing form
+  // handles changes on the listing form
   const handleOnFormChange = event => {
     if (event.target.name == 'category') {
       let listingFormCopy = listingForm;
@@ -78,33 +79,37 @@ export default function AddModal({itemData}) {
     });
   };
 
-  const handleDiscardDraft = () => {
-    setListingForm({
-      listing_name: '',
-      description: '',
-      gender: '',
-      category: '',
-      size: '',
-      price: '',
-      image: '',
+  // Do not save changes when closing modal
+  const onCloseModal = ()=> {
+    setListingForm(itemData);
+    setIsEditActive(false)
+    onClose()
+  } 
+  // Save changes made to listing
+  const handleSaveChanges = () => {
+    listingVariables.updateListing(listingForm);
+    toast({
+      position: 'top',
+      title: 'Edit Success.',
+      description: 'Your listing has been updated',
+      status: 'info',
+      duration: 5000,
+      isClosable: true,
     });
-    onClose();
-  };
-
-  const submitListing = async () => {
-    await createListing(listingForm);
+    onClose()
+    setIsEditActive(false)
   };
 
   return (
     <>
-      <Button onClick={onOpen} rightIcon={<AddIcon />}>
-        Add
+      <Button colorScheme={'blue'} onClick={onOpen} rightIcon={<EditIcon />}>
+        Edit
       </Button>
       <Modal
         size={'xl'}
         initialFocusRef={initialRef}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onCloseModal}
       >
         <ModalOverlay />
         <ModalContent>
@@ -121,7 +126,6 @@ export default function AddModal({itemData}) {
                 name="listing_name"
               />
             </FormControl>
-
             <FormControl mt={4}>
               <FormLabel>Item description</FormLabel>
               <Textarea
@@ -181,11 +185,15 @@ export default function AddModal({itemData}) {
                     step={0.5}
                     min={7}
                     max={18}
-                    value = {listingForm.size}
-                    onChange={event =>{
-                      if (event%0.5!=0) setListingForm({ ...listingForm, size: Math.floor(event) })
-                      else setListingForm({ ...listingForm, size: event })}
-                    }
+                    value={listingForm.size}
+                    onChange={event => {
+                      if (event % 0.5 != 0)
+                        setListingForm({
+                          ...listingForm,
+                          size: Math.floor(event),
+                        });
+                      else setListingForm({ ...listingForm, size: event });
+                    }}
                   >
                     <NumberInputField value={9} name="size" />
                     <NumberInputStepper>
@@ -249,17 +257,17 @@ export default function AddModal({itemData}) {
                   name="image"
                   value={listingForm.image}
                 />
+                {listingForm.image}
               </InputGroup>
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={submitListing} colorScheme="blue" mr={3}>
-              Add Listing
+            <Button onClick={handleSaveChanges} colorScheme="blue" mr={3}>
+              Save Changes
             </Button>
-            <Button onClick={onClose}>Save Draft </Button>
             <Spacer />
-            <Button onClick={handleDiscardDraft} mr={3}>
-              Discard draft
+            <Button onClick={onCloseModal} mr={3}>
+              Discard Changes
             </Button>
           </ModalFooter>
         </ModalContent>

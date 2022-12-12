@@ -65,12 +65,6 @@ export default function ListingsPage() {
               return (
                 <GridItem colSpan={1}>
                   <ProductCard
-                    key={itemData.id}
-                    imageURL={itemData.image}
-                    name={itemData.listing_name}
-                    price={itemData.price}
-                    gender={itemData.gender}
-                    size={itemData.size}
                     itemData={itemData}
                   />
                 </GridItem>
