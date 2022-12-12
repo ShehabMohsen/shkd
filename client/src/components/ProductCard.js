@@ -89,8 +89,8 @@ export default function ProductCard({ itemData }) {
             </WrapItem>
           </ButtonGroup>
           </Wrap>
-        ) : (
-          <Wrap>
+        ) : 
+              <Wrap>
             <ButtonGroup spacing="2">
               {isEditActive ? (
                 <EditModal
@@ -110,10 +110,10 @@ export default function ProductCard({ itemData }) {
               )}
               <WrapItem>
               <DeleteListingButton listingId={itemData.id} />{' '}
-              <WrapItem>
+              </WrapItem>
             </ButtonGroup>
           </Wrap>
-        )}
+        }
       </CardFooter>
     </Card>
   );
