@@ -30,6 +30,11 @@ import CartTable from './CartTable';
 import Headline from './Headline';
 import Logo from '../Assets/Logo.png';
 
+
+const headlineHeading = 'Your Cart is Empty!'
+const headlineText = 'You have nothing in your Cart! Feel free to check out our listings page and pick whatever you like 🙂'
+const headlineIcon = 'info icon'
+
 export default function CartDrawer() {
   // Required to make drawer work
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -98,7 +103,7 @@ export default function CartDrawer() {
             <>
               <Center height={'100%'}>
                 <VStack>
-                  <Headline />
+                  <Headline headlineHeading={headlineHeading} headlineText={headlineText} headlineIcon={headlineIcon}/>
                   <Link to="/listings">
                     <Button
                       size={'lg'}

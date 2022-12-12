@@ -69,7 +69,6 @@ export default function ProductCard({ itemData }) {
             <ButtonGroup spacing="2">
               {!cartVariables.isInCart(itemData) ? (
                 <WrapItem>
-                  {' '}
                   <Button
                     variant="solid"
                     colorScheme="blue"
