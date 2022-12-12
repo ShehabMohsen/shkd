@@ -8,19 +8,28 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  useToast,
 } from '@chakra-ui/react';
-import {  DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 export default function DeleteListingButton({ listingId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
-  const {listingVariables} = useListingContext()
-  const deleteListing = listingVariables.deleteListing
+  const { listingVariables } = useListingContext();
+  const deleteListing = listingVariables.deleteListing;
+  const toast = useToast();
 
-  function onDelete(){
-    
-    deleteListing(listingId)
-    onClose()
+  function onDelete() {
+    deleteListing(listingId);
+    toast({
+      position: 'top',
+      title: 'Deletion Success.',
+      description: 'Your listing has been removed',
+      status: 'info',
+      duration: 5000,
+      isClosable: true,
+    });
+    onClose();
   }
   return (
     <>

@@ -87,7 +87,7 @@ export default function ProductCard({
               Add to Card
             </Button>
             <Button
-              variant="ghost"
+              variant="outline"
               colorScheme="blue"
               onClick={() => {
                 cartVariables.removeFromCart(itemData);
