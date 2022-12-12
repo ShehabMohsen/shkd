@@ -1,13 +1,7 @@
+import React from 'react';
 import {
-  Flex,
-  Circle,
   Box,
   Image,
-  Badge,
-  useColorModeValue,
-  Icon,
-  chakra,
-  Tooltip,
   Divider,
   Card,
   CardBody,
@@ -25,13 +19,17 @@ import {
   Wrap,
   WrapItem,
 } from '@chakra-ui/react';
-import { FiShoppingCart } from 'react-icons/fi';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
-import { MoonIcon } from '@chakra-ui/icons';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useState } from 'react';
+import DeleteListingButton from './DeleteListingButton';
+import EditModal from './EditModal';
 
-
-function ProductCard({itemData }) {
+export default function ProductCard({ itemData }) {
   const { cartVariables } = useCartContext();
+  const { authVariables } = useAuthContext();
+  const [isEditActive, setIsEditActive] = useState(false);
 
   return (
     <Card maxW="sm">
@@ -64,23 +62,59 @@ function ProductCard({itemData }) {
       </CardBody>
       <Divider />
       <CardFooter>
-        <Wrap>
+        {itemData.UserId != authVariables.user.id ? (
+           <Wrap>
           <ButtonGroup spacing="2">
-            <WrapItem>
-              <Button variant="solid" colorScheme="blue" onClick={()=>{cartVariables.addToCart(itemData)}}>
-                Add to Card
-              </Button>
+          <WrapItem>
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              onClick={() => {
+                cartVariables.addToCart(itemData);
+              }}
+            >
+              Add to Card
+            </Button>
             </WrapItem>
             <WrapItem>
-              <Button variant="outline" colorScheme="blue" onClick={()=>{cartVariables.removeFromCart(itemData)}}>
-                Remove from Cart
-              </Button>
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              onClick={() => {
+                cartVariables.removeFromCart(itemData);
+              }}
+            >
+              Remove from Cart
+            </Button>
             </WrapItem>
           </ButtonGroup>
-        </Wrap>
+          </Wrap>
+        ) : (
+          <Wrap>
+            <ButtonGroup spacing="2">
+              {isEditActive ? (
+                <EditModal
+                  itemData={itemData}
+                  setIsEditActive={setIsEditActive}
+                />
+              ) : (
+                <WrapItem>
+                <Button
+                  colorScheme={'blue'}
+                  onClick={setIsEditActive(true)}
+                  rightIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+                </WrapItem>
+              )}
+              <WrapItem>
+              <DeleteListingButton listingId={itemData.id} />{' '}
+              <WrapItem>
+            </ButtonGroup>
+          </Wrap>
+        )}
       </CardFooter>
     </Card>
   );
 }
-
-export default ProductCard;

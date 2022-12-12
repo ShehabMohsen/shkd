@@ -17,6 +17,9 @@ export default function ProfileMenu({authVariables}) {
   function onClickOrderHistory(){
     navigate("/user/orders");
   }
+  function onClickMyListings(){
+    navigate("/user/listings");
+  }
 
   return (
     <Menu>
@@ -36,7 +39,7 @@ export default function ProfileMenu({authVariables}) {
       </MenuButton>
       <MenuList>
         <MenuGroup title="Profile">
-          <MenuItem>My Listings</MenuItem>
+          <MenuItem onClick={onClickMyListings}>My Listings</MenuItem>
           <MenuItem onClick={onClickOrderHistory}>Order History </MenuItem>
         </MenuGroup>
         <MenuDivider />
