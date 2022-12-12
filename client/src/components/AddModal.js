@@ -55,14 +55,12 @@ export default function AddModal() {
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
   const createListing = listingVariables.createListing;
-  const getListingsData = listingVariables.getListingsData
-  const getUserListingsData= listingVariables.getUserListingsData
 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const toast = useToast();
   // useLocation will give us the current route the react app is currently on
   const location = useLocation()
-  console.log(location.pathname)
+
   // handles changes on create listing form
   const handleOnFormChange = event => {
     if (event.target.name == 'category') {
@@ -81,7 +79,6 @@ export default function AddModal() {
       }
     }
     // update listingForm with the value passed
-
     setListingForm({
       ...listingForm,
       [event.target.name]: event.target.value,
@@ -103,7 +100,7 @@ export default function AddModal() {
 
   const submitListing = async () => {
     setIsButtonLoading(true);
-    await createListing(listingForm);
+    await createListing(listingForm, location.pathname);
     setIsButtonLoading(false);
     toast({
       position: 'top',
@@ -124,11 +121,6 @@ export default function AddModal() {
       price: '',
       image: '',
     })
-
-    // if listing is created from within listings page
-    if (location.pathname == '/listings') getListingsData()
-    // if listing is created from within user listings page
-    else if (location.pathname == '/user/listings') getUserListingsData()
     onClose();
   };
 

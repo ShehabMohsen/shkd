@@ -47,7 +47,7 @@ export const ListingContextProvider = ({ children }) => {
     }
   };
 
-  const createListing = async listingForm => {
+  const createListing = async (listingForm, pathname) => {
     try {
       let response = await fetch('/api/listing/createListing', {
         method: 'POST',
@@ -56,8 +56,10 @@ export const ListingContextProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
       });
-
-      getListingsData();
+      // if listing is created from within listings page
+      if (pathname == '/listings') getListingsData();
+      // if listing is created from within user listings page
+      else if (pathname == '/user/listings') getUserListingsData();
     } catch (error) {
       console.log(error);
     }

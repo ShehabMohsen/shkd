@@ -19,20 +19,20 @@ export default function ListingsPage() {
   const { listingVariables } = useListingContext();
   const listings = listingVariables.userListings;
   const setListings = listingVariables.setUserListings;
-
+  
+  //used for loading spinner logic and making we're not using array.map before fetching the data 
   const [isLoading, setIsLoading] = useState(true);
+  // store searchbar value
   const [searchValue, setSearchValue] = useState('');
+  // listings we get based on the searchbar input
   const [searchedListings, setSearchedListings] = useState([]);
 
   useEffect(() => {
     async function getListingsData() {
       try {
         let response = await fetch(`/api/listing/myListings`);
-
         if (!response.ok) throw new Error('Unable to get listings');
-
         let fetchedListings = await response.json();
-
         setListings(fetchedListings);
         setSearchedListings(fetchedListings)
         setIsLoading(false);
