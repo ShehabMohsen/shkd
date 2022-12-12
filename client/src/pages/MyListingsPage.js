@@ -20,9 +20,9 @@ export default function ListingsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function getListingsData() {
+    async function getListingData() {
       try {
-        let response = await fetch(`/api/listing`);
+        let response = await fetch(`/api/listing/myListings`);
 
         if (!response.ok) throw new Error('Unable to get listings');
 
@@ -34,7 +34,7 @@ export default function ListingsPage() {
         console.log(err);
       }
     }
-    getListingsData();
+    getListingData();
   }, []);
 
   

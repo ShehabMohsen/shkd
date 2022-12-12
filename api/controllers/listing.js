@@ -21,12 +21,12 @@ router.get("/", (req, res) => {
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
     //Returns ListingData.js
-    res.status(200).json(ListingData.listingDataArray); 
+    // res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    // Listing.findAll({order: [
-    //     ["updatedAt",  "DESC"]
-    // ]}).then((allListing) => res.json(allListing));
+    Listing.findAll({order: [
+        ["updatedAt",  "DESC"]
+    ]}).then((allListing) => res.json(allListing));
 });
 
 //Gets userListings
@@ -112,7 +112,7 @@ router.put("/:id", passport.isAuthenticated(), (req, res) =>{
 });
 
 // deleting a post (Works: 00:06, Dec 5th, 2022)
-router.delete("/:id", (req, res) =>{
+router.delete("/delete/:id", passport.isAuthenticated(), (req, res) =>{
     const { id } = req.params;
     Listing.findByPk(id).then((lpost) =>{
         if(!lpost){
