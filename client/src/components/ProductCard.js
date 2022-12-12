@@ -16,6 +16,8 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Wrap,
+  WrapItem,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
@@ -34,29 +36,36 @@ export default function ProductCard({ itemData }) {
       <CardBody>
         <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-          <Accordion defaultIndex={[0]} allowMultiple>
+          <Accordion defaultIndex={[1]} allowMultiple>
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box flex="1" textAlign="left">
+                  <Box flex='1' textAlign='left'>
                     <Heading size="md">{itemData.listing_name}</Heading>
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel pb={4}>{itemData.description}</AccordionPanel>
+              <AccordionPanel pb={4}>
+                <Text fontSize="md">Category: {itemData.category}</Text>
+                <Text fontSize="sm" as='i'>{itemData.description}</Text>
+              </AccordionPanel>
             </AccordionItem>
           </Accordion>
-
           <Text color="blue.400" fontSize="2xl">
             ${itemData.price}
+          </Text>
+          <Text color="blue.400" fontSize="lg">
+            Size: {itemData.size}, {itemData.gender}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
       <CardFooter>
         {itemData.UserId != authVariables.user.id ? (
+           <Wrap>
           <ButtonGroup spacing="2">
+          <WrapItem>
             <Button
               variant="solid"
               colorScheme="blue"
@@ -66,6 +75,8 @@ export default function ProductCard({ itemData }) {
             >
               Add to Card
             </Button>
+            </WrapItem>
+            <WrapItem>
             <Button
               variant="outline"
               colorScheme="blue"
@@ -75,9 +86,11 @@ export default function ProductCard({ itemData }) {
             >
               Remove from Cart
             </Button>
+            </WrapItem>
           </ButtonGroup>
+          </Wrap>
         ) : (
-          <>
+          <Wrap>
             <ButtonGroup spacing="2">
               {isEditActive ? (
                 <EditModal
@@ -85,6 +98,7 @@ export default function ProductCard({ itemData }) {
                   setIsEditActive={setIsEditActive}
                 />
               ) : (
+                <WrapItem>
                 <Button
                   colorScheme={'blue'}
                   onClick={setIsEditActive(true)}
@@ -92,10 +106,13 @@ export default function ProductCard({ itemData }) {
                 >
                   Edit
                 </Button>
+                </WrapItem>
               )}
+              <WrapItem>
               <DeleteListingButton listingId={itemData.id} />{' '}
+              <WrapItem>
             </ButtonGroup>
-          </>
+          </Wrap>
         )}
       </CardFooter>
     </Card>
