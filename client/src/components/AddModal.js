@@ -145,7 +145,7 @@ export default function AddModal() {
               >
                 <HStack spacing="24px">
                   <Radio value="Male">Men's</Radio>
-                  <Radio value="Women">Women's</Radio>
+                  <Radio value="Female">Women's</Radio>
                   <Radio value="Unisex">Unisex</Radio>
                 </HStack>
               </RadioGroup>

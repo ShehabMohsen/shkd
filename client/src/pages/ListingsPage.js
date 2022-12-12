@@ -21,6 +21,7 @@ export default function ListingsPage() {
   const setListings = listingVariables.setListings;
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
+  const [searchedListings, setSearchedListings] = useState(listings);
 
   useEffect(() => {
     async function getListingsData() {
@@ -32,6 +33,7 @@ export default function ListingsPage() {
         let fetchedListings = await response.json();
 
         setListings(fetchedListings);
+        setSearchedListings(fetchedListings)
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -45,25 +47,18 @@ export default function ListingsPage() {
 
     let value = event.target.value;
     setSearchValue(value);
-    try {
-      let response = await fetch(`/api/listing`);
 
-      if (!response.ok) throw new Error('Unable to get listings');
-
-      let fetchedListings = await response.json();
-
-      let searchedListings = fetchedListings.filter(
+    setSearchedListings(
+      listings.filter(
         element =>
           element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
           element.category.toLowerCase() == value.toLowerCase() ||
           element.gender.toLowerCase() == value.toLowerCase()
-      );
+      )
+    );
 
-      setListings(searchedListings);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
+    // setListings(searchedListings);
+    setIsLoading(false);
   }
 
   return (
@@ -95,7 +90,7 @@ export default function ListingsPage() {
               </GridItem>
             </Grid>
             <SimpleGrid columns={[1, 2, 3]} spacing="40px" mx={60}>
-              {listings.map(itemData => {
+              {searchedListings.map(itemData => {
                 return (
                   <Box>
                     <Center>
