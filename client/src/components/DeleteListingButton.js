@@ -12,15 +12,16 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
+import { useLocation } from 'react-router-dom';
 export default function DeleteListingButton({ listingId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const { listingVariables } = useListingContext();
   const deleteListing = listingVariables.deleteListing;
   const toast = useToast();
-
+  const location = useLocation()
   function onDelete() {
-    deleteListing(listingId);
+    deleteListing(listingId, location.pathname);
     toast({
       position: 'top',
       title: 'Deletion Success.',

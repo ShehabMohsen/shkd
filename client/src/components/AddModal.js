@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Modal,
   ModalOverlay,
@@ -26,6 +27,8 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  toast,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
@@ -52,7 +55,14 @@ export default function AddModal() {
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
   const createListing = listingVariables.createListing;
+  const getListingsData = listingVariables.getListingsData
+  const getUserListingsData= listingVariables.getUserListingsData
 
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const toast = useToast();
+  // useLocation will give us the current route the react app is currently on
+  const location = useLocation()
+  console.log(location.pathname)
   // handles changes on create listing form
   const handleOnFormChange = event => {
     if (event.target.name == 'category') {
@@ -92,7 +102,34 @@ export default function AddModal() {
   };
 
   const submitListing = async () => {
+    setIsButtonLoading(true);
     await createListing(listingForm);
+    setIsButtonLoading(false);
+    toast({
+      position: 'top',
+      title: 'Add Success.',
+      description: 'Your listing has been added',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+
+    // reset listing form
+    setListingForm({
+      listing_name: '',
+      description: '',
+      gender: '',
+      category: '',
+      size: '',
+      price: '',
+      image: '',
+    })
+
+    // if listing is created from within listings page
+    if (location.pathname == '/listings') getListingsData()
+    // if listing is created from within user listings page
+    else if (location.pathname == '/user/listings') getUserListingsData()
+    onClose();
   };
 
   return (
@@ -181,11 +218,15 @@ export default function AddModal() {
                     step={0.5}
                     min={7}
                     max={18}
-                    value = {listingForm.size}
-                    onChange={event =>{
-                      if (event%0.5!=0) setListingForm({ ...listingForm, size: Math.floor(event) })
-                      else setListingForm({ ...listingForm, size: event })}
-                    }
+                    value={listingForm.size}
+                    onChange={event => {
+                      if (event % 0.5 != 0)
+                        setListingForm({
+                          ...listingForm,
+                          size: Math.floor(event),
+                        });
+                      else setListingForm({ ...listingForm, size: event });
+                    }}
                   >
                     <NumberInputField value={9} name="size" />
                     <NumberInputStepper>
@@ -253,7 +294,12 @@ export default function AddModal() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={submitListing} colorScheme="blue" mr={3}>
+            <Button
+              isLoading={isButtonLoading}
+              onClick={submitListing}
+              colorScheme="blue"
+              mr={3}
+            >
               Add Listing
             </Button>
             <Button onClick={onClose}>Save Draft </Button>

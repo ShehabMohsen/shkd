@@ -12,18 +12,20 @@ import {
   InputGroup,
   InputLeftElement,
   Center,
-  SimpleGrid
+  SimpleGrid,
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 export default function ListingsPage() {
   const { listingVariables } = useListingContext();
-  const listings = listingVariables.listings;
-  const setListings = listingVariables.setListings;
+  const listings = listingVariables.userListings;
+  const setListings = listingVariables.setUserListings;
+
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
+  const [searchedListings, setSearchedListings] = useState([]);
 
   useEffect(() => {
-    async function getListingData() {
+    async function getListingsData() {
       try {
         let response = await fetch(`/api/listing/myListings`);
 
@@ -32,39 +34,36 @@ export default function ListingsPage() {
         let fetchedListings = await response.json();
 
         setListings(fetchedListings);
+        setSearchedListings(fetchedListings)
         setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-    getListingData();
+    getListingsData();
   }, []);
 
+
+  useEffect(()=>{
+    setSearchedListings(listings)
+  },[listings])
 
   async function handleOnSearchChange(event) {
     setIsLoading(true);
 
     let value = event.target.value;
     setSearchValue(value);
-    try {
-      let response = await fetch(`/api/listing`);
 
-      if (!response.ok) throw new Error('Unable to get listings');
-
-      let fetchedListings = await response.json();
-
-      let searchedListings = fetchedListings.filter(
+    setSearchedListings(
+      listings.filter(
         element =>
           element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
           element.category.toLowerCase() == value.toLowerCase() ||
           element.gender.toLowerCase() == value.toLowerCase()
-      );
+      )
+    );
 
-      setListings(searchedListings);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
+    setIsLoading(false);
   }
 
   return (
@@ -96,7 +95,7 @@ export default function ListingsPage() {
               </GridItem>
             </Grid>
             <SimpleGrid columns={[1, 2, 3]} spacing="40px" mx={60}>
-              {listings.map(itemData => {
+              {searchedListings.map(itemData => {
                 return (
                   <Box>
                     <Center>
@@ -112,5 +111,5 @@ export default function ListingsPage() {
         )}
       </Box>
     </React.Fragment>
-  );  
+  );
 }

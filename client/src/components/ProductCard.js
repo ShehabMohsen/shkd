@@ -107,7 +107,7 @@ export default function ProductCard({ itemData }) {
                 <WrapItem>
                   <Button
                     colorScheme={'blue'}
-                    onClick={setIsEditActive(true)}
+                    onClick={setIsEditActive(!isEditActive)}
                     rightIcon={<EditIcon />}
                   >
                     Edit

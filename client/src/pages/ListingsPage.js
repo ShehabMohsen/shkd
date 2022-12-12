@@ -19,9 +19,10 @@ export default function ListingsPage() {
   const { listingVariables } = useListingContext();
   const listings = listingVariables.listings;
   const setListings = listingVariables.setListings;
+
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
-  const [searchedListings, setSearchedListings] = useState(listings);
+  const [searchedListings, setSearchedListings] = useState([]);
 
   useEffect(() => {
     async function getListingsData() {
@@ -42,6 +43,11 @@ export default function ListingsPage() {
     getListingsData();
   }, []);
 
+
+  useEffect(()=>{
+    setSearchedListings(listings)
+  },[listings])
+
   async function handleOnSearchChange(event) {
     setIsLoading(true);
 
@@ -57,7 +63,6 @@ export default function ListingsPage() {
       )
     );
 
-    // setListings(searchedListings);
     setIsLoading(false);
   }
 

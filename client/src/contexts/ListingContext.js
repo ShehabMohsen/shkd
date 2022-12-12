@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useEffect, createContext, useContext } from 'react';
-
 export const ListingContext = createContext();
 
 export function useListingContext() {
@@ -19,7 +18,7 @@ export const ListingContextProvider = ({ children }) => {
     price: '',
     image: '',
   });
-
+  
   useEffect(() => {}, [listings]);
 
   const getListingsData = async () => {
@@ -30,7 +29,19 @@ export const ListingContextProvider = ({ children }) => {
 
       let fetchedListings = await response.json();
       setListings(fetchedListings);
-      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserListingsData = async () => {
+    try {
+      let response = await fetch(`/api/listing/myListings`);
+
+      if (!response.ok) throw new Error('Unable to get listings');
+
+      let fetchedListings = await response.json();
+      setUserListings(fetchedListings);
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +63,7 @@ export const ListingContextProvider = ({ children }) => {
     }
   };
 
-  const deleteListing = async listingId => {
+  const deleteListing = async (listingId, pathname="/") => {
     try {
       // remove from backend
       await fetch(`/api/listing/delete/${listingId}`, {
@@ -62,14 +73,17 @@ export const ListingContextProvider = ({ children }) => {
         },
       });
 
-      getListingsData();
+      // if listing is created from within listings page
+      if (pathname == '/listings') getListingsData();
+      // if listing is created from within user listings page
+      else if (pathname == '/user/listings') getUserListingsData();
+
     } catch (error) {
       console.log(error);
     }
   };
 
-
-  const updateListing = async listingData => {
+  const updateListing = async (listingData, pathname="/") => {
     try {
       await fetch(`/api/listing/update/${listingData.id}`, {
         method: 'PUT',
@@ -78,12 +92,15 @@ export const ListingContextProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
       });
-      getListingsData();
+      // if listing is created from within listings page
+      if (pathname == '/listings') getListingsData();
+      // if listing is created from within user listings page
+      else if (pathname == '/user/listings') getUserListingsData();
 
-    } catch (error){
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const listingVariables = {
     listings,
@@ -92,7 +109,11 @@ export const ListingContextProvider = ({ children }) => {
     setListingForm,
     createListing,
     deleteListing,
-    updateListing
+    updateListing,
+    getListingsData,
+    userListings,
+    setUserListings,
+    getUserListingsData,
   };
   return (
     <ListingContext.Provider value={{ listingVariables }}>

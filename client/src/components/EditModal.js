@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Modal,
   ModalOverlay,
@@ -48,11 +49,14 @@ export default function EditModal({ itemData, setIsEditActive }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const toast = useToast()
-  
-  
+
+
   // listing context variables
   const { listingVariables } = useListingContext();
   const [listingForm, setListingForm] = useState({...itemData});
+  //to pass pathname to update listing function
+  const location = useLocation()
+  
 
   // handles changes on the listing form
   const handleOnFormChange = event => {
@@ -87,7 +91,7 @@ export default function EditModal({ itemData, setIsEditActive }) {
   } 
   // Save changes made to listing
   const handleSaveChanges = () => {
-    listingVariables.updateListing(listingForm);
+    listingVariables.updateListing(listingForm, location.pathname) ;
     toast({
       position: 'top',
       title: 'Edit Success.',
@@ -113,7 +117,7 @@ export default function EditModal({ itemData, setIsEditActive }) {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Listing</ModalHeader>
+          <ModalHeader>Edit Listing</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired>
