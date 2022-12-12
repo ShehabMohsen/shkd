@@ -99,12 +99,27 @@ export default function AddModal() {
   };
 
   const submitListing = async () => {
+    // logic for checking everything was filled out properly:
+    // toast for failure
+    // toast({
+    //   position: 'top',
+    //   title: 'Create Error.',
+    //   description: 'Please fill out all the required fields and make sure that image URL is Valid',
+    //   status: 'error',
+    //   duration: 9000,
+    //   isClosable: true,
+    // });
+
+    // logic for making the request
     setIsButtonLoading(true);
     await createListing(listingForm, location.pathname);
     setIsButtonLoading(false);
+    
+    
+    // if submission was successful
     toast({
       position: 'top',
-      title: 'Add Success.',
+      title: 'Create Success.',
       description: 'Your listing has been added',
       status: 'success',
       duration: 5000,
