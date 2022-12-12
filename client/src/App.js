@@ -19,6 +19,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 import { ListingContextProvider } from './contexts/ListingContext';
 import { CartContextProvider } from './contexts/CartContext';
 import CreateListing from './pages/CreateListing';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="listing/create" element={<CreateListing/>}/>
               </Routes>
+              <Footer />
             </BrowserRouter>
           </ListingContextProvider>
         </CartContextProvider>
