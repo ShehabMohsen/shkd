@@ -18,7 +18,8 @@ import {
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-  
+  import { useNavigate } from 'react-router-dom';
+
   export default function SignupCard() {
     const [showPassword, setShowPassword] = useState(false);
     const {authVariables} = useAuthContext()
@@ -31,6 +32,8 @@ import {
       password: "",
     })
     const [error, setError] = React.useState(true)
+    // navigate instance to redirect user after sign up
+    const navigate = useNavigate()
 
     function handleOnFormChange (event){
       if (form.password!==form.confirmPassword) setError(true)
@@ -40,7 +43,13 @@ import {
 
     const handleOnSubmit = async (event) => {
       event.preventDefault();
-      authVariables.signup(form)
+      
+      try {
+        authVariables.signup(form)
+        navigate("/")
+      } catch (error){
+        console.log(error)
+      }
     }
 
     return (
