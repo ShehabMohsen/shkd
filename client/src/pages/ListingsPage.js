@@ -6,11 +6,13 @@ import {
   Box,
   useColorModeValue,
   Grid,
+  SimpleGrid,
   GridItem,
   Input,
   Stack,
   InputGroup,
   InputLeftElement,
+  Center,
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 export default function ListingsPage() {
@@ -68,12 +70,13 @@ export default function ListingsPage() {
     <React.Fragment>
       <Box bg={useColorModeValue('gray.50', 'gray.800')} px={90} py={30}>
         <Grid
-          h="300px"
-          templateColumns="repeat(4, 1fr)"
+          w="auto"
           gap="7"
           fontWeight="bold"
+          mb={10}
+          mx={60}
         >
-          <GridItem colSpan={'4'} h="40px">
+          <GridItem h="40px">
             <Stack spacing={4}>
               <InputGroup>
                 <InputLeftElement
@@ -85,31 +88,31 @@ export default function ListingsPage() {
                   placeholder="Search for item"
                   value={searchValue}
                   onChange={handleOnSearchChange}
+                  
                 />
               </InputGroup>
             </Stack>
           </GridItem>
+        </Grid>
 
+        <SimpleGrid columns={[1, 2, 3]} spacing='40px' mx={60}>
           {!isLoading ? (
             listings.map(itemData => {
               return (
-                <GridItem colSpan={1}>
+                <Box>
+                  <Center>
                   <ProductCard
-                    key={itemData.id}
-                    imageURL={itemData.image}
-                    name={itemData.listing_name}
-                    price={itemData.price}
-                    gender={itemData.gender}
-                    size={itemData.size}
                     itemData={itemData}
                   />
-                </GridItem>
+                  </Center>
+                </Box>
               );
             })
           ) : (
             <LoadingSpinner />
           )}
-        </Grid>
+          </SimpleGrid>
+        
       </Box>
     </React.Fragment>
   );
