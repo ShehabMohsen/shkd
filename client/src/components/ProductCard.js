@@ -40,7 +40,7 @@ export default function ProductCard({ itemData }) {
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box flex='1' textAlign='left'>
+                  <Box flex="1" textAlign="left">
                     <Heading size="md">{itemData.listing_name}</Heading>
                   </Box>
                   <AccordionIcon />
@@ -48,7 +48,9 @@ export default function ProductCard({ itemData }) {
               </h2>
               <AccordionPanel pb={4}>
                 <Text fontSize="md">Category: {itemData.category}</Text>
-                <Text fontSize="sm" as='i'>{itemData.description}</Text>
+                <Text fontSize="sm" as="i">
+                  {itemData.description}
+                </Text>
               </AccordionPanel>
             </AccordionItem>
           </Accordion>
@@ -63,35 +65,38 @@ export default function ProductCard({ itemData }) {
       <Divider />
       <CardFooter>
         {itemData.UserId != authVariables.user.id ? (
-           <Wrap>
-          <ButtonGroup spacing="2">
-          
-           {!cartVariables.isInCart(itemData) ?<WrapItem> <Button
-              variant="solid"
-              colorScheme="blue"
-              onClick={() => {
-                cartVariables.addToCart(itemData);
-              }}
-            >
-              Add to Card
-            </Button>
-            </WrapItem>:
-
-            <WrapItem>
-            <Button
-              variant="outline"
-              colorScheme="blue"
-              onClick={() => {
-                cartVariables.removeFromCart(itemData);
-              }}
-            >
-              Remove from Cart
-            </Button>
-            </WrapItem>}
-          </ButtonGroup>
+          <Wrap>
+            <ButtonGroup spacing="2">
+              {!cartVariables.isInCart(itemData) ? (
+                <WrapItem>
+                  {' '}
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => {
+                      cartVariables.addToCart(itemData);
+                    }}
+                  >
+                    Add to Card
+                  </Button>
+                </WrapItem>
+              ) : (
+                <WrapItem>
+                  <Button
+                    variant="outline"
+                    colorScheme="red"
+                    onClick={() => {
+                      cartVariables.removeFromCart(itemData);
+                    }}
+                  >
+                    Remove from Cart
+                  </Button>
+                </WrapItem>
+              )}
+            </ButtonGroup>
           </Wrap>
-        ) : 
-              <Wrap>
+        ) : (
+          <Wrap>
             <ButtonGroup spacing="2">
               {isEditActive ? (
                 <EditModal
@@ -100,21 +105,21 @@ export default function ProductCard({ itemData }) {
                 />
               ) : (
                 <WrapItem>
-                <Button
-                  colorScheme={'blue'}
-                  onClick={setIsEditActive(true)}
-                  rightIcon={<EditIcon />}
-                >
-                  Edit
-                </Button>
+                  <Button
+                    colorScheme={'blue'}
+                    onClick={setIsEditActive(true)}
+                    rightIcon={<EditIcon />}
+                  >
+                    Edit
+                  </Button>
                 </WrapItem>
               )}
               <WrapItem>
-              <DeleteListingButton listingId={itemData.id} />{' '}
+                <DeleteListingButton listingId={itemData.id} />{' '}
               </WrapItem>
             </ButtonGroup>
           </Wrap>
-        }
+        )}
       </CardFooter>
     </Card>
   );
