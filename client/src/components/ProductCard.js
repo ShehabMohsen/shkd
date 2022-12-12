@@ -65,8 +65,8 @@ export default function ProductCard({ itemData }) {
         {itemData.UserId != authVariables.user.id ? (
            <Wrap>
           <ButtonGroup spacing="2">
-          <WrapItem>
-            <Button
+          
+           {!cartVariables.isInCart(itemData) ?<WrapItem> <Button
               variant="solid"
               colorScheme="blue"
               onClick={() => {
@@ -75,7 +75,8 @@ export default function ProductCard({ itemData }) {
             >
               Add to Card
             </Button>
-            </WrapItem>
+            </WrapItem>:
+
             <WrapItem>
             <Button
               variant="outline"
@@ -86,7 +87,7 @@ export default function ProductCard({ itemData }) {
             >
               Remove from Cart
             </Button>
-            </WrapItem>
+            </WrapItem>}
           </ButtonGroup>
           </Wrap>
         ) : 

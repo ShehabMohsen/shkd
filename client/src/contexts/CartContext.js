@@ -94,12 +94,21 @@ export const CartContextProvider = ({ children }) => {
     }
   }
 
+  // searches cart for a listing and returns true if its found
+  function isInCart(listing){
+    for (let i = 0; i < shoppingCart.length; i++){
+      if (shoppingCart[i].id == listing.id) return true
+    }
+    return false
+  } 
+
   const cartVariables = {
     shoppingCart,
     setShoppingCart,
     addToCart,
     removeFromCart,
     checkout,
+    isInCart
   };
 
   return (
