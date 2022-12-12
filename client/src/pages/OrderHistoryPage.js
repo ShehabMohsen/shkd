@@ -34,8 +34,8 @@ export default function OrderHistoryPage() {
                 setOrders(fetchedOrders);
 
                 setIsLoading(false);
-            } catch (err) {
-                console.log(err);
+            } catch (error) {
+                console.log(error);
             }
         }
         getOrderHistory();

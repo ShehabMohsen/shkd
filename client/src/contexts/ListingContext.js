@@ -31,8 +31,8 @@ export const ListingContextProvider = ({ children }) => {
       let fetchedListings = await response.json();
       setListings(fetchedListings);
       
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
