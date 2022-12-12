@@ -1,13 +1,7 @@
+import React from 'react';
 import {
-  Flex,
-  Circle,
   Box,
   Image,
-  Badge,
-  useColorModeValue,
-  Icon,
-  chakra,
-  Tooltip,
   Divider,
   Card,
   CardBody,
@@ -23,54 +17,87 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from '@chakra-ui/react';
-import { FiShoppingCart } from 'react-icons/fi';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
-import { MoonIcon } from '@chakra-ui/icons';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useState } from 'react';
+import DeleteListingButton from './DeleteListingButton';
+import EditModal from './EditModal';
 
-
-function ProductCard({ imageURL, name, price, gender, size, itemData }) {
+export default function ProductCard({ itemData }) {
   const { cartVariables } = useCartContext();
+  const { authVariables } = useAuthContext();
+  const [isEditActive, setIsEditActive] = useState(false);
 
   return (
     <Card maxW="sm">
       <CardBody>
-        <Image src={imageURL} borderRadius="lg" />
+        <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-
-        <Accordion defaultIndex={[0]} allowMultiple>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box flex='1' textAlign='left'>
-                <Heading size="md">{name}</Heading>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-            {itemData.description}
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
+          <Accordion defaultIndex={[0]} allowMultiple>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    <Heading size="md">{itemData.listing_name}</Heading>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>{itemData.description}</AccordionPanel>
+            </AccordionItem>
+          </Accordion>
 
           <Text color="blue.400" fontSize="2xl">
-            ${price}
+            ${itemData.price}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
       <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue" onClick={()=>{cartVariables.addToCart(itemData)}}>
-            Add to Card
-          </Button>
-          <Button variant="ghost" colorScheme="blue" onClick={()=>{cartVariables.removeFromCart(itemData)}}>
-            Remove from Cart
-          </Button>
-        </ButtonGroup>
+        {itemData.UserId != authVariables.user.id ? (
+          <ButtonGroup spacing="2">
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              onClick={() => {
+                cartVariables.addToCart(itemData);
+              }}
+            >
+              Add to Card
+            </Button>
+            <Button
+              variant="outline"
+              colorScheme="blue"
+              onClick={() => {
+                cartVariables.removeFromCart(itemData);
+              }}
+            >
+              Remove from Cart
+            </Button>
+          </ButtonGroup>
+        ) : (
+          <>
+            <ButtonGroup spacing="2">
+              {isEditActive ? (
+                <EditModal
+                  itemData={itemData}
+                  setIsEditActive={setIsEditActive}
+                />
+              ) : (
+                <Button
+                  colorScheme={'blue'}
+                  onClick={setIsEditActive(true)}
+                  rightIcon={<EditIcon />}
+                >
+                  Edit
+                </Button>
+              )}
+              <DeleteListingButton listingId={itemData.id} />{' '}
+            </ButtonGroup>
+          </>
+        )}
       </CardFooter>
     </Card>
   );
 }
-
-export default ProductCard;
