@@ -2,10 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
   ChakraProvider,
-  Box,
   theme,
-  useColorMode,
-  useColorModeValue,
+  Flex,
 } from '@chakra-ui/react';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
@@ -25,6 +23,7 @@ function App() {
         <CartContextProvider>
           <ListingContextProvider>
             <BrowserRouter>
+            <Flex flexDirection={'column'} minH={'100vh'}>
               <Navigation />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
@@ -35,6 +34,7 @@ function App() {
                 <Route path="/user/listings" element={<MyListingsPage />} />
               </Routes>
               <Footer/>
+              </Flex>
             </BrowserRouter>
           </ListingContextProvider>
         </CartContextProvider>

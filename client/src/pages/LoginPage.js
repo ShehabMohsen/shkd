@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Flex,
   Box,
@@ -16,6 +16,7 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Center,
 } from '@chakra-ui/react';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -23,20 +24,20 @@ export default function SimpleCard() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   // this object will update to the values the user types into the input form
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     email: '',
     password: '',
   });
-  const [errorMsg, setErrorMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   // for redirecting our page to landing page after logging in
   const navigate = useNavigate();
 
   // boolean state variable to have a loading button
-  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const handleOnFormChange = event => {
-    setErrorMsg("")
+    setErrorMsg('');
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -47,7 +48,6 @@ export default function SimpleCard() {
       await authVariables.login(form.email, form.password);
       // redirect to landing page after logging in
       navigate('/');
-
     } catch (error) {
       console.log(error);
       // set an alertmessage to display to the user when login fails
@@ -59,13 +59,12 @@ export default function SimpleCard() {
 
   return (
     <Flex
-      minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
     >
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack align={'center'}>
+
+        <Stack align={'center'} >
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
             Please enter your email address and password ✌️
@@ -76,6 +75,7 @@ export default function SimpleCard() {
           bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={8}
+          
         >
           <Stack spacing={4}>
             <FormControl id="email">
@@ -97,7 +97,7 @@ export default function SimpleCard() {
               />
             </FormControl>
             {errorMsg ? (
-              <Alert status="error" variant={'subtle'}> 
+              <Alert status="error" variant={'subtle'}>
                 <AlertIcon />
                 <AlertTitle>Error 401</AlertTitle>
                 <AlertDescription>{errorMsg}</AlertDescription>
