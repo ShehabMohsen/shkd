@@ -12,11 +12,16 @@ import {
   useColorModeValue,
   Image,
   HStack,
+  VStack,
+  Spacer,
+  Center,
 } from '@chakra-ui/react';
 import React from 'react';
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
 import Logo from '../Assets/Logo.png';
+import githubLogo from '../Assets/githubLogo.png';
+import OrangeGitHubLogo from '../Assets/OrangeGitHubLogo.png';
 
 const SocialButton = ({ children, label, href }) => {
   return (
@@ -62,6 +67,7 @@ export default function Footer() {
           templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }}
           spacing={8}
         >
+          {/* SECTION 1 */}
           <Stack spacing={6}>
             <Box>
               <HStack>
@@ -72,7 +78,7 @@ export default function Footer() {
               </HStack>
             </Box>
             <Text fontSize={'sm'}>© 2022 SHKD. All rights reserved</Text>
-            <Stack direction={'row'} spacing={6}>
+            {/* <Stack direction={'row'} spacing={6}>
               <SocialButton label={'Twitter'} href={'#'}>
                 <FaTwitter />
               </SocialButton>
@@ -82,8 +88,10 @@ export default function Footer() {
               <SocialButton label={'Instagram'} href={'#'}>
                 <FaInstagram />
               </SocialButton>
-            </Stack>
+            </Stack> */}
+            {/* SECTION 2 */}
           </Stack>
+
           <Stack align={'flex-start'}>
             <ListHeader>Company</ListHeader>
             <Link href={'#'}>About us</Link>
@@ -100,27 +108,13 @@ export default function Footer() {
             <Link href={'#'}>Privacy Policy</Link>
             <Link href={'#'}>Satus</Link>
           </Stack>
-          <Stack align={'flex-start'}>
-            <ListHeader>Stay up to date</ListHeader>
-            <Stack direction={'row'}>
-              <Input
-                placeholder={'Your email address'}
-                bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
-                border={0}
-                _focus={{
-                  bg: 'whiteAlpha.300',
-                }}
-              />
-              <IconButton
-                bg={useColorModeValue('green.400', 'green.800')}
-                color={useColorModeValue('white', 'gray.800')}
-                _hover={{
-                  bg: 'green.600',
-                }}
-                aria-label="Subscribe"
-                icon={<BiMailSend />}
-              />
-            </Stack>
+
+          {/* SECTION 3 */}
+          <Stack align={'center'}>
+            <ListHeader>Check us out on GitHub!</ListHeader>
+            <Link href={'https://github.com/ShehabMohsen/shkd'}>
+              <Image src={OrangeGitHubLogo} width={10} /> 
+              </Link>
           </Stack>
         </SimpleGrid>
       </Container>
