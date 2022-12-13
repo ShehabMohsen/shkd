@@ -20,8 +20,9 @@ import { useAuthContext } from '../contexts/AuthContext';
 export default function LandingPage() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
-
+  
   return (
+    <Box  minH={'70vh'}>
     <Container maxW={'7xl'}>
       <Stack
         align={'center'}
@@ -147,6 +148,7 @@ export default function LandingPage() {
         </Flex>
       </Stack>
     </Container>
+    </Box>
   );
 }
 

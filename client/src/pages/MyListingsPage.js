@@ -11,75 +11,127 @@ import {
   Stack,
   InputGroup,
   InputLeftElement,
+  Center,
+  SimpleGrid,
+  VStack
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
+import Headline from '../components/Headline';
+
+const headlineHeader = 'You have no listings...';
+const headlineText =
+  'You have yet to create any listings on our website!' + 
+  'Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
+
 export default function ListingsPage() {
   const { listingVariables } = useListingContext();
-  const listings = listingVariables.listings;
-  const setListings = listingVariables.setListings;
+  const listings = listingVariables.userListings;
+  const setListings = listingVariables.setUserListings;
+
+  //used for loading spinner logic and making we're not using array.map before fetching the data
   const [isLoading, setIsLoading] = useState(true);
+  // store searchbar value
+  const [searchValue, setSearchValue] = useState('');
+  // listings we get based on the searchbar input
+  const [searchedListings, setSearchedListings] = useState([]);
 
   useEffect(() => {
-    async function getListingData() {
+    async function getListingsData() {
       try {
         let response = await fetch(`/api/listing/myListings`);
-
         if (!response.ok) throw new Error('Unable to get listings');
-
         let fetchedListings = await response.json();
-
         setListings(fetchedListings);
+        setSearchedListings(fetchedListings);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-    getListingData();
+    getListingsData();
   }, []);
 
-  
+  useEffect(() => {
+    setSearchedListings(listings);
+  }, [listings]);
+
+  async function handleOnSearchChange(event) {
+    setIsLoading(true);
+
+    let value = event.target.value;
+    setSearchValue(value);
+
+    setSearchedListings(
+      listings.filter(
+        element =>
+          element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
+          element.category.toLowerCase() == value.toLowerCase() ||
+          element.gender.toLowerCase() == value.toLowerCase()
+      )
+    );
+
+    setIsLoading(false);
+  }
 
   return (
     <React.Fragment>
-      <Box bg={useColorModeValue('gray.50', 'gray.800')} px={90} py={30}>
-        <Grid
-          h="300px"
-          templateColumns="repeat(4, 1fr)"
-          gap="7"
-          fontWeight="bold"
-        >
-          <GridItem colSpan={'4'} h="40px" >
-            <Stack spacing={4}>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<Search2Icon color="gray.300" />}
-                />
-                <Input type="search" placeholder="Search for item" />
-              </InputGroup>
-            </Stack>
-          </GridItem>
-
-          {!isLoading ? (
-            listings.map(itemData => {
-              return (
-                <GridItem colSpan={1}>
-                  <ProductCard
-                    key={itemData.id}
-                    imageURL={itemData.image}
-                    name={itemData.listing_name}
-                    price={itemData.price}
-                    gender={itemData.gender}
-                    size={itemData.size}
-                    itemData={itemData}
-                  />
-                </GridItem>
-              );
-            })
-          ) : (
-            <LoadingSpinner />
-          )}
-        </Grid>
+      <Box
+        bg={useColorModeValue('gray.50', 'gray.800')}
+        minH={'70vh'}
+        px={90}
+        py={30}
+      >
+        {listings.length == 0 ? (
+          <Center height={'100%'}>
+            <VStack>
+              <Headline
+                headlineHeader={headlineHeader}
+                headlineText={headlineText}
+              />
+            </VStack>
+          </Center>
+        ) : (
+          <>
+            {!isLoading ? (
+              <>
+                <Grid w="auto" gap="7" fontWeight="bold" mb={10} mx={60}>
+                  <GridItem h="40px">
+                    <Stack spacing={4}>
+                      <InputGroup>
+                        <InputLeftElement
+                          pointerEvents="none"
+                          children={<Search2Icon color="gray.300" />}
+                        />
+                        <Input
+                        
+                          type="search"
+                          borderWidth={2}
+                          variant={'filled'}
+                          placeholder="Search for item"
+                          value={searchValue}
+                          onChange={handleOnSearchChange}
+                        />
+                      </InputGroup>
+                    </Stack>
+                  </GridItem>
+                </Grid>
+                <SimpleGrid columns={[1, 2, 3]} spacing="40px" mx={60}>
+                  {searchedListings.map(itemData => {
+                    return (
+                      <Box>
+                        <Center>
+                          <ProductCard itemData={itemData} />
+                        </Center>
+                      </Box>
+                    );
+                  })}
+                </SimpleGrid>
+              </>
+            ) : (
+              <LoadingSpinner />
+            )}
+          </>
+        )}
       </Box>
     </React.Fragment>
   );

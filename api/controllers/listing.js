@@ -70,7 +70,6 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
         size: content.size,
         price: content.price,
         description: content.description,
-        listing_region: content.listing_region,
         image: content.image,
     })
         .then((newData) =>{

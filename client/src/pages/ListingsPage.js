@@ -19,8 +19,10 @@ export default function ListingsPage() {
   const { listingVariables } = useListingContext();
   const listings = listingVariables.listings;
   const setListings = listingVariables.setListings;
+
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
+  const [searchedListings, setSearchedListings] = useState([]);
 
   useEffect(() => {
     async function getListingsData() {
@@ -32,6 +34,7 @@ export default function ListingsPage() {
         let fetchedListings = await response.json();
 
         setListings(fetchedListings);
+        setSearchedListings(fetchedListings);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -40,79 +43,73 @@ export default function ListingsPage() {
     getListingsData();
   }, []);
 
+  useEffect(() => {
+    setSearchedListings(listings);
+  }, [listings]);
+
   async function handleOnSearchChange(event) {
     setIsLoading(true);
 
     let value = event.target.value;
     setSearchValue(value);
-    try {
-      let response = await fetch(`/api/listing`);
 
-      if (!response.ok) throw new Error('Unable to get listings');
-
-      let fetchedListings = await response.json();
-
-      let searchedListings = fetchedListings.filter(
+    setSearchedListings(
+      listings.filter(
         element =>
           element.listing_name.toLowerCase().includes(value.toLowerCase()) ||
           element.category.toLowerCase() == value.toLowerCase() ||
           element.gender.toLowerCase() == value.toLowerCase()
-      );
+      )
+    );
 
-      setListings(searchedListings);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
+    setIsLoading(false);
   }
 
   return (
     <React.Fragment>
-      <Box bg={useColorModeValue('gray.50', 'gray.800')} px={90} py={30}>
-        <Grid
-          w="auto"
-          gap="7"
-          fontWeight="bold"
-          mb={10}
-          mx={60}
-        >
-          <GridItem h="40px">
-            <Stack spacing={4}>
-              <InputGroup>
-                <InputLeftElement
-                  pointerEvents="none"
-                  children={<Search2Icon color="gray.300" />}
-                />
-                <Input
-                  type="search"
-                  placeholder="Search for item"
-                  value={searchValue}
-                  onChange={handleOnSearchChange}
-                  
-                />
-              </InputGroup>
-            </Stack>
-          </GridItem>
-        </Grid>
-
-        <SimpleGrid columns={[1, 2, 3]} spacing='40px' mx={60}>
-          {!isLoading ? (
-            listings.map(itemData => {
-              return (
-                <Box>
-                  <Center>
-                  <ProductCard
-                    itemData={itemData}
-                  />
-                  </Center>
-                </Box>
-              );
-            })
-          ) : (
-            <LoadingSpinner />
-          )}
-          </SimpleGrid>
-        
+      <Box
+        bg={useColorModeValue('gray.50', 'gray.800')}
+        h={'90vh'}
+        px={90}
+        py={30}
+        minH={'100vh'}
+      >
+        {!isLoading ? (
+          <>
+            <Grid w="auto" gap="7" fontWeight="bold" mb={10} mx={60}>
+              <GridItem h="40px">
+                <Stack spacing={4}>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<Search2Icon color="gray.300" />}
+                    />
+                    <Input
+                      variant={'filled'}
+                      type="search"
+                      placeholder="Search for item"
+                      value={searchValue}
+                      onChange={handleOnSearchChange}
+                    />
+                  </InputGroup>
+                </Stack>
+              </GridItem>
+            </Grid>
+            <SimpleGrid columns={[1, 2, 3]} spacing="40px" mx={60}>
+              {searchedListings.map(itemData => {
+                return (
+                  <Box>
+                    <Center>
+                      <ProductCard itemData={itemData} />
+                    </Center>
+                  </Box>
+                );
+              })}
+            </SimpleGrid>
+          </>
+        ) : (
+          <LoadingSpinner />
+        )}
       </Box>
     </React.Fragment>
   );

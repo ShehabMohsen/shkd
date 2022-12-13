@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Modal,
   ModalOverlay,
@@ -26,9 +27,12 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  toast,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
+// import isImageURL from 'image-url-validator'
 
 // will map through the two arrays to render the elements as html
 const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
@@ -41,7 +45,6 @@ const categories = [
   'Shoes',
   'Accessories',
 ];
-
 export default function AddModal() {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,9 +55,25 @@ export default function AddModal() {
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
   const createListing = listingVariables.createListing;
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [isValidImage, setIsValidImage] = useState(false);
+
+
+  const toast = useToast();
+  // useLocation will give us the current route the react app is currently on
+  const location = useLocation();
+
+  function isImage(url) {
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+  }
 
   // handles changes on create listing form
   const handleOnFormChange = event => {
+    // image url validation
+    if (event.target.name == 'image') {
+     setIsValidImage(isImage(event.target.value))
+    }
+
     if (event.target.name == 'category') {
       let listingFormCopy = listingForm;
       listingFormCopy.size = '';
@@ -71,12 +90,12 @@ export default function AddModal() {
       }
     }
     // update listingForm with the value passed
-
     setListingForm({
       ...listingForm,
       [event.target.name]: event.target.value,
     });
   };
+
 
   const handleDiscardDraft = () => {
     setListingForm({
@@ -92,8 +111,68 @@ export default function AddModal() {
   };
 
   const submitListing = async () => {
-    await createListing(listingForm);
+    // logic for checking everything was filled out properly:
+    
+    // makes sure that all input fields are filled out except for description
+    for (const property in listingForm){
+      // iterate through object properties (keys)
+      if (!listingForm[property] && property!='description') {
+        toast({
+          position: 'top',
+          title: 'Create Error.',
+          description:
+            'Please fill out all the required fields',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        return
+      }
+    }
+    // toast for failure
+    if (!isValidImage) {
+      toast({
+        position: 'top',
+        title: 'Create Error.',
+        description:
+          'Please make sure that image URL is Valid',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+
+      return;
+    }
+
+    // logic for making the request
+    setIsButtonLoading(true);
+    await createListing(listingForm, location.pathname);
+    setIsButtonLoading(false);
+
+    // if submission was successful
+    toast({
+      position: 'top',
+      title: 'Create Success.',
+      description: 'Your listing has been created',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+
+    // reset listing form
+    setListingForm({
+      listing_name: '',
+      description: '',
+      gender: '',
+      category: '',
+      size: '',
+      price: '',
+      image: '',
+    });
+    onClose();
   };
+
+
 
   return (
     <>
@@ -145,7 +224,7 @@ export default function AddModal() {
               >
                 <HStack spacing="24px">
                   <Radio value="Male">Men's</Radio>
-                  <Radio value="Women">Women's</Radio>
+                  <Radio value="Female">Women's</Radio>
                   <Radio value="Unisex">Unisex</Radio>
                 </HStack>
               </RadioGroup>
@@ -181,11 +260,15 @@ export default function AddModal() {
                     step={0.5}
                     min={7}
                     max={18}
-                    value = {listingForm.size}
-                    onChange={event =>{
-                      if (event%0.5!=0) setListingForm({ ...listingForm, size: Math.floor(event) })
-                      else setListingForm({ ...listingForm, size: event })}
-                    }
+                    value={listingForm.size}
+                    onChange={event => {
+                      if (event % 0.5 != 0)
+                        setListingForm({
+                          ...listingForm,
+                          size: Math.floor(event),
+                        });
+                      else setListingForm({ ...listingForm, size: event });
+                    }}
                   >
                     <NumberInputField value={9} name="size" />
                     <NumberInputStepper>
@@ -238,7 +321,7 @@ export default function AddModal() {
               </HStack>
             </FormControl>
 
-            <FormControl mt={4}>
+            <FormControl isRequired mt={4}>
               <FormLabel>Image</FormLabel>
               <InputGroup>
                 <InputLeftAddon children="URL" />
@@ -253,7 +336,12 @@ export default function AddModal() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={submitListing} colorScheme="blue" mr={3}>
+            <Button
+              isLoading={isButtonLoading}
+              onClick={submitListing}
+              colorScheme="blue"
+              mr={3}
+            >
               Add Listing
             </Button>
             <Button onClick={onClose}>Save Draft </Button>
