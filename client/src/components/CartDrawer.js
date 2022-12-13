@@ -21,6 +21,10 @@ import {
   Image,
   useColorModeValue,
   useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -46,7 +50,6 @@ export default function CartDrawer() {
   const shoppingCart = cartVariables.shoppingCart;
   const setShoppingCart = cartVariables.setShoppingCart;
   const checkout = cartVariables.checkout;
-
   const [checkoutForm, setCheckoutForm] = useState({});
   // Drawer background color:  useColorModeValue('lightModeColor', 'darkModeColor')
   const bg = useColorModeValue('gray.100', 'gray.800');
@@ -143,12 +146,14 @@ export function CartContent({
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const { authVariables } = useAuthContext();
+  const [errorMsg, setErrorMsg] = useState('');
+
   const toast = useToast();
 
   async function checkoutCart() {
     if (!isChecked) return;
     if (!authVariables.user) {
-
+      setErrorMsg('Please log in to your account before checking out');
       return;
     }
 
@@ -184,6 +189,14 @@ export function CartContent({
       <DrawerBody>
         <CartTable shoppingCart={shoppingCart} />
       </DrawerBody>
+
+      {errorMsg ? (
+        <Alert status="error" variant={'subtle'} width={'80%'} alignSelf={'center'} mb={20}>
+          <AlertIcon />
+          <AlertTitle>Error 401</AlertTitle>
+          <AlertDescription>{errorMsg}</AlertDescription>
+        </Alert>
+      ) : null}
       <HStack>
         <Checkbox
           ml={6}
