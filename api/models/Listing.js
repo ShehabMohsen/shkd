@@ -44,10 +44,6 @@ module.exports = (sequelize, DataTypes) => {
                 // isIn: [['XL','L','M','S','XS']]      
             }
         },
-        listing_region: {
-            type: DataTypes.STRING,
-
-        },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
