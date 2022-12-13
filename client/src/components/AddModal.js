@@ -56,9 +56,9 @@ export default function AddModal() {
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
   const createListing = listingVariables.createListing;
-
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isValidImage, setIsValidImage] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
 
   const toast = useToast();
   // useLocation will give us the current route the react app is currently on
@@ -71,7 +71,7 @@ export default function AddModal() {
   console.log(isValidImage)
   // handles changes on create listing form
   const handleOnFormChange = event => {
-    // iamge url validation
+    // image url validation
     if (event.target.name == 'image') {
      setIsValidImage(isImage(event.target.value))
     }
@@ -114,13 +114,30 @@ export default function AddModal() {
 
   const submitListing = async () => {
     // logic for checking everything was filled out properly:
+    
+    // makes sure that all input fields are filled out except for description
+    for (const property in listingForm){
+      // iterate through object properties (keys)
+      if (!listingForm[property] && property!='description') {
+        toast({
+          position: 'top',
+          title: 'Create Error.',
+          description:
+            'Please fill out all the required fields',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        return
+      }
+    }
     // toast for failure
     if (!isValidImage) {
       toast({
         position: 'top',
         title: 'Create Error.',
         description:
-          'Please fill out all the required fields and make sure that image URL is Valid',
+          'Please make sure that image URL is Valid',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -128,6 +145,7 @@ export default function AddModal() {
 
       return;
     }
+
     // logic for making the request
     setIsButtonLoading(true);
     await createListing(listingForm, location.pathname);
@@ -155,6 +173,8 @@ export default function AddModal() {
     });
     onClose();
   };
+
+
 
   return (
     <>
