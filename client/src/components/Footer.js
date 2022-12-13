@@ -94,14 +94,14 @@ export default function Footer() {
 
           <Stack align={'flex-start'}>
             <ListHeader>Our team</ListHeader>
-            <Link href={'#'}>Shehab Mohsen</Link>
-            <Link href={'#'}>David Wang</Link>
+            <Link href={'https://github.com/ShehabMohsen'}>Shehab Mohsen</Link>
+            <Link href={'https://github.com/dwang312'}>David Wang</Link>
             
           </Stack>
           <Stack align={'flex-start'} mt={6}>
             <ListHeader>{''}</ListHeader>
-            <Link href={'#'}>Hyemin</Link>
-            <Link href={'#'}>Kiane</Link>
+            <Link href={'https://github.com/HyeminShin'}>Hyemin Shin</Link>
+            <Link href={'https://github.com/Kianeefondo'}>Kiane Efondo</Link>
           </Stack>
 
           {/* SECTION 3 */}
