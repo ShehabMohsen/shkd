@@ -69,10 +69,9 @@ export default function ListingsPage() {
     <React.Fragment>
       <Box
         bg={useColorModeValue('gray.50', 'gray.800')}
-        h={'90vh'}
+        minH={'100vh'}
         px={90}
         py={30}
-        minH={'100vh'}
       >
         {!isLoading ? (
           <>
@@ -95,7 +94,7 @@ export default function ListingsPage() {
                 </Stack>
               </GridItem>
             </Grid>
-            <SimpleGrid columns={[1, 2, 3]} spacing="40px" mx={60}>
+            <SimpleGrid columns={[1, 2, 3, 4]} spacing="40px" mx={60}>
               {searchedListings.map(itemData => {
                 return (
                   <Box>

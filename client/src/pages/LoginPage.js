@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Flex,
   Box,
@@ -24,17 +24,17 @@ export default function SimpleCard() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   // this object will update to the values the user types into the input form
-  const [form, setForm] = React.useState({
+  const [form, setForm] = useState({
     email: '',
     password: '',
   });
-  const [errorMsg, setErrorMsg] = React.useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   // for redirecting our page to landing page after logging in
   const navigate = useNavigate();
 
   // boolean state variable to have a loading button
-  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const handleOnFormChange = event => {
     setErrorMsg('');

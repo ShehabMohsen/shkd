@@ -25,6 +25,7 @@ import {
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
+import { useAuthContext } from '../contexts/AuthContext';
 import { useState } from 'react';
 import CartTable from './CartTable';
 import Headline from './Headline';
@@ -41,6 +42,7 @@ export default function CartDrawer() {
   const btnRef = React.useRef();
   // CartContext
   const { cartVariables } = useCartContext();
+  // to ensure user is authed when checkint out:
   const shoppingCart = cartVariables.shoppingCart;
   const setShoppingCart = cartVariables.setShoppingCart;
   const checkout = cartVariables.checkout;
@@ -140,10 +142,16 @@ export function CartContent({
 }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const { authVariables } = useAuthContext();
   const toast = useToast();
 
   async function checkoutCart() {
     if (!isChecked) return;
+    if (!authVariables.user) {
+
+      return;
+    }
+
     setIsButtonLoading(true);
     // call to chechkout function
     await checkout(checkoutForm);

@@ -111,24 +111,24 @@ export default function Navigation({}) {
               Sign In
             </Button>
           )}
-          {authVariables.user ? <CartDrawer /> : null}
           <Link to="/register">
             {authVariables.user ? null : (
               <Button
-                display={{ base: 'none', md: 'inline-flex' }}
-                fontSize={'sm'}
-                fontWeight={600}
-                color={'white'}
-                bg={'orange.400'}
-                href={'/register'}
-                _hover={{
-                  bg: 'orange.500',
-                }}
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'orange.400'}
+              href={'/register'}
+              _hover={{
+                bg: 'orange.500',
+              }}
               >
                 Sign Up
               </Button>
             )}
           </Link>
+            <CartDrawer />
         </Stack>
       </Flex>
 
