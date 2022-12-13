@@ -77,7 +77,7 @@ export default function ListingsPage() {
     <React.Fragment>
       <Box
         bg={useColorModeValue('gray.50', 'gray.800')}
-        minH={'70vh'}
+        minH={'80vh'}
         px={90}
         py={30}
       >
