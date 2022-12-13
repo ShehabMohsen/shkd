@@ -45,7 +45,7 @@ import {
       event.preventDefault();
       
       try {
-        authVariables.signup(form)
+        await authVariables.signup(form)
         navigate("/")
       } catch (error){
         console.log(error)
