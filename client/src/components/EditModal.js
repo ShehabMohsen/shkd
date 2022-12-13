@@ -48,18 +48,25 @@ export default function EditModal({ itemData, setIsEditActive }) {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-  const toast = useToast()
-
+  const toast = useToast();
+  const [isValidImage, setIsValidImage] = useState(false);
 
   // listing context variables
   const { listingVariables } = useListingContext();
-  const [listingForm, setListingForm] = useState({...itemData});
+  const [listingForm, setListingForm] = useState({ ...itemData });
   //to pass pathname to update listing function
-  const location = useLocation()
-  
+  const location = useLocation();
 
-  // handles changes on the listing form
+  function isImage(url) {
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+  }
+
   const handleOnFormChange = event => {
+    // image url validation
+    if (event.target.name == 'image') {
+     setIsValidImage(isImage(event.target.value))
+    }
+
     if (event.target.name == 'category') {
       let listingFormCopy = listingForm;
       listingFormCopy.size = '';
@@ -76,22 +83,52 @@ export default function EditModal({ itemData, setIsEditActive }) {
       }
     }
     // update listingForm with the value passed
-
     setListingForm({
       ...listingForm,
       [event.target.name]: event.target.value,
     });
   };
-
   // Do not save changes when closing modal
-  const onCloseModal = ()=> {
+  const onCloseModal = () => {
     setListingForm(itemData);
-    setIsEditActive(false)
-    onClose()
-  } 
+    setIsEditActive(false);
+    onClose();
+  };
+
   // Save changes made to listing
   const handleSaveChanges = () => {
-    listingVariables.updateListing(listingForm, location.pathname) ;
+    for (const property in listingForm) {
+      // iterate through object properties (keys)
+      if (!listingForm[property] && property != 'description') {
+        
+        console.log(property, listingForm[property])
+        toast({
+          position: 'top',
+          title: 'Edit Error.',
+          description: 'Please fill out all the required fields',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        return;
+      }
+    }
+
+    // toast for failure
+    if (!isValidImage) {
+      toast({
+        position: 'top',
+        title: 'Edit Error.',
+        description: 'Please make sure that image URL is Valid',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+
+      return;
+    }
+
+    listingVariables.updateListing(listingForm, location.pathname);
     toast({
       position: 'top',
       title: 'Edit Success.',
@@ -100,8 +137,8 @@ export default function EditModal({ itemData, setIsEditActive }) {
       duration: 5000,
       isClosable: true,
     });
-    onClose()
-    setIsEditActive(false)
+    onClose();
+    setIsEditActive(false);
   };
 
   return (

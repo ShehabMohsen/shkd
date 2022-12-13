@@ -45,7 +45,6 @@ const categories = [
   'Shoes',
   'Accessories',
 ];
-
 export default function AddModal() {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -58,7 +57,7 @@ export default function AddModal() {
   const createListing = listingVariables.createListing;
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [isValidImage, setIsValidImage] = useState(false);
-  const [errMsg, setErrMsg] = useState('');
+
 
   const toast = useToast();
   // useLocation will give us the current route the react app is currently on
@@ -68,14 +67,12 @@ export default function AddModal() {
     return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
   }
 
-  console.log(isValidImage)
   // handles changes on create listing form
   const handleOnFormChange = event => {
     // image url validation
     if (event.target.name == 'image') {
      setIsValidImage(isImage(event.target.value))
     }
-
 
     if (event.target.name == 'category') {
       let listingFormCopy = listingForm;
@@ -98,6 +95,7 @@ export default function AddModal() {
       [event.target.name]: event.target.value,
     });
   };
+
 
   const handleDiscardDraft = () => {
     setListingForm({
@@ -155,7 +153,7 @@ export default function AddModal() {
     toast({
       position: 'top',
       title: 'Create Success.',
-      description: 'Your listing has been added',
+      description: 'Your listing has been created',
       status: 'success',
       duration: 5000,
       isClosable: true,

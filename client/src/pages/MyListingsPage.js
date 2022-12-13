@@ -18,7 +18,7 @@ import {
 import { Search2Icon } from '@chakra-ui/icons';
 import Headline from '../components/Headline';
 
-const headlineHeader = 'You Have no Listings...';
+const headlineHeader = 'You have no listings...';
 const headlineText =
   'You have yet to create any listings on our website! Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
 
