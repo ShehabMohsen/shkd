@@ -84,6 +84,7 @@ export default function ListingsPage() {
                       children={<Search2Icon color="gray.300" />}
                     />
                     <Input
+                      variant={'filled'}
                       type="search"
                       placeholder="Search for item"
                       value={searchValue}

@@ -105,7 +105,6 @@ export default function ListingsPage() {
                         
                           type="search"
                           borderWidth={2}
-                          bgColor={'white'}
                           variant={'filled'}
                           placeholder="Search for item"
                           value={searchValue}
