@@ -49,7 +49,7 @@ export default function EditModal({ itemData, setIsEditActive }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const toast = useToast();
-  const [isValidImage, setIsValidImage] = useState(false);
+  const [isValidImage, setIsValidImage] = useState(true);
 
   // listing context variables
   const { listingVariables } = useListingContext();
