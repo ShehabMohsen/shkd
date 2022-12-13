@@ -52,12 +52,12 @@ export default function OrderHistoryPage() {
   //Generate Order History Page
   return (
     <React.Fragment>
-      <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'90vh'}>
+      <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'70vh'}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
-          {orders.length == 0 ?<Headline headlineHeader={headlineHeader} headlineText={headlineText}/>: (
+          {orders.length == 0 ?<Center><Headline headlineHeader={headlineHeader} headlineText={headlineText}/></Center>: (
               <>
               <Spacer h="30px" />
               <Heading textAlign="center">Your Order History</Heading>
