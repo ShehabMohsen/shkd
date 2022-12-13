@@ -30,9 +30,8 @@ import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
 import CartDrawer from './CartDrawer';
 import AddModal from './AddModal';
-
-// import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
 import Logo from '../Assets/Logo.png';
+
 export default function Navigation({}) {
   const { isOpen, onToggle } = useDisclosure();
   // from AuthContext, contains user, signin, signout, signup, etc

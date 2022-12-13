@@ -20,9 +20,9 @@ import { useAuthContext } from '../contexts/AuthContext';
 export default function LandingPage() {
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
-
+  
   return (
-    <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'100vh'}>
+    <Box  minH={'70vh'}>
     <Container maxW={'7xl'}>
       <Stack
         align={'center'}

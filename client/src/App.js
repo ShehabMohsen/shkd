@@ -17,6 +17,7 @@ import { ListingContextProvider } from './contexts/ListingContext';
 import { CartContextProvider } from './contexts/CartContext';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import MyListingsPage from './pages/MyListingsPage';
+import Footer from './components/Footer';
 function App() {
   return (
     <ChakraProvider theme={theme}>
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/user/orders" element={<OrderHistoryPage />} />
                 <Route path="/user/listings" element={<MyListingsPage />} />
               </Routes>
+              <Footer/>
             </BrowserRouter>
           </ListingContextProvider>
         </CartContextProvider>
