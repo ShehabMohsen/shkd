@@ -33,19 +33,20 @@ import AddModal from './AddModal';
 
 // import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
 import Logo from '../Assets/Logo.png';
-export default function Navigation() {
+export default function Navigation({}) {
   const { isOpen, onToggle } = useDisclosure();
-  // toggle darkmode on and off
-  const { colorMode, toggleColorMode } = useColorMode();
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   // for redirecting our page to landing page after logging in
   const navigate = useNavigate();
 
+  // toggle darkmode on and off
+  const { colorMode, toggleColorMode } = useColorMode();
   // making a dedicating handler for logging out in case we need to do more
   const handleOnClickLogout = async event => {
     authVariables.logout();
   };
+  console.log(colorMode)
 
   return (
     <Box>

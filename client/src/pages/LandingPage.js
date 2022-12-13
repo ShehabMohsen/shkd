@@ -22,7 +22,8 @@ export default function LandingPage() {
   const { authVariables } = useAuthContext();
 
   return (
-    <Container  maxW={'7xl'}>
+    <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'100vh'}>
+    <Container maxW={'7xl'}>
       <Stack
         align={'center'}
         spacing={{ base: 8, md: 10 }}
@@ -147,6 +148,7 @@ export default function LandingPage() {
         </Flex>
       </Stack>
     </Container>
+    </Box>
   );
 }
 

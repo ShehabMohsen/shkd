@@ -20,7 +20,8 @@ import Headline from '../components/Headline';
 
 const headlineHeader = 'You have no listings...';
 const headlineText =
-  'You have yet to create any listings on our website! Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
+  'You have yet to create any listings on our website!' + 
+  'Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
 
 export default function ListingsPage() {
   const { listingVariables } = useListingContext();
@@ -76,7 +77,7 @@ export default function ListingsPage() {
     <React.Fragment>
       <Box
         bg={useColorModeValue('gray.50', 'gray.800')}
-        minh={'100vh'}
+        minH={'100vh'}
         px={90}
         py={30}
       >
