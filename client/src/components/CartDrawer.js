@@ -20,7 +20,7 @@ import {
   HStack,
   Image,
   useColorModeValue,
-  useToast
+  useToast,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
@@ -30,9 +30,10 @@ import CartTable from './CartTable';
 import Headline from './Headline';
 import Logo from '../Assets/Logo.png';
 
-
-const headlineHeader = 'Your Cart is Empty!'
-const headlineText = 'You have nothing in your Cart! Feel free to check out our listings page and pick whatever you like 🙂'
+const headlineHeader = 'Your Cart is Empty!';
+const headlineText =
+  'You have nothing in your Cart! ' +
+  'Feel free to check out our listings page and pick whatever you like 🙂';
 
 export default function CartDrawer() {
   // Required to make drawer work
@@ -102,7 +103,10 @@ export default function CartDrawer() {
             <>
               <Center height={'100%'}>
                 <VStack>
-                  <Headline headlineHeader={headlineHeader} headlineText={headlineText}/>
+                  <Headline
+                    headlineHeader={headlineHeader}
+                    headlineText={headlineText}
+                  />
                   <Link to="/listings">
                     <Button
                       size={'lg'}
@@ -136,7 +140,7 @@ export function CartContent({
 }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const toast = useToast()
+  const toast = useToast();
 
   async function checkoutCart() {
     if (!isChecked) return;
@@ -153,7 +157,7 @@ export function CartContent({
     toast({
       position: 'top',
       title: 'Checkout Success.',
-      description: "Your order has been processed, thank you for using SHKD :)",
+      description: 'Your order has been processed, thank you for using SHKD :)',
       status: 'success',
       duration: 8000,
       isClosable: true,
@@ -189,7 +193,7 @@ export function CartContent({
           colorScheme="blue"
           isLoading={isButtonLoading}
           onClick={() => {
-            checkoutCart()
+            checkoutCart();
           }}
         >
           Checkout
