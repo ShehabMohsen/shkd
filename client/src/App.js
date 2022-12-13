@@ -28,7 +28,6 @@ function App() {
         <CartContextProvider>
           <ListingContextProvider>
             <BrowserRouter>
-            <Box bg={useColorModeValue('gray.50', 'gray.800')} h="100vh">
               <Navigation />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
@@ -38,7 +37,6 @@ function App() {
                 <Route path="/user/orders" element={<OrderHistoryPage/>}/>
                 <Route path="/user/listings" element={<MyListingsPage/>}/>
               </Routes>
-              </Box>
             </BrowserRouter>
           </ListingContextProvider>
         </CartContextProvider>

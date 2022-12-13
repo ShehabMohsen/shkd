@@ -72,6 +72,7 @@ export default function ListingsPage() {
         h={'90vh'}
         px={90}
         py={30}
+        minH={'100vh'}
       >
         {!isLoading ? (
           <>
