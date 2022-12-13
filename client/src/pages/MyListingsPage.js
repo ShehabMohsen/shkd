@@ -13,14 +13,14 @@ import {
   InputLeftElement,
   Center,
   SimpleGrid,
-  VStack
+  VStack,
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import Headline from '../components/Headline';
 
 const headlineHeader = 'You have no listings...';
 const headlineText =
-  'You have yet to create any listings on our website!' + 
+  'You have yet to create any listings on our website!' +
   'Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
 
 export default function ListingsPage() {
@@ -103,7 +103,6 @@ export default function ListingsPage() {
                           children={<Search2Icon color="gray.300" />}
                         />
                         <Input
-                        
                           type="search"
                           borderWidth={2}
                           variant={'filled'}
@@ -118,9 +117,9 @@ export default function ListingsPage() {
                 <SimpleGrid columns={[1, 2, 3, 4]} spacing="40px" mx={60}>
                   {searchedListings.map(itemData => {
                     return (
-                      <Box>
-                        <Center>
-                          <ProductCard itemData={itemData} />
+                      <Box key={itemData.id}>
+                        <Center key={itemData.id}>
+                          <ProductCard key={itemData.id} itemData={itemData} />
                         </Center>
                       </Box>
                     );
