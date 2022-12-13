@@ -7,8 +7,8 @@ export function useListingContext() {
 }
 
 export const ListingContextProvider = ({ children }) => {
-  const [listings, setListings] = useState();
-  const [userListings, setUserListings] = useState();
+  const [listings, setListings] = useState([]);
+  const [userListings, setUserListings] = useState([]);
   const [listingForm, setListingForm] = useState({
     listing_name: '',
     description: '',
