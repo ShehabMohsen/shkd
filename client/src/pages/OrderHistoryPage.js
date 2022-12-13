@@ -61,10 +61,10 @@ export default function OrderHistoryPage() {
             <Spacer h='30px' />
             {isLoading ? null : orders.map((order, index) => {
                 return (
-                    <Flex justify="center" >
-                        <Box width='xl' mb='20' >
+                    <Flex justify="center">
+                        <Box width='xl' mb='20' border="ridge" borderColor={"#D3D3D3"} margin = "15px">
                             <HStack>
-                                <Heading size="md">Order #{order.id}</Heading>
+                                <Heading size="md" textIndent={"20px"}>Order #{order.id}</Heading>
                                 <Spacer h ='30px'/>
                                 <Heading size = "xs"> {getFormattedDate(order.createdAt)}</Heading>
                             </HStack>
