@@ -100,8 +100,6 @@ export default function EditModal({ itemData, setIsEditActive }) {
     for (const property in listingForm) {
       // iterate through object properties (keys)
       if (!listingForm[property] && property != 'description') {
-        
-        console.log(property, listingForm[property])
         toast({
           position: 'top',
           title: 'Edit Error.',

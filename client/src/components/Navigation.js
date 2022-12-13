@@ -45,7 +45,6 @@ export default function Navigation({}) {
   const handleOnClickLogout = async event => {
     authVariables.logout();
   };
-  console.log(colorMode);
 
   return (
     <Box>
