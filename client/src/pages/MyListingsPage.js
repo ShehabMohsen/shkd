@@ -13,11 +13,12 @@ import {
   InputLeftElement,
   Center,
   SimpleGrid,
+  VStack
 } from '@chakra-ui/react';
 import { Search2Icon } from '@chakra-ui/icons';
 import Headline from '../components/Headline';
 
-const headlineHeader = 'You have no created Listings!';
+const headlineHeader = 'You Have no Listings...';
 const headlineText =
   'You have yet to create any listings on our website! Feel free to add to our collection of listings by clicking the add button in the navigation bar 🙂';
 
@@ -80,7 +81,14 @@ export default function ListingsPage() {
         py={30}
       >
         {listings.length == 0 ? (
-          <Headline headlineHeader={headlineHeader} headlineText={headlineText}/>
+          <Center height={'100%'}>
+            <VStack>
+              <Headline
+                headlineHeader={headlineHeader}
+                headlineText={headlineText}
+              />
+            </VStack>
+          </Center>
         ) : (
           <>
             {!isLoading ? (

@@ -18,6 +18,7 @@ import {
   AccordionIcon,
   Wrap,
   WrapItem,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
@@ -32,7 +33,7 @@ export default function ProductCard({ itemData }) {
   const [isEditActive, setIsEditActive] = useState(false);
 
   return (
-    <Card maxW="sm">
+    <Card bgColor={useColorModeValue('white','gray.700')} maxW="sm">
       <CardBody>
         <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">

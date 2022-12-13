@@ -34,7 +34,7 @@ export default function ListingsPage() {
         let fetchedListings = await response.json();
 
         setListings(fetchedListings);
-        setSearchedListings(fetchedListings)
+        setSearchedListings(fetchedListings);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -43,10 +43,9 @@ export default function ListingsPage() {
     getListingsData();
   }, []);
 
-
-  useEffect(()=>{
-    setSearchedListings(listings)
-  },[listings])
+  useEffect(() => {
+    setSearchedListings(listings);
+  }, [listings]);
 
   async function handleOnSearchChange(event) {
     setIsLoading(true);

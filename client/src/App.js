@@ -9,6 +9,7 @@ import {
   Code,
   Grid,
   theme,
+  useColorModeValue
 } from '@chakra-ui/react';
 import Navigation from './components/Navigation';
 import LandingPage from './pages/LandingPage';
@@ -18,7 +19,6 @@ import LoginPage from './pages/LoginPage';
 import { AuthContextProvider } from './contexts/AuthContext';
 import { ListingContextProvider } from './contexts/ListingContext';
 import { CartContextProvider } from './contexts/CartContext';
-import CreateListing from './pages/CreateListing';
 import OrderHistoryPage from './pages/OrderHistoryPage';
 import MyListingsPage from "./pages/MyListingsPage"
 function App() {
@@ -28,16 +28,17 @@ function App() {
         <CartContextProvider>
           <ListingContextProvider>
             <BrowserRouter>
+            <Box bg={useColorModeValue('gray.50', 'gray.800')} h="100vh">
               <Navigation />
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/listings" element={<ListingsPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="listing/create" element={<CreateListing/>}/>
                 <Route path="/user/orders" element={<OrderHistoryPage/>}/>
                 <Route path="/user/listings" element={<MyListingsPage/>}/>
               </Routes>
+              </Box>
             </BrowserRouter>
           </ListingContextProvider>
         </CartContextProvider>

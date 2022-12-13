@@ -32,6 +32,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
+// import isImageURL from 'image-url-validator'
 
 // will map through the two arrays to render the elements as html
 const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
@@ -57,12 +58,25 @@ export default function AddModal() {
   const createListing = listingVariables.createListing;
 
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [isValidImage, setIsValidImage] = useState(false);
+
   const toast = useToast();
   // useLocation will give us the current route the react app is currently on
-  const location = useLocation()
+  const location = useLocation();
 
+  function isImage(url) {
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+  }
+
+  console.log(isValidImage)
   // handles changes on create listing form
   const handleOnFormChange = event => {
+    // iamge url validation
+    if (event.target.name == 'image') {
+     setIsValidImage(isImage(event.target.value))
+    }
+
+
     if (event.target.name == 'category') {
       let listingFormCopy = listingForm;
       listingFormCopy.size = '';
@@ -101,21 +115,24 @@ export default function AddModal() {
   const submitListing = async () => {
     // logic for checking everything was filled out properly:
     // toast for failure
-    // toast({
-    //   position: 'top',
-    //   title: 'Create Error.',
-    //   description: 'Please fill out all the required fields and make sure that image URL is Valid',
-    //   status: 'error',
-    //   duration: 9000,
-    //   isClosable: true,
-    // });
+    if (!isValidImage) {
+      toast({
+        position: 'top',
+        title: 'Create Error.',
+        description:
+          'Please fill out all the required fields and make sure that image URL is Valid',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
 
+      return;
+    }
     // logic for making the request
     setIsButtonLoading(true);
     await createListing(listingForm, location.pathname);
     setIsButtonLoading(false);
-    
-    
+
     // if submission was successful
     toast({
       position: 'top',
@@ -135,7 +152,7 @@ export default function AddModal() {
       size: '',
       price: '',
       image: '',
-    })
+    });
     onClose();
   };
 
@@ -286,7 +303,7 @@ export default function AddModal() {
               </HStack>
             </FormControl>
 
-            <FormControl mt={4}>
+            <FormControl isRequired mt={4}>
               <FormLabel>Image</FormLabel>
               <InputGroup>
                 <InputLeftAddon children="URL" />
