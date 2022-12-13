@@ -51,6 +51,11 @@ export default function OrderHistoryPage() {
         getOrderHistory();
     }, []);
 
+    //####################COMMENT TO BE DELETED####################
+    /*Insert headline.js from Shehab's branch later on*/
+    //####################COMMENT TO BE DELETED####################
+
+
     //Generate Order History Page
     //Converting ISO8601 to timestamp
     //https://linuxhint.com/date-toisostring-method-javascript/#:~:text=The%20Date%20toISOString()%20method%20is%20used%20to%20format%20the,string%20value%20to%20the%20caller.
@@ -75,5 +80,4 @@ export default function OrderHistoryPage() {
             })}
         </React.Fragment>
     )
-
 }
