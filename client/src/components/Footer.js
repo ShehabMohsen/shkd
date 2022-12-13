@@ -42,10 +42,10 @@ const ListHeader = ({ children }) => {
 
 export default function Footer() {
   return (
-    <Box
+    <Box id ="footer"
       bg={useColorModeValue('gray.50', 'gray.900')}
       color={useColorModeValue('gray.700', 'gray.200')}>
-      <Container as={Stack} maxW={'6xl'} py={10}>
+      <Container as={Stack} maxW={'sm'} py={10}>
         <Flex>
           <Stack spacing={6}>
             <Box>
