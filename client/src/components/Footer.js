@@ -93,20 +93,15 @@ export default function Footer() {
           </Stack>
 
           <Stack align={'flex-start'}>
-            <ListHeader>Company</ListHeader>
-            <Link href={'#'}>About us</Link>
-            <Link href={'#'}>Blog</Link>
-            <Link href={'#'}>Contact us</Link>
-            <Link href={'#'}>Pricing</Link>
-            <Link href={'#'}>Testimonials</Link>
+            <ListHeader>Our team</ListHeader>
+            <Link href={'#'}>Shehab Mohsen</Link>
+            <Link href={'#'}>David Wang</Link>
+            
           </Stack>
-          <Stack align={'flex-start'}>
-            <ListHeader>Support</ListHeader>
-            <Link href={'#'}>Help Center</Link>
-            <Link href={'#'}>Terms of Service</Link>
-            <Link href={'#'}>Legal</Link>
-            <Link href={'#'}>Privacy Policy</Link>
-            <Link href={'#'}>Satus</Link>
+          <Stack align={'flex-start'} mt={6}>
+            <ListHeader>{''}</ListHeader>
+            <Link href={'#'}>Hyemin</Link>
+            <Link href={'#'}>Kiane</Link>
           </Stack>
 
           {/* SECTION 3 */}
