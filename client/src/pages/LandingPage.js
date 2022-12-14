@@ -55,11 +55,10 @@ export default function LandingPage() {
               4 YOU!
             </Text>
           </Heading>
-          <Text color={'gray.500'}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+          <Text color={'gray.500'} fontSize={20} >
+            Join now and learn from the numerous fashionistas selling their
+            clothes right here! Look for your style and express yourself through
+            fashion!
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
