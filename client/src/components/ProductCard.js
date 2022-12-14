@@ -33,12 +33,14 @@ export default function ProductCard({ itemData }) {
   const { authVariables } = useAuthContext();
   // to be passed to child components for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const shadowColor = useColorModeValue('md', 'dark-lg');
 
   return (
     <Card
       bgColor={useColorModeValue('white', 'gray.700')}
       minW="250px"
       maxW="sm"
+      boxShadow={shadowColor}
     >
       <CardBody>
         <Image src={itemData.image} borderRadius="lg" />
