@@ -36,7 +36,7 @@ export default function OrderHistoryPage() {
     https://isotropic.co/how-to-format-a-date-as-dd-mm-yyyy-in-javascript/
     https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options*/
-    const getFormattedDate = (dateStr: string) => {
+    const getFormattedDate = (dateStr) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString(); //Returns in local time of machine
       }
@@ -64,7 +64,7 @@ export default function OrderHistoryPage() {
   //Generate Order History Page
   return (
     <React.Fragment>
-      <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'70vh'}>
+      <Box  minH={'70vh'}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
