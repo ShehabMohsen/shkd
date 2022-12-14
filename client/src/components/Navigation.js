@@ -153,7 +153,7 @@ const DesktopNav = () => {
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? '#'}
+                to={navItem.href ?? '#'}
                 fontSize={'sm'}
                 fontWeight={500}
                 color={linkColor}
@@ -300,14 +300,14 @@ const NAV_ITEMS = [
   },
   {
     label: 'Male Clothing',
-    href: '#',
+    href: '/listings',
   },
   {
     label: 'Female Clothing',
-    href: '#',
+    href: '/listings',
   },
   {
     label: 'Accessories',
-    href: '#',
+    href: '/listings',
   },
 ];
