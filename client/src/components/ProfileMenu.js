@@ -43,9 +43,8 @@ export default function ProfileMenu({authVariables}) {
           <MenuItem onClick={onClickOrderHistory}>Order History </MenuItem>
         </MenuGroup>
         <MenuDivider />
-        <MenuGroup title="Help">
+        <MenuGroup title="Account">
           <MenuItem onClick={authVariables.logout}>Sign Out</MenuItem>
-          <MenuItem>About Us</MenuItem>
         </MenuGroup>
       </MenuList>
     </Menu>
