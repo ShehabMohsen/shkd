@@ -18,7 +18,8 @@ import {
   AccordionIcon,
   Wrap,
   WrapItem,
-  useColorModeValue
+  useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
@@ -30,10 +31,16 @@ import EditModal from './EditModal';
 export default function ProductCard({ itemData }) {
   const { cartVariables } = useCartContext();
   const { authVariables } = useAuthContext();
-  const [isEditActive, setIsEditActive] = useState(false);
+  // to be passed to child components for opening/closing the modal
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
 
   return (
-    <Card bgColor={useColorModeValue('white','gray.700')} minW='250px' maxW="sm">
+    <Card
+      bgColor={useColorModeValue('white', 'gray.700')}
+      minW="250px"
+      maxW="sm"
+    >
       <CardBody>
         <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">
@@ -97,25 +104,20 @@ export default function ProductCard({ itemData }) {
           </Wrap>
         ) : (
           <Wrap>
+            <EditModal itemData={itemData} isOpen={isOpen} onOpen={onOpen} onClose={onClose}/>
             <ButtonGroup spacing="2">
-              {isEditActive ? (
-                <EditModal
-                  itemData={itemData}
-                  setIsEditActive={setIsEditActive}
-                />
-              ) : (
-                <WrapItem>
-                  <Button
-                    colorScheme={'blue'}
-                    onClick={setIsEditActive(!isEditActive)}
-                    rightIcon={<EditIcon />}
-                  >
-                    Edit
-                  </Button>
-                </WrapItem>
-              )}
               <WrapItem>
-                <DeleteListingButton listingId={itemData.id} />{' '}
+                <Button
+                  colorScheme={'blue'}
+                  rightIcon={<EditIcon />}
+                  onClick={onOpen}
+                >
+                  Edit
+                </Button>
+              </WrapItem>
+
+              <WrapItem>
+                <DeleteListingButton listingId={itemData.id} isOpen={isOpen}  onOpen={onOpen} onClose={onClose}/>{' '}
               </WrapItem>
             </ButtonGroup>
           </Wrap>

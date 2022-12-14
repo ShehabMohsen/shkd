@@ -97,9 +97,9 @@ export default function ListingsPage() {
             <SimpleGrid columns={[1, 2, 3, 4]} spacing="40px" mx={60}>
               {searchedListings.map(itemData => {
                 return (
-                  <Box>
-                    <Center>
-                      <ProductCard itemData={itemData} />
+                  <Box key={itemData.id}>
+                    <Center key={itemData.id}>
+                      <ProductCard key={itemData.id} itemData={itemData} />
                     </Center>
                   </Box>
                 );

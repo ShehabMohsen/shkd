@@ -9,7 +9,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  useDisclosure,
   FormControl,
   FormLabel,
   Input,
@@ -44,15 +43,14 @@ const categories = [
   'Accessories',
 ];
 
-export default function EditModal({ itemData, setIsEditActive }) {
-  // needed for opening/closing the modal
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function EditModal({ itemData, isOpen, onOpen, onClose }) {
   const initialRef = React.useRef(null);
+  // feedback toast when calling handleSaveChanges
   const toast = useToast();
   const [isValidImage, setIsValidImage] = useState(true);
-
   // listing context variables
   const { listingVariables } = useListingContext();
+  // pre load the form in order to edit
   const [listingForm, setListingForm] = useState({ ...itemData });
   //to pass pathname to update listing function
   const location = useLocation();
@@ -64,7 +62,7 @@ export default function EditModal({ itemData, setIsEditActive }) {
   const handleOnFormChange = event => {
     // image url validation
     if (event.target.name == 'image') {
-     setIsValidImage(isImage(event.target.value))
+      setIsValidImage(isImage(event.target.value));
     }
 
     if (event.target.name == 'category') {
@@ -91,7 +89,6 @@ export default function EditModal({ itemData, setIsEditActive }) {
   // Do not save changes when closing modal
   const onCloseModal = () => {
     setListingForm(itemData);
-    setIsEditActive(false);
     onClose();
   };
 
@@ -100,8 +97,6 @@ export default function EditModal({ itemData, setIsEditActive }) {
     for (const property in listingForm) {
       // iterate through object properties (keys)
       if (!listingForm[property] && property != 'description') {
-        
-        console.log(property, listingForm[property])
         toast({
           position: 'top',
           title: 'Edit Error.',
@@ -138,14 +133,10 @@ export default function EditModal({ itemData, setIsEditActive }) {
       isClosable: true,
     });
     onClose();
-    setIsEditActive(false);
   };
 
   return (
     <>
-      <Button colorScheme={'blue'} onClick={onOpen} rightIcon={<EditIcon />}>
-        Edit
-      </Button>
       <Modal
         size={'xl'}
         initialFocusRef={initialRef}
