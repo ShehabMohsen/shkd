@@ -182,7 +182,7 @@ export function CartContent({
       <DrawerHeader textColor={'orange.400'}>
         <HStack>
           <Image src={Logo} width="45px" marginLeft="2px" />
-          <Text>Your Shopping Cart</Text>
+          <Text fontFamily={'cursive'}>Your Shopping Cart</Text>
         </HStack>
       </DrawerHeader>
 

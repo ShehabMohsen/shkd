@@ -37,6 +37,7 @@ export default function LandingPage() {
             <Text
               as={'span'}
               position={'relative'}
+              fontFamily='cursive'
               _after={{
                 content: "''",
                 width: 'full',
@@ -51,7 +52,7 @@ export default function LandingPage() {
               FASHION
             </Text>
             <br />
-            <Text as={'span'} color={'orange.400'}>
+            <Text as={'span'} color={'orange.400'} fontFamily='cursive'>
               4 YOU!
             </Text>
           </Heading>

@@ -43,6 +43,7 @@ export default function Footer() {
                 <Text
                   textColor={useColorModeValue('orange.500', 'orange.400')}
                   fontWeight={'semibold'}
+                  fontFamily='cursive'
                 >
                   FASHION 4 YOU!
                 </Text>
