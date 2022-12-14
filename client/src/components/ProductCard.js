@@ -57,8 +57,8 @@ export default function ProductCard({ itemData }) {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Text fontSize="md">Category: {itemData.category}</Text>
-                <Text fontSize="sm" as="i">
+                <Text fontSize="md" mb={2} >Category: {itemData.category}</Text>
+                <Text fontSize="md" as="i">
                   {itemData.description}
                 </Text>
               </AccordionPanel>
