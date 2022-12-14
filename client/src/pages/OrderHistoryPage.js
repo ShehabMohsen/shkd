@@ -61,6 +61,8 @@ export default function OrderHistoryPage() {
     getOrderHistory();
   }, []);
 
+  //useColorModeValue(light,dark) (each as string)
+
   //Generate Order History Page
   return (
     <React.Fragment>
@@ -77,16 +79,17 @@ export default function OrderHistoryPage() {
               {orders.map((order, index) => {
                 return (
                   <Flex justify="center">
-                    <Box width="xl" mb="20" border="ridge" borderColor={"#D3D3D3"} margin = "15px">
+                    <Box width="xl" mb="20" border="ridge" borderColor={"blue.800"} margin = "15px" padding = "10px">
                       <HStack>
-                        <Heading size="md" textIndent={"20px"} >Order #{order.id}</Heading>
-                        <Spacer h="30px" />
-                        <Heading size="xs"> {getFormattedDate(order.createdAt)}</Heading>
+                        <Heading size="md" h ="20px" textIndent={"20px"}>Order #{order.id}</Heading>
+                        <Spacer  h="10px"/>
+                        <Heading size="xs" h ="10px"> {getFormattedDate(order.createdAt)}</Heading>
                       </HStack>
                       <CartTable
                         key={index}
                         shoppingCart={order.listings}
                         isPrevOrder={true}
+                        
                       />
                     </Box>
                   </Flex>
