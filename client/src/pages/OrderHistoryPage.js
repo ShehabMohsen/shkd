@@ -15,7 +15,7 @@ import {
   Spacer,
   Box,
   Center,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -30,23 +30,21 @@ export default function OrderHistoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [orders, setOrders] = useState({});
 
-
-    /*Reference Used for DateTime:
+  /*Reference Used for DateTime:
     https://stackoverflow.com/questions/68121540/how-can-i-access-my-json-datetime-value-from-my-react-component
     https://isotropic.co/how-to-format-a-date-as-dd-mm-yyyy-in-javascript/
     https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options*/
-    const getFormattedDate = (dateStr: string) => {
-        const date = new Date(dateStr);
-        return date.toLocaleDateString(); //Returns in local time of machine
-      }
-      
+  const getFormattedDate = dateStr => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString(); //Returns in local time of machine
+  };
+
   //Fetches Order Data
   useEffect(() => {
     async function getOrderHistory() {
       try {
         let response = await fetch(`/api/order/myOrders`);
-
 
         if (!response.ok) throw new Error('Unable to get orders');
 
@@ -62,44 +60,63 @@ export default function OrderHistoryPage() {
   }, []);
 
   //useColorModeValue(light,dark) (each as string)
+  const shadowColor = useColorModeValue('md', 'dark-lg');
 
   //Generate Order History Page
   return (
     <React.Fragment>
-      <Box bgColor={useColorModeValue('gray.50', 'gray.800')} minH={'70vh'}>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          {orders.length == 0 ?<Center><Headline headlineHeader={headlineHeader} headlineText={headlineText}/></Center>: (
+      <Box bgColor={useColorModeValue('white', 'gray.800')} minH={'70vh'}>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            {orders.length == 0 ? (
+              <Center>
+                <Headline
+                  headlineHeader={headlineHeader}
+                  headlineText={headlineText}
+                />
+              </Center>
+            ) : (
               <>
-              <Spacer h="30px" />
-              <Heading textAlign="center">Your Order History</Heading>
-              <Spacer h="30px" />
-              {orders.map((order, index) => {
-                return (
-                  <Flex justify="center">
-                    <Box width="xl" mb="20" border="ridge" borderColor={"blue.800"} margin = "15px" padding = "10px">
-                      <HStack>
-                        <Heading size="md" h ="20px" textIndent={"20px"}>Order #{order.id}</Heading>
-                        <Spacer  h="10px"/>
-                        <Heading size="xs" h ="10px"> {getFormattedDate(order.createdAt)}</Heading>
-                      </HStack>
-                      <CartTable
-                        key={index}
-                        shoppingCart={order.listings}
-                        isPrevOrder={true}
-                        
-                      />
-                    </Box>
-                  </Flex>
-                );
-              })}
+                <Spacer h="30px" />
+                <Heading textAlign="center">Your Order History</Heading>
+                <Spacer h="30px" />
+                {orders.map((order, index) => {
+                  return (
+                    <Flex justify="center">
+                      <Box
+                        width="xl"
+                        mb="20"
+                        margin="15px"
+                        padding={10}
+                        boxShadow={shadowColor}
+                        rounded={'md'}
+                      >
+                        <HStack>
+                          <Heading size="md" h="20px">
+                            Order #{order.id}
+                          </Heading>
+                          <Spacer h={10} />
+                          <Heading size="xs" h="10px">
+                            {' '}
+                            {getFormattedDate(order.createdAt)}
+                          </Heading>
+                        </HStack>
+                        <CartTable
+                          key={index}
+                          shoppingCart={order.listings}
+                          isPrevOrder={true}
+                        />
+                      </Box>
+                    </Flex>
+                  );
+                })}
+              </>
+            )}
           </>
-          )}
-        </>
-      )}
-        </Box>
+        )}
+      </Box>
     </React.Fragment>
   );
 }
