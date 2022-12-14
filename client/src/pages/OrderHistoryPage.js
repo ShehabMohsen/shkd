@@ -66,7 +66,7 @@ export default function OrderHistoryPage() {
   //Generate Order History Page
   return (
     <React.Fragment>
-      <Box bgColor={useColorModeValue('white', 'gray.800')} minH={'70vh'}>
+      <Box bgColor={useColorModeValue('white', 'gray.800')} minH={'70vh'} mb = "10">
         {isLoading ? (
           <LoadingSpinner />
         ) : (
@@ -88,8 +88,8 @@ export default function OrderHistoryPage() {
                     <Flex justify="center">
                       <Box
                         width="xl"
-                        mb="20"
-                        margin="15px"
+                        //mb="20"
+                        margin="20px"
                         padding={10}
                         boxShadow={shadowColor}
                         rounded={'md'}
