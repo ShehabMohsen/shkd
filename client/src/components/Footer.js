@@ -72,7 +72,7 @@ export default function Footer() {
             <Box>
               <HStack>
                 <Image src={Logo} width={'36px'} />
-                <Text textColor={'orange.400'} fontWeight={'semibold'}>
+                <Text textColor={useColorModeValue('orange.500', 'orange.400')} fontWeight={'semibold'}>
                   FASHION 4 YOU!
                 </Text>
               </HStack>
