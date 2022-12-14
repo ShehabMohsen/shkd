@@ -78,22 +78,10 @@ export default function Footer() {
               </HStack>
             </Box>
             <Text fontSize={'sm'}>© 2022 SHKD. All rights reserved</Text>
-            {/* <Stack direction={'row'} spacing={6}>
-              <SocialButton label={'Twitter'} href={'#'}>
-                <FaTwitter />
-              </SocialButton>
-              <SocialButton label={'YouTube'} href={'#'}>
-                <FaYoutube />
-              </SocialButton>
-              <SocialButton label={'Instagram'} href={'#'}>
-                <FaInstagram />
-              </SocialButton>
-            </Stack> */}
-            {/* SECTION 2 */}
           </Stack>
 
           <Stack align={'center'}>
-            <ListHeader>Our team</ListHeader>
+            <ListHeader>Our Team</ListHeader>
             <Link href={'https://github.com/ShehabMohsen'}>Shehab Mohsen</Link>
             <Link href={'https://github.com/dwang312'}>David Wang</Link>
             
