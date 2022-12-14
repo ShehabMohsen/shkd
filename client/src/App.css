@@ -1,1 +1,4 @@
 /* Add custom CSS here if neccessary*/
+* {
+  font-family:sans-serif;
+}
