@@ -43,11 +43,11 @@ export default function ListingsPage() {
         let fetchedListings = await response.json();
         setListings(fetchedListings);
         setSearchedListings(fetchedListings);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
+    setIsLoading(false);
     getListingsData();
   }, []);
 
