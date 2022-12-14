@@ -86,7 +86,7 @@ export default function ProductCard({ itemData }) {
                       cartVariables.addToCart(itemData);
                     }}
                   >
-                    Add to Card
+                    Add to Cart
                   </Button>
                 </WrapItem>
               ) : (
