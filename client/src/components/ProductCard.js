@@ -34,7 +34,6 @@ export default function ProductCard({ itemData }) {
   // to be passed to child components for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   return (
     <Card
       bgColor={useColorModeValue('white', 'gray.700')}
@@ -104,7 +103,12 @@ export default function ProductCard({ itemData }) {
           </Wrap>
         ) : (
           <Wrap>
-            <EditModal itemData={itemData} isOpen={isOpen} onOpen={onOpen} onClose={onClose}/>
+            <EditModal
+              itemData={itemData}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+            />
             <ButtonGroup spacing="2">
               <WrapItem>
                 <Button
@@ -117,7 +121,12 @@ export default function ProductCard({ itemData }) {
               </WrapItem>
 
               <WrapItem>
-                <DeleteListingButton listingId={itemData.id} isOpen={isOpen}  onOpen={onOpen} onClose={onClose}/>{' '}
+                <DeleteListingButton
+                  listingId={itemData.id}
+                  isOpen={isOpen}
+                  onOpen={onOpen}
+                  onClose={onClose}
+                />{' '}
               </WrapItem>
             </ButtonGroup>
           </Wrap>
