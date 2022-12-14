@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  useDisclosure,
   AlertDialog,
   AlertDialogBody,
   AlertDialogFooter,
@@ -13,8 +12,7 @@ import {
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 import { useLocation } from 'react-router-dom';
-export default function DeleteListingButton({ listingId }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function DeleteListingButton({ listingId, isOpen, onOpen, onClose}) {
   const cancelRef = React.useRef();
   const { listingVariables } = useListingContext();
   const deleteListing = listingVariables.deleteListing;

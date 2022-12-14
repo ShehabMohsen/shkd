@@ -49,16 +49,16 @@ export default function AddModal() {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
-
   // listing context variables
   const { listingVariables } = useListingContext();
   const listingForm = listingVariables.listingForm;
   const setListingForm = listingVariables.setListingForm;
   const createListing = listingVariables.createListing;
+  // button spinner while http request takes place
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  // make sure image url is valid
   const [isValidImage, setIsValidImage] = useState(false);
-
-
+  // feed back message submitting listing form
   const toast = useToast();
   // useLocation will give us the current route the react app is currently on
   const location = useLocation();

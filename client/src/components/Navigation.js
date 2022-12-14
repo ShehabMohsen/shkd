@@ -45,7 +45,6 @@ export default function Navigation({}) {
   const handleOnClickLogout = async event => {
     authVariables.logout();
   };
-  console.log(colorMode)
 
   return (
     <Box>
@@ -92,7 +91,7 @@ export default function Navigation({}) {
           flex={{ base: 1, md: 0 }}
           justify={'flex-end'}
           direction={'row'}
-          spacing={6}
+          spacing={4}
         >
           {authVariables.user ? <AddModal /> : null}
           <Button onClick={toggleColorMode}>
@@ -100,35 +99,37 @@ export default function Navigation({}) {
           </Button>
           {authVariables.user ? (
             <ProfileMenu authVariables={authVariables} />
-          ) : (
-            <Button
+            ) : (
+              <Button
               as={'a'}
               fontSize={'sm'}
               fontWeight={400}
               variant={'link'}
               href={'/login'}
-            >
+              >
               Sign In
             </Button>
           )}
-          <Link to="/register">
-            {authVariables.user ? null : (
+          {authVariables.user ? null : (
+            <Link to="/register">
               <Button
-              display={{ base: 'none', md: 'inline-flex' }}
-              fontSize={'sm'}
-              fontWeight={600}
-              color={'white'}
-              bg={'orange.400'}
-              href={'/register'}
-              _hover={{
-                bg: 'orange.500',
-              }}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'orange.400'}
+                href={'/register'}
+                _hover={{
+                  bg: 'orange.500',
+                }}
               >
-                Sign Up
+                <Text color={colorMode === 'light' ? 'white' : 'black'}>
+                  Sign Up
+                </Text>
               </Button>
-            )}
-          </Link>
-            <CartDrawer />
+            </Link>
+          )}
+          <CartDrawer />
         </Stack>
       </Flex>
 
