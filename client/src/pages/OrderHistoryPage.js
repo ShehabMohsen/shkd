@@ -61,7 +61,7 @@ export default function OrderHistoryPage() {
   }, []);
 
   //useColorModeValue(light,dark) (each as string)
-  const shadowColor = useColorModeValue('lg', 'dark-lg');
+  const shadowColor = useColorModeValue('md', 'dark-lg');
 
   //Generate Order History Page
   return (
