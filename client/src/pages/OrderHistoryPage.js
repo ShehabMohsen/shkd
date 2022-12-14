@@ -81,7 +81,7 @@ export default function OrderHistoryPage() {
                       <HStack>
                         <Heading size="md">Order #{order.id}</Heading>
                         <Spacer h="30px" />
-                        <Heading size="xs"> {{getFormattedDate(order.createdAt)}</Heading>
+                        <Heading size="xs"> {getFormattedDate(order.createdAt)}</Heading>
                       </HStack>
                       <CartTable
                         key={index}
