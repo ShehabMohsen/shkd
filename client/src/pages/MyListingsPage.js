@@ -81,18 +81,20 @@ export default function ListingsPage() {
         px={90}
         py={30}
       >
-        {listings.length == 0 ? (
-          <Center height={'100%'}>
-            <VStack>
-              <Headline
-                headlineHeader={headlineHeader}
-                headlineText={headlineText}
-              />
-            </VStack>
-          </Center>
+        {isLoading ? (
+          <LoadingSpinner />
         ) : (
           <>
-            {!isLoading ? (
+            {listings.length == 0 ? (
+              <Center height={'100%'}>
+                <VStack>
+                  <Headline
+                    headlineHeader={headlineHeader}
+                    headlineText={headlineText}
+                  />
+                </VStack>
+              </Center>
+            ) : (
               <>
                 <Grid w="auto" gap="7" fontWeight="bold" mb={10} mx={60}>
                   <GridItem h="40px">
@@ -126,8 +128,6 @@ export default function ListingsPage() {
                   })}
                 </SimpleGrid>
               </>
-            ) : (
-              <LoadingSpinner />
             )}
           </>
         )}
