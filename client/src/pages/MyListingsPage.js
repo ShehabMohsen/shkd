@@ -49,7 +49,6 @@ export default function ListingsPage() {
     }
     setIsLoading(false);
     getListingsData();
-    setIsLoading(false);
   }, []);
 
   useEffect(() => {
