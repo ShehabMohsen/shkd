@@ -8,11 +8,13 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useToast,
+  useDisclosure
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
 import { useLocation } from 'react-router-dom';
-export default function DeleteListingButton({ listingId, isOpen, onOpen, onClose}) {
+export default function DeleteListingButton({ listingId}) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const { listingVariables } = useListingContext();
   const deleteListing = listingVariables.deleteListing;

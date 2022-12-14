@@ -33,6 +33,7 @@ export default function ProductCard({ itemData }) {
   const { authVariables } = useAuthContext();
   // to be passed to child components for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   const shadowColor = useColorModeValue('md', 'dark-lg');
 
   return (
@@ -123,12 +124,7 @@ export default function ProductCard({ itemData }) {
               </WrapItem>
 
               <WrapItem>
-                <DeleteListingButton
-                  listingId={itemData.id}
-                  isOpen={isOpen}
-                  onOpen={onOpen}
-                  onClose={onClose}
-                />{' '}
+                <DeleteListingButton listingId={itemData.id} />
               </WrapItem>
             </ButtonGroup>
           </Wrap>
