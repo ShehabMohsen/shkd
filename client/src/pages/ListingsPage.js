@@ -95,7 +95,7 @@ export default function ListingsPage() {
                 </Stack>
               </GridItem>
             </Grid>
-            <SimpleGrid columns={[1, 2, 3, 4]} spacing="40px" mx={60}>
+            <SimpleGrid minChildWidth='230px' spacing="40px" mx={60}>
               {searchedListings.map(itemData => {
                 return (
                   <Box key={itemData.id}>

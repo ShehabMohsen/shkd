@@ -21,7 +21,7 @@ router.get("/", (req, res) => {
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
     //Returns ListingData.js
-    // res.status(200).json(ListingData.listingDataArray); 
+    //res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
     Listing.findAll({order: [

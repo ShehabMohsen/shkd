@@ -58,7 +58,8 @@ export default function LandingPage() {
           <Text color={'gray.500'} fontSize={20} >
             Join now and learn from the numerous fashionistas selling their
             clothes right here! Look for your style and express yourself through
-            fashion!
+            fashion! Share your style with us and connect with an evergrowing
+            community.
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
