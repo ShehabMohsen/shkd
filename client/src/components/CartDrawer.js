@@ -19,15 +19,26 @@ import {
   Box,
   HStack,
   Image,
-  useColorModeValue
+  useColorModeValue,
+  useToast,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useCartContext } from '../contexts/CartContext';
+import { useAuthContext } from '../contexts/AuthContext';
 import { useState } from 'react';
 import CartTable from './CartTable';
 import Headline from './Headline';
 import Logo from '../Assets/Logo.png';
+
+const headlineHeader = 'Your Cart is Empty!';
+const headlineText =
+  'You have nothing in your Cart! ' +
+  'Feel free to check out our listings page and pick whatever you like 🙂';
 
 export default function CartDrawer() {
   // Required to make drawer work
@@ -35,11 +46,13 @@ export default function CartDrawer() {
   const btnRef = React.useRef();
   // CartContext
   const { cartVariables } = useCartContext();
+  // to ensure user is authed when checkint out:
   const shoppingCart = cartVariables.shoppingCart;
+  const setShoppingCart = cartVariables.setShoppingCart;
+  const checkout = cartVariables.checkout;
   const [checkoutForm, setCheckoutForm] = useState({});
   // Drawer background color:  useColorModeValue('lightModeColor', 'darkModeColor')
-  const bg = useColorModeValue('gray.100', 'gray.800')
-  
+  const bg = useColorModeValue('gray.100', 'gray.800');
 
   useEffect(() => {
     // this will prepare checkout form
@@ -49,7 +62,7 @@ export default function CartDrawer() {
         totalPrice += shoppingCart[i].price;
       }
       setCheckoutForm({
-        shoppingCart:shoppingCart,
+        shoppingCart: shoppingCart,
         totalPrice,
       });
     }
@@ -77,19 +90,28 @@ export default function CartDrawer() {
         onClose={onClose}
         finalFocusRef={btnRef}
         size={'lg'}
-        
       >
         <DrawerOverlay />
         <DrawerContent bgColor={bg}>
           <DrawerCloseButton />
           {shoppingCart.length > 0 ? (
-            <CartContent shoppingCart={shoppingCart} onClose={onClose} />
+            <CartContent
+              shoppingCart={shoppingCart}
+              onClose={onClose}
+              checkoutForm={checkoutForm}
+              checkout={checkout}
+              setCheckoutForm={setCheckoutForm}
+              setShoppingCart={setShoppingCart}
+            />
           ) : (
             // display headline when there's nothing in cart
             <>
               <Center height={'100%'}>
                 <VStack>
-                  <Headline />
+                  <Headline
+                    headlineHeader={headlineHeader}
+                    headlineText={headlineText}
+                  />
                   <Link to="/listings">
                     <Button
                       size={'lg'}
@@ -113,21 +135,47 @@ export default function CartDrawer() {
   );
 }
 
-export function CartContent({ shoppingCart, onClose }) {
+export function CartContent({
+  shoppingCart,
+  onClose,
+  checkoutForm,
+  setCheckoutForm,
+  checkout,
+  setShoppingCart,
+}) {
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const { authVariables } = useAuthContext();
+  const [errorMsg, setErrorMsg] = useState('');
 
+  const toast = useToast();
 
-  function checkoutCart(){
-    if (!isChecked) return
-    setIsButtonLoading(true)
-    // chechkout logic here
+  async function checkoutCart() {
+    if (!isChecked) return;
+    if (!authVariables.user) {
+      setErrorMsg('Please log in to your account before checking out');
+      return;
+    }
+
+    setIsButtonLoading(true);
+    // call to chechkout function
+    await checkout(checkoutForm);
     // after checkout is done, disable loading button
-    // setIsButtonLoading(false)
 
+    setCheckoutForm({});
+    setShoppingCart([]);
+    setIsButtonLoading(false);
+    onClose();
+
+    toast({
+      position: 'top',
+      title: 'Checkout Success.',
+      description: 'Your order has been processed, thank you for using SHKD :)',
+      status: 'success',
+      duration: 8000,
+      isClosable: true,
+    });
   }
-
-
 
   return (
     <React.Fragment>
@@ -141,15 +189,38 @@ export function CartContent({ shoppingCart, onClose }) {
       <DrawerBody>
         <CartTable shoppingCart={shoppingCart} />
       </DrawerBody>
+
+      {errorMsg ? (
+        <Alert status="error" variant={'subtle'} width={'80%'} alignSelf={'center'} mb={20}>
+          <AlertIcon />
+          <AlertTitle>Error 401</AlertTitle>
+          <AlertDescription>{errorMsg}</AlertDescription>
+        </Alert>
+      ) : null}
       <HStack>
-      <Checkbox ml={6} required onChange={()=>{setIsChecked(!isChecked)}}>
-        <Text>By checking this box, you are confirming to Checkout</Text>
-      </Checkbox>
-        </HStack>
+        <Checkbox
+          ml={6}
+          required
+          onChange={() => {
+            setIsChecked(!isChecked);
+          }}
+        >
+          <Text>By checking this box, you are confirming to Checkout</Text>
+        </Checkbox>
+      </HStack>
       <DrawerFooter>
-        <Button size={'md'}colorScheme="blue" isLoading = {isButtonLoading} onClick={checkoutCart}>Checkout</Button>
+        <Button
+          size={'md'}
+          colorScheme="blue"
+          isLoading={isButtonLoading}
+          onClick={() => {
+            checkoutCart();
+          }}
+        >
+          Checkout
+        </Button>
         <Spacer />
-        <Button size = {'md'} variant="outline" ml={3} onClick={onClose}>
+        <Button size={'md'} variant="outline" ml={3} onClick={onClose}>
           Cancel
         </Button>
       </DrawerFooter>

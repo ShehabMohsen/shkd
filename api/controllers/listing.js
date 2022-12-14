@@ -21,12 +21,12 @@ router.get("/", (req, res) => {
     //RESULTS: https://prnt.sc/CvWneA54IOz7
     
     //Returns ListingData.js
-    res.status(200).json(ListingData.listingDataArray); 
+    // res.status(200).json(ListingData.listingDataArray); 
 
     //Returns currentListings from PSQL DB
-    // Listing.findAll({order: [
-    //     ["updatedAt",  "DESC"]
-    // ]}).then((allListing) => res.json(allListing));
+    Listing.findAll({order: [
+        ["updatedAt",  "DESC"]
+    ]}).then((allListing) => res.json(allListing));
 });
 
 //Gets userListings
@@ -61,7 +61,6 @@ router.get("/:id", passport.isAuthenticated() ,(req,res) =>{
 router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
     // listing content received from frontEnd, in a JSON Object form
     let content = req.body;
-
     let user = req.user;
     Listing.create({
         UserId:user.dataValues.id,
@@ -71,7 +70,6 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
         size: content.size,
         price: content.price,
         description: content.description,
-        listing_region: content.listing_region,
         image: content.image,
     })
         .then((newData) =>{
@@ -91,7 +89,7 @@ router.post("/createListing", passport.isAuthenticated() , (req, res) =>{
 // editing a post
 // Updating a Instance:
 // https://sequelize.org/docs/v6/core-concepts/model-instances/
-router.put("/:id", passport.isAuthenticated(), (req, res) =>{
+router.put("/update/:id", passport.isAuthenticated(), (req, res) =>{
 
     // IMPORTANT NOTE: may scrap detailed listing view, so listing id may not be passed via req.params
     const { id } = req.params;
@@ -113,7 +111,7 @@ router.put("/:id", passport.isAuthenticated(), (req, res) =>{
 });
 
 // deleting a post (Works: 00:06, Dec 5th, 2022)
-router.delete("/:id", (req, res) =>{
+router.delete("/delete/:id", passport.isAuthenticated(), (req, res) =>{
     const { id } = req.params;
     Listing.findByPk(id).then((lpost) =>{
         if(!lpost){

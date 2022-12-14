@@ -27,12 +27,10 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  toast,
   useToast,
 } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import { useListingContext } from '../contexts/ListingContext';
-// import isImageURL from 'image-url-validator'
 
 // will map through the two arrays to render the elements as html
 const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', 'N/A'];
@@ -45,29 +43,24 @@ const categories = [
   'Shoes',
   'Accessories',
 ];
-export default function AddModal() {
+
+export default function EditModal({ itemData, setIsEditActive }) {
   // needed for opening/closing the modal
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
+  const toast = useToast();
+  const [isValidImage, setIsValidImage] = useState(true);
 
   // listing context variables
   const { listingVariables } = useListingContext();
-  const listingForm = listingVariables.listingForm;
-  const setListingForm = listingVariables.setListingForm;
-  const createListing = listingVariables.createListing;
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
-  const [isValidImage, setIsValidImage] = useState(false);
-
-
-  const toast = useToast();
-  // useLocation will give us the current route the react app is currently on
+  const [listingForm, setListingForm] = useState({ ...itemData });
+  //to pass pathname to update listing function
   const location = useLocation();
 
   function isImage(url) {
     return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
   }
 
-  // handles changes on create listing form
   const handleOnFormChange = event => {
     // image url validation
     if (event.target.name == 'image') {
@@ -95,47 +88,38 @@ export default function AddModal() {
       [event.target.name]: event.target.value,
     });
   };
-
-
-  const handleDiscardDraft = () => {
-    setListingForm({
-      listing_name: '',
-      description: '',
-      gender: '',
-      category: '',
-      size: '',
-      price: '',
-      image: '',
-    });
+  // Do not save changes when closing modal
+  const onCloseModal = () => {
+    setListingForm(itemData);
+    setIsEditActive(false);
     onClose();
   };
 
-  const submitListing = async () => {
-    // logic for checking everything was filled out properly:
-    
-    // makes sure that all input fields are filled out except for description
-    for (const property in listingForm){
+  // Save changes made to listing
+  const handleSaveChanges = () => {
+    for (const property in listingForm) {
       // iterate through object properties (keys)
-      if (!listingForm[property] && property!='description') {
+      if (!listingForm[property] && property != 'description') {
+        
+        console.log(property, listingForm[property])
         toast({
           position: 'top',
-          title: 'Create Error.',
-          description:
-            'Please fill out all the required fields',
+          title: 'Edit Error.',
+          description: 'Please fill out all the required fields',
           status: 'error',
           duration: 9000,
           isClosable: true,
         });
-        return
+        return;
       }
     }
+
     // toast for failure
     if (!isValidImage) {
       toast({
         position: 'top',
-        title: 'Create Error.',
-        description:
-          'Please make sure that image URL is Valid',
+        title: 'Edit Error.',
+        description: 'Please make sure that image URL is Valid',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -144,50 +128,33 @@ export default function AddModal() {
       return;
     }
 
-    // logic for making the request
-    setIsButtonLoading(true);
-    await createListing(listingForm, location.pathname);
-    setIsButtonLoading(false);
-
-    // if submission was successful
+    listingVariables.updateListing(listingForm, location.pathname);
     toast({
       position: 'top',
-      title: 'Create Success.',
-      description: 'Your listing has been created',
-      status: 'success',
+      title: 'Edit Success.',
+      description: 'Your listing has been updated',
+      status: 'info',
       duration: 5000,
       isClosable: true,
     });
-
-    // reset listing form
-    setListingForm({
-      listing_name: '',
-      description: '',
-      gender: '',
-      category: '',
-      size: '',
-      price: '',
-      image: '',
-    });
     onClose();
+    setIsEditActive(false);
   };
-
-
 
   return (
     <>
-      <Button onClick={onOpen} rightIcon={<AddIcon />}>
-        Add
+      <Button colorScheme={'blue'} onClick={onOpen} rightIcon={<EditIcon />}>
+        Edit
       </Button>
       <Modal
         size={'xl'}
         initialFocusRef={initialRef}
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onCloseModal}
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Listing</ModalHeader>
+          <ModalHeader>Edit Listing</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl isRequired>
@@ -200,7 +167,6 @@ export default function AddModal() {
                 name="listing_name"
               />
             </FormControl>
-
             <FormControl mt={4}>
               <FormLabel>Item description</FormLabel>
               <Textarea
@@ -224,7 +190,7 @@ export default function AddModal() {
               >
                 <HStack spacing="24px">
                   <Radio value="Male">Men's</Radio>
-                  <Radio value="Female">Women's</Radio>
+                  <Radio value="Women">Women's</Radio>
                   <Radio value="Unisex">Unisex</Radio>
                 </HStack>
               </RadioGroup>
@@ -321,7 +287,7 @@ export default function AddModal() {
               </HStack>
             </FormControl>
 
-            <FormControl isRequired mt={4}>
+            <FormControl mt={4}>
               <FormLabel>Image</FormLabel>
               <InputGroup>
                 <InputLeftAddon children="URL" />
@@ -332,22 +298,17 @@ export default function AddModal() {
                   name="image"
                   value={listingForm.image}
                 />
+                {listingForm.image}
               </InputGroup>
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button
-              isLoading={isButtonLoading}
-              onClick={submitListing}
-              colorScheme="blue"
-              mr={3}
-            >
-              Add Listing
+            <Button onClick={handleSaveChanges} colorScheme="blue" mr={3}>
+              Save Changes
             </Button>
-            <Button onClick={onClose}>Save Draft </Button>
             <Spacer />
-            <Button onClick={handleDiscardDraft} mr={3}>
-              Discard draft
+            <Button onClick={onCloseModal} mr={3}>
+              Discard Changes
             </Button>
           </ModalFooter>
         </ModalContent>

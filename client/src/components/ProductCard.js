@@ -1,13 +1,7 @@
+import React from 'react';
 import {
-  Flex,
-  Circle,
   Box,
   Image,
-  Badge,
-  useColorModeValue,
-  Icon,
-  chakra,
-  Tooltip,
   Divider,
   Card,
   CardBody,
@@ -22,55 +16,111 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Wrap,
+  WrapItem,
+  useColorModeValue
 } from '@chakra-ui/react';
-import { FiShoppingCart } from 'react-icons/fi';
+import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import { useCartContext } from '../contexts/CartContext';
-import { MoonIcon } from '@chakra-ui/icons';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useState } from 'react';
+import DeleteListingButton from './DeleteListingButton';
+import EditModal from './EditModal';
 
-
-function ProductCard({ imageURL, name, price, gender, size, itemData }) {
+export default function ProductCard({ itemData }) {
   const { cartVariables } = useCartContext();
+  const { authVariables } = useAuthContext();
+  const [isEditActive, setIsEditActive] = useState(false);
 
   return (
-    <Card maxW="sm">
+    <Card bgColor={useColorModeValue('white','gray.700')} minW='250px' maxW="sm">
       <CardBody>
-        <Image src={imageURL} borderRadius="lg" />
+        <Image src={itemData.image} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-
-        <Accordion defaultIndex={[0]} allowMultiple>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box flex='1' textAlign='left'>
-                <Heading size="md">{name}</Heading>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-            {itemData.description}
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-
+          <Accordion defaultIndex={[1]} allowMultiple>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    <Heading size="md">{itemData.listing_name}</Heading>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <Text fontSize="md">Category: {itemData.category}</Text>
+                <Text fontSize="sm" as="i">
+                  {itemData.description}
+                </Text>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
           <Text color="blue.400" fontSize="2xl">
-            ${price}
+            ${itemData.price}
+          </Text>
+          <Text color="blue.400" fontSize="lg">
+            Size: {itemData.size}, {itemData.gender}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
       <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue" onClick={()=>{cartVariables.addToCart(itemData)}}>
-            Add to Card
-          </Button>
-          <Button variant="ghost" colorScheme="blue" onClick={()=>{cartVariables.removeFromCart(itemData)}}>
-            Remove from Cart
-          </Button>
-        </ButtonGroup>
+        {itemData.UserId != authVariables.user.id ? (
+          <Wrap>
+            <ButtonGroup spacing="2">
+              {!cartVariables.isInCart(itemData) ? (
+                <WrapItem>
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => {
+                      cartVariables.addToCart(itemData);
+                    }}
+                  >
+                    Add to Card
+                  </Button>
+                </WrapItem>
+              ) : (
+                <WrapItem>
+                  <Button
+                    variant="outline"
+                    colorScheme="red"
+                    onClick={() => {
+                      cartVariables.removeFromCart(itemData);
+                    }}
+                  >
+                    Remove from Cart
+                  </Button>
+                </WrapItem>
+              )}
+            </ButtonGroup>
+          </Wrap>
+        ) : (
+          <Wrap>
+            <ButtonGroup spacing="2">
+              {isEditActive ? (
+                <EditModal
+                  itemData={itemData}
+                  setIsEditActive={setIsEditActive}
+                />
+              ) : (
+                <WrapItem>
+                  <Button
+                    colorScheme={'blue'}
+                    onClick={setIsEditActive(!isEditActive)}
+                    rightIcon={<EditIcon />}
+                  >
+                    Edit
+                  </Button>
+                </WrapItem>
+              )}
+              <WrapItem>
+                <DeleteListingButton listingId={itemData.id} />{' '}
+              </WrapItem>
+            </ButtonGroup>
+          </Wrap>
+        )}
       </CardFooter>
     </Card>
   );
 }
-
-export default ProductCard;

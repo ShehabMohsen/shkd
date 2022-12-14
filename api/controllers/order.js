@@ -23,10 +23,9 @@ router.get("/myOrders", passport.isAuthenticated(), (req, res) => {
 router.post("/createOrder", passport.isAuthenticated(), (req,res) =>{
     let content = req.body;
     let user = req.user;
-
     Order.create({
         UserId:user.dataValues.id,
-        listings: content.listings,
+        listings: content.shoppingCart,
 /*         tax: content.tax, //Perhaps it being a equation, calculate towards content.tax
         shipping: content.shipping, //Same as above */
         totalPrice: content.totalPrice,

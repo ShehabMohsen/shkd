@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 
 // will be used as key for storing/fetching data from browser local storage
 const SHOPPING_CART_STORAGE_KEY = 'listing-shopping-cart';
@@ -7,7 +7,7 @@ const SHOPPING_CART_STORAGE_KEY = 'listing-shopping-cart';
 export const CartContext = createContext();
 
 export function useCartContext() {
-  return React.useContext(CartContext);
+  return useContext(CartContext);
 }
 
 export const CartContextProvider = ({ children }) => {
@@ -78,8 +78,29 @@ export const CartContextProvider = ({ children }) => {
     setShoppingCart(newShoppingCart);
   }
 
-  // this function will take checkout form and send it to the backend once user "purchases" the items. it'll probably be better to puth this in the CartDrawer Component
-  async function checkout(checkoutForm) {}
+  // this function will take checkout form and send it to the backend once user "purchases" the items. 
+  async function checkout(checkoutForm) {
+    try {
+      // post request in order to checkout
+      await fetch('/api/order/createOrder', {
+        method: 'POST',
+        body: JSON.stringify(checkoutForm),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // searches cart for a listing and returns true if its found
+  function isInCart(listing){
+    for (let i = 0; i < shoppingCart.length; i++){
+      if (shoppingCart[i].id == listing.id) return true
+    }
+    return false
+  } 
 
   const cartVariables = {
     shoppingCart,
@@ -87,7 +108,9 @@ export const CartContextProvider = ({ children }) => {
     addToCart,
     removeFromCart,
     checkout,
+    isInCart
   };
+
   return (
     <CartContext.Provider value={{ cartVariables }}>
       {children}

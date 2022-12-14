@@ -30,22 +30,22 @@ import { useAuthContext } from '../contexts/AuthContext';
 import ProfileMenu from './ProfileMenu';
 import CartDrawer from './CartDrawer';
 import AddModal from './AddModal';
-
-// import { ReactComponent as Logo } from '..\Assets\ClotheWardrobeIcon.svg';
 import Logo from '../Assets/Logo.png';
-export default function Navigation() {
+
+export default function Navigation({}) {
   const { isOpen, onToggle } = useDisclosure();
-  // toggle darkmode on and off
-  const { colorMode, toggleColorMode } = useColorMode();
   // from AuthContext, contains user, signin, signout, signup, etc
   const { authVariables } = useAuthContext();
   // for redirecting our page to landing page after logging in
   const navigate = useNavigate();
 
+  // toggle darkmode on and off
+  const { colorMode, toggleColorMode } = useColorMode();
   // making a dedicating handler for logging out in case we need to do more
   const handleOnClickLogout = async event => {
     authVariables.logout();
   };
+  console.log(colorMode)
 
   return (
     <Box>
@@ -80,13 +80,6 @@ export default function Navigation() {
             <Center>
               <Image src={Logo} width="45px" marginLeft="2px" />
             </Center>
-            {/* <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}
-            >
-              Logo
-            </Text> */}
           </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -101,10 +94,7 @@ export default function Navigation() {
           direction={'row'}
           spacing={6}
         >
-          
-          {authVariables.user ? (
-            <AddModal />
-          ) : null}
+          {authVariables.user ? <AddModal /> : null}
           <Button onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
@@ -121,28 +111,28 @@ export default function Navigation() {
               Sign In
             </Button>
           )}
-          {authVariables.user ? <CartDrawer /> : null}
           <Link to="/register">
             {authVariables.user ? null : (
               <Button
-                display={{ base: 'none', md: 'inline-flex' }}
-                fontSize={'sm'}
-                fontWeight={600}
-                color={'white'}
-                bg={'orange.400'}
-                href={'/register'}
-                _hover={{
-                  bg: 'orange.500',
-                }}
+              display={{ base: 'none', md: 'inline-flex' }}
+              fontSize={'sm'}
+              fontWeight={600}
+              color={'white'}
+              bg={'orange.400'}
+              href={'/register'}
+              _hover={{
+                bg: 'orange.500',
+              }}
               >
                 Sign Up
               </Button>
             )}
           </Link>
+            <CartDrawer />
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity> 
+      <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
     </Box>

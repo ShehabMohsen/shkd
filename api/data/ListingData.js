@@ -25,7 +25,7 @@ let listingData = {
     {
       id:2,
       listing_name: "Stripped Pants",
-      gender: "F",
+      gender: "female",
       category: "pants",
       description: "Pants with colorful stripes",
       size: "L",
@@ -49,7 +49,7 @@ let listingData = {
     {
       id:4,
       listing_name: "Rogue Leather Belt",
-      gender: "M",
+      gender: "male",
       category: "accessories",
       description: "A belt to make sure your pants stay on!",
       size: "30 inches",
@@ -74,7 +74,7 @@ let listingData = {
     {
       id:6,
       listing_name: "Purple Gloves",
-      gender: "F",
+      gender: "female",
       category: "accessories",
       description: "Gloves was originally used for a costume.",
       size: "small",

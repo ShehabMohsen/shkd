@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 
 export const AuthContext = createContext();
 
 export function useAuthContext() {
-  return React.useContext(AuthContext);
+  return useContext(AuthContext);
 }
 
 
