@@ -35,6 +35,7 @@ export default function OrderHistoryPage() {
     https://isotropic.co/how-to-format-a-date-as-dd-mm-yyyy-in-javascript/
     https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options*/
+    
   const getFormattedDate = dateStr => {
     const date = new Date(dateStr);
     return date.toLocaleDateString(); //Returns in local time of machine

@@ -86,6 +86,7 @@ export default function ListingsPage() {
                     <Input
                       variant={'filled'}
                       type="search"
+                      size={'lg'}
                       placeholder="Search for item"
                       value={searchValue}
                       onChange={handleOnSearchChange}
