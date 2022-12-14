@@ -68,7 +68,7 @@ export default function Footer() {
           spacing={8}
         >
           {/* SECTION 1 */}
-          <Stack spacing={6}>
+          <Stack spacing={6} align="center">
             <Box>
               <HStack>
                 <Image src={Logo} width={'36px'} />
@@ -92,7 +92,7 @@ export default function Footer() {
             {/* SECTION 2 */}
           </Stack>
 
-          <Stack align={'flex-start'}>
+          <Stack align={'center'}>
             <ListHeader>Our team</ListHeader>
             <Link href={'https://github.com/ShehabMohsen'}>Shehab Mohsen</Link>
             <Link href={'https://github.com/dwang312'}>David Wang</Link>
