@@ -21,6 +21,10 @@ Landing Page and Login:
 
 https://user-images.githubusercontent.com/97417536/209047772-51ac9b77-4d6c-42b2-a9df-40228dc3cae0.mov
 
+Browse for listings and search for them via the searchbar:
+
+https://user-images.githubusercontent.com/97417536/209049457-24b618e2-44a3-4a18-b5a1-e315930c25fd.mov
+
 
 
 ## Stack
