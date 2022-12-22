@@ -1,6 +1,6 @@
-# CTP Project Starter
+# FASHION 4 YOU - SHKD
 
-A full stack web application starter template for building projects with React, Express.js, and Sequelize.js
+A full stack web application project built with React, Express.js, and Sequelize.js
 
 **Current version:** 2022.2 (Oct 2022)
 
@@ -17,7 +17,7 @@ _Backend API_
 _Frontend React client_
 
 - Based on `create-react-app`
-  - pre-configured to work with the api
+- Chakra UI
 - Bootstrap (v5)
   - added to `/client/public/index.html` (_optional_ can be removed)
 - React Router (v6)
