@@ -194,15 +194,25 @@ git push heroku main
 │       ├── App.css
 │       ├── App.js
 │       ├── <strong>components</strong>
-│       │   ├── ErrorAlert.js
+│       │   ├── AddModal.js
+│       │   ├── CartDrawer.js
+│       │   ├── CartTable.js
+│       │   ├── DeleteListingButton.js
+│       │   ├── EditModal.js
+│       │   ├── Footer.js
+│       │   ├── Headline.js
 │       │   ├── LoadingSpinner.js
-│       │   └── MicroPostCard.js
+│       │   ├── Navigation.js
+│       │   ├── ProductCard.js
+│       │   └── ProfileMenu.js
 │       ├── index.js
 │       └── <strong>pages</strong>
-│           ├── AboutUsPage.js
-│           ├── PostFormPage.js
-│           ├── PostsListPage.js
-│           └── ShowPostPage.js
+│           ├── LandingPage.js
+│           ├── ListingsPage.js
+│           ├── LoginPage.js
+│           ├── MyListingsPage.js
+│           ├── OrderHistoryPage.js
+│           └── RegisterPage.js
 ├── package-lock.json
 └── package.json
 </pre>
