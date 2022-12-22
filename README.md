@@ -18,8 +18,6 @@ _Frontend React client_
 
 - Based on `create-react-app`
 - Chakra UI
-- Bootstrap (v5)
-  - added to `/client/public/index.html` (_optional_ can be removed)
 - React Router (v6)
 
 ## Development Setup
