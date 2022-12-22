@@ -29,7 +29,7 @@ Create, edit, and delete a listing:
 
 https://user-images.githubusercontent.com/97417536/209049919-15fa2e45-7b41-4ea1-bd31-af4e688f301b.mov
 
-
+Add listings to cart, checkout, and view transaction history
 
 ## Stack
 
