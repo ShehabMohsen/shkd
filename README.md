@@ -12,7 +12,7 @@ Users can:
 - Edit and delete listing
 - Add listings to cart and checkout
 - View transaction history
-
+- Toggle between light and dark mode
 ## Stack
 
 > Node.js v16 LTS is recommended
