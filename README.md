@@ -22,7 +22,7 @@ _Frontend React client_
 
 ## Development Setup
 
-Each team member will need to do this on their local machine.
+To run the backend API on your local machine, make sure to read the following:
 
 ### Ensure you have PostgreSQL installed
 
@@ -33,7 +33,7 @@ Each team member will need to do this on their local machine.
 
 ### Create a PostgreSQL user and database
 
-The project-starter template expects the following for local development:
+The project-starter template which this repository was forked from expects the following for local development:
 
 - PostgreSQL User/Role
   - name: `ctp_user`
