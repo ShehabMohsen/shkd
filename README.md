@@ -17,23 +17,33 @@ Users can:
 
 ## Walkthrough
 
-Landing Page and Login:
+<strong>Please click to expand embedded walkthroughs</strong>
 
-https://user-images.githubusercontent.com/97417536/209047772-51ac9b77-4d6c-42b2-a9df-40228dc3cae0.mov
+<details>
+  </br>
+  <summary>Landing Page and Login</summary>
+  
+  https://user-images.githubusercontent.com/97417536/209047772-51ac9b77-4d6c-42b2-a9df-40228dc3cae0.mov
+</details>
 
-Browse for listings and search for them via the searchbar:
+<details>
+  </br>
+  <summary>Browse for listings and search for them via the searchbar</summary>
+  
+  https://user-images.githubusercontent.com/97417536/209049457-24b618e2-44a3-4a18-b5a1-e315930c25fd.mov
+</details>
 
-https://user-images.githubusercontent.com/97417536/209049457-24b618e2-44a3-4a18-b5a1-e315930c25fd.mov
+<details>
+  </br>
+  <summary>Create, edit, and delete a listing</summary>
+  https://user-images.githubusercontent.com/97417536/209049919-15fa2e45-7b41-4ea1-bd31-af4e688f301b.mov
+</details>
 
-Create, edit, and delete a listing:
-
-https://user-images.githubusercontent.com/97417536/209049919-15fa2e45-7b41-4ea1-bd31-af4e688f301b.mov
-
-Add listings to cart, checkout, and view transaction history:
-
-https://user-images.githubusercontent.com/97417536/209050393-cc62d55a-dbbf-41b1-b0a4-dc2e91498841.mov
-
-
+<details>
+  </br>
+  <summary>Add listings to cart, checkout, and view transaction history</summary>
+  https://user-images.githubusercontent.com/97417536/209050393-cc62d55a-dbbf-41b1-b0a4-dc2e91498841.mov
+</details>
 
 ## Stack
 
