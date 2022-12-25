@@ -2,7 +2,8 @@
 
 A full stack web application project built with React, Express.js, and Sequelize.js
 
-**Current version:** 2022.2 (Oct 2022)
+Deployed site: https://shkd.fly.dev/
+
 
 ## Features and Walkthrough
 Users can:
