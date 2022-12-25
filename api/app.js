@@ -5,7 +5,7 @@ const passport = require("./middlewares/authentication")
 const path = require("path");
 const db = require("./models");
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 // this lets us parse 'application/json' content in http requests
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(express.json());
 // setup passport and session cookies
 app.use(
   expressSession({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'randomly_super_long_string',
     resave: false,
     saveUninitialized: true,
   })
@@ -44,7 +44,7 @@ db.sequelize.sync({ force: false });
 
 // start up the server
 if (PORT) {
-  app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+  app.listen(PORT, "0.0.0.0", () => console.log(`Listening on ${PORT}`));
 } else {
   console.log("===== ERROR ====\nCREATE A .env FILE!\n===== /ERROR ====");
 }
