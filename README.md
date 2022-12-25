@@ -17,7 +17,7 @@ Users can:
 
 ## Walkthrough
 
-<strong>Please click to expand embedded walkthroughs</strong>
+_Please click to expand embedded walkthroughs_
 
 <details>
   </br>
