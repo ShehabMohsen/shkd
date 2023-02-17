@@ -298,16 +298,16 @@ const NAV_ITEMS = [
     label: 'All Listings',
     href: '/listings',
   },
-  {
-    label: 'Male Clothing',
-    href: '/listings',
-  },
-  {
-    label: 'Female Clothing',
-    href: '/listings',
-  },
-  {
-    label: 'Accessories',
-    href: '/listings',
-  },
+  // {
+  //   label: 'Male Clothing',
+  //   href: '/listings',
+  // },
+  // {
+  //   label: 'Female Clothing',
+  //   href: '/listings',
+  // },
+  // {
+  //   label: 'Accessories',
+  //   href: '/listings',
+  // },
 ];
